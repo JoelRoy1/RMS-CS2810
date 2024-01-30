@@ -1,0 +1,37 @@
+services:
+  postgresdb:
+    build:
+      context: ./db
+      dockerfile: Dockerfile
+    container_name: postgresdb
+    image: postgres:latest
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+    ports:
+      - 5432:5432
+  rms-api:
+    container_name: rms-api
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    image: rms-api:latest
+    depends_on:
+      - postgresdb
+    ports:
+      - 9000:9000
+  rms-client:
+    container_name: rms-client
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    image: rms-client:latest
+    depends_on:
+      - rms-api
+    ports:
+      - 3000:3000
+volumes:
+  pgdata:
+    name: pgdata
