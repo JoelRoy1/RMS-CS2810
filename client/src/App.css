@@ -1,38 +1,96 @@
 .App {
+  min-height: 100vh; /* to make sure that it covers at least the full viewport height */
+  background-image: url('./restaurant_background.jpg'); /* Path of the image */
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed; /* Fixed background image */
+  color: white; /* White text for better contrast */
+}
+
+
+/* Invisible area to trigger navbar appearance */
+.App-nav-trigger {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 10px; /* Height of the trigger area */
+  z-index: 200; /* Higher than everything else */
+}
+
+/* Navbar initial state */
+.App-nav {
+  position: fixed;
+  top: -50px; /* Start offscreen */
+  left: 0;
+  right: 0;
+  background: rgba(255, 165, 0, 0.7); /* Semi-transparent orange */
+  transition: top 0.3s, background-color 0.3s; /* Smooth transitions for sliding and color */
+  z-index: 100; /* To ensure it's above other content */
+  padding: 1rem;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/* Navbar visible state */
+.App-nav.show {
+  top: 0; /* Bring into view */
+  background: rgba(255, 255, 255, 0.7); /* Change to white */
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.App-nav a {
+  color: white;           /* White text for the links */
+  margin: 0 1rem;         /* Add some space around each link */
+  text-decoration: none;  /* Remove the underline from links */
+  font-size: 1.2rem;      /* Make the text a bit larger */
+  font-weight: bold;      /* Make the text bold */
 }
+
+.App-nav a:hover {
+  color: #ffdf00;         /* Change color when hovering over the link */
+  text-decoration: underline; /* Underline on hover */
+}
+
+
+
 
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+ text-align: center; /* Center text horizontally */
+  padding: 20px 0; /* for adding padding at the top and bottom *
 }
 
-.App-link {
-  color: #61dafb;
+.App-header h1,
+.App-header p,
+.App-buttons {
+  margin: 0; /* Remove default margins */
+  padding: 10px 0; /* Add some vertical padding */
+}
+.App-buttons {
+  display: flex; /* Use flexbox for button alignment */
+  justify-content: center; /* Center flex items horizontally */
+  gap: 10px; /* Add space between buttons */
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.App-button-customer,
+.App-button-staff {
+  padding: 10px 20px; /* Add some padding inside the buttons */
+  border: none; /* Remove borders */
+  background-color: #ffdf00; /* Use the theme color for the button background */
+  color: #563d7c; /* Color for the text inside the buttons */
+  font-weight: bold; /* Make button text bold */
+  cursor: pointer; /* Change mouse cursor to indicate clickable */
+  border-radius: 5px; /* round the button corners */
 }
+
+.App-button-customer:hover,
+.App-button-staff:hover {
+  background-color: #fff; /* Light background color on hover */
+  color: #563d7c; /* Dark text on hover */
+}
+
+.App-footer {
+  text-align: center; /* Center text horizontally */
+  padding: 20px 0; /* for adding padding at the top and bottom */
+}
+
+

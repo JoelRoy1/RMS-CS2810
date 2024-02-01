@@ -1,39 +1,47 @@
-import logo from './logo.svg';
-import './App.css';
-import React, {useState, useEffect} from 'react';
+import React, { useState } from 'react'
+import './App.css'
+import backgroundImage from './restaurant_background.jpg'
 
 function App() {
-  const [data, setData] = useState("");
-
-  useEffect(() => {
-    fetch("http://localhost:9000/")
-    .then((res) => res.json())
-    .then((data) => {
-      setData(data);
-      console.log(data);
-    })
-    .catch((error) => console.log(error));
-  }, []);
+  const [showNav, setShowNav] = useState(false)
 
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>{data.name}</p>
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+      {/* Trigger area to show navbar on hover */}
+      <div
+        className="App-nav-trigger"
+        onMouseOver={() => setShowNav(true)}
+        onFocus={() => setShowNav(true)} // only for pc
+        onMouseOut={() => setShowNav(false)}
+        onBlur={() => setShowNav(false)} // only for pc
+      />
+      <nav className={`App-nav ${showNav ? 'show' : ''}`}>
+        {/* Navigation links */}
+        <a href="#home">Home</a>
+        <a href="#menu">Menu</a>
+        <a href="#about">About Us</a>
+      </nav>
+      <header
+        className="App-header"
+        style={{ backgroundImage: `url(${backgroundImage})` }}
+      >
+        {/* Section with restaurant name */}
+        <h1>OAXACA</h1>
+        <p>CHICKEN WINGS EXTRAORDINAIRE</p>
+        <p>Est. 2005</p>
+        {/* Buttons for customer and staff */}
+        <div className="App-buttons">
+          <button className="App-button-customer">Customer</button>
+          <button className="App-button-staff">Staff</button>
+        </div>
       </header>
+      <main>{/* Content sections */}</main>
+      <footer className="App-footer">
+        {/* Footer content */}
+        <p>The Exquisite Oaxaca</p>
+      </footer>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
