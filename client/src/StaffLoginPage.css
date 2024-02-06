@@ -1,0 +1,49 @@
+.staff-login-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: black;
+  }
+  
+  .login-container {
+    background-color: grey;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  .login-heading {
+    text-align: center;
+    margin-bottom: 20px;
+    color: black;
+  }
+  
+  .login-form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .login-label {
+    margin-bottom: 8px;
+    color: black;
+  }
+  
+  .login-input {
+    padding: 8px;
+    margin-bottom: 16px;
+    border: 1px solid black;
+  }
+  
+  .login-button {
+    padding: 10px;
+    border: none;
+    background-color: black;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .login-button:hover {
+    background-color: #333;
+  }
