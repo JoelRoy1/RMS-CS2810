@@ -1,13 +1,46 @@
+-- Initialize root user on database rms_db and connect to it
 CREATE ROLE root WITH LOGIN PASSWORD 'pass';
-CREATE DATABASE test_db WITH OWNER = root;
-GRANT ALL PRIVILEGES ON DATABASE test_db TO root;
-\c test_db root
-CREATE TABLE test_table(
-  id SERIAL PRIMARY KEY,
-  name VARCHAR(255)
+CREATE DATABASE rms_db WITH OWNER = root;
+GRANT ALL PRIVILEGES ON DATABASE rms_db TO root;
+\c rms_db root
+
+-- Create staff table
+CREATE TABLE staff(
+  staff_id SERIAL PRIMARY KEY,
+  staff_username VARCHAR(255) NOT NULL,
+  staff_pin INT NOT NULL
 );
 
-GRANT ALL ON test_table TO root;
+GRANT ALL ON staff TO root;
 
-INSERT INTO test_table (name)
-VALUES('This text came from the db!');
+
+-- Create customer table
+CREATE TABLE customer(
+  customer_id SERIAL PRIMARY KEY,
+  customer_name VARCHAR(255) NOT NULL,
+  customer_allergies TEXT
+);
+
+GRANT ALL ON customer TO root;
+
+-- Create menu table
+CREATE TABLE menu(
+  dish_id SERIAL PRIMARY KEY,
+  dish_name VARCHAR(255) NOT NULL,
+  dish_calories INT NOT NULL,
+  dish_price DECIMAL(10,2) NOT NULL,
+  dish_allergens VARCHAR(255)
+);
+
+GRANT ALL ON menu TO root;
+
+-- Create orders table
+CREATE TABLE orders(
+  order_id SERIAL PRIMARY KEY,
+  customer_id SERIAL REFERENCES customer(customer_id),
+  staff_id SERIAL REFERENCES staff(staff_id),
+  order_status VARCHAR(255),
+  order_allergies VARCHAR(255)
+);
+
+GRANT ALL ON orders TO root;
