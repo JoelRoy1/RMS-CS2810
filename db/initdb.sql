@@ -4,11 +4,11 @@ CREATE DATABASE rms_db WITH OWNER = root;
 GRANT ALL PRIVILEGES ON DATABASE rms_db TO root;
 \c rms_db root
 
--- Create staff table
+-- Create staff table (insure all staff usernames are unique)
 CREATE TABLE staff(
   staff_id SERIAL PRIMARY KEY,
-  staff_username VARCHAR(255) NOT NULL,
-  staff_pin INT NOT NULL
+  staff_username VARCHAR(255) UNIQUE NOT NULL,
+  staff_pin VARCHAR(255) NOT NULL
 );
 
 GRANT ALL ON staff TO root;

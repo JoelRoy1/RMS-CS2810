@@ -2,12 +2,19 @@
 const express = require('express');
 const pool = require('./db');
 const cors = require('cors');
+const bodyParser = require('body-parser');
 const port = 9000;
 const app = express();
+const staffRoute = require('./BackendRoutes/StaffLoginRoute');
 
 //middleware
 app.use(express.json());
+app.use(bodyParser.json())
 app.use(cors())
+
+//test staff login route (this is temporary)
+app.use('/signin', staffRoute);
+app.use('/signin/create-account', staffRoute);
 
 /**
  * HTTP get request. sends the result from the database.
