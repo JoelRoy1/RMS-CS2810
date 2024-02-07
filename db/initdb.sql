@@ -7,8 +7,8 @@ GRANT ALL PRIVILEGES ON DATABASE rms_db TO root;
 -- Create staff table (insure all staff usernames are unique)
 CREATE TABLE staff(
   staff_id SERIAL PRIMARY KEY,
-  staff_username VARCHAR(255) UNIQUE NOT NULL,
-  staff_pin VARCHAR(255) NOT NULL
+  staff_name VARCHAR(255) UNIQUE NOT NULL,
+  staff_pin INT NOT NULL
 );
 
 GRANT ALL ON staff TO root;
