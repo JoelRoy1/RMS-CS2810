@@ -6,7 +6,7 @@ async function signIn(username, pin) {
     const client = await pool.connect();
     console.log('Connected to the database');
     const query = {
-      text: 'SELECT * FROM staff WHERE staff_username = $1 AND staff_pin = $2',
+      text: 'SELECT * FROM staff WHERE staff_name = $1 AND staff_pin = $2',
       values: [username, pin],
     };
     const result = await client.query(query);
@@ -29,7 +29,7 @@ async function createAccount(username, pin) {
     const client = await pool.connect();
     console.log('Connected to the database');
     const query = {
-      text: 'INSERT INTO staff (staff_username, staff_pin) VALUES ($1, $2) RETURNING *',
+      text: 'INSERT INTO staff (staff_name, staff_pin) VALUES ($1, $2) RETURNING *',
       values: [username, pin],
     };
     const result = await client.query(query);
