@@ -32,6 +32,11 @@ CREATE TABLE menu(
   dish_allergens VARCHAR(255)
 );
 
+-- Dummy values to test that they are being retrieved and displayed correctly. (Temporary)
+INSERT INTO menu (dish_name, dish_calories, dish_price, dish_allergens) VALUES ('Pizza', 800, 10.99, 'Gluten, Dairy');
+INSERT INTO menu (dish_name, dish_calories, dish_price, dish_allergens) VALUES ('Burger', 700, 8.99, 'Gluten');
+INSERT INTO menu (dish_name, dish_calories, dish_price, dish_allergens) VALUES ('Salad', 300, 6.99, 'Nuts');
+
 GRANT ALL ON menu TO root;
 
 -- Create orders table
