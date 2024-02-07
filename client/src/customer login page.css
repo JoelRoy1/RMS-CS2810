@@ -1,0 +1,62 @@
+
+
+.customer-login-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: black;
+}
+
+.customer-login-container {
+    background-color: grey;
+    padding: 20px;
+    border: 2px solid white;
+    border-radius: 20px;
+    width: 350px;
+    height: 500px;
+}
+
+.customer-login-heading {
+    text-align: center;
+    margin-bottom: 20px;
+    color: black;
+}
+
+.customer-login-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.customer-login-label {
+    font-size: 24px;
+    margin-left: 40px;
+    margin-top: 50px;
+    margin-bottom: 8px;
+    color: white;
+}
+
+.customer-login-input {
+    padding: 8px;
+    height: 28px;
+    margin-bottom: 16px;
+    border-radius: 15px;
+    border: 1px solid black;
+}
+
+.customer-login-button {
+    padding: 10px;
+    margin-top: 125px;
+    margin-bottom: 50px;
+    height: 60px;
+    width: 300px;
+    border: none;
+    background-color: black;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.customer-login-button:hover {
+    background-color: #333;
+}
