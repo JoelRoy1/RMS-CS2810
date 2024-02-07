@@ -1,26 +1,28 @@
-import React, { useState } from 'react'
-import './App.css'
-import backgroundImage from './restaurant_background.jpg'
+import React, { useState } from 'react';
+import './App.css';
+import backgroundImage from './restaurant_background.jpg';
 
 function App() {
-  const [showNav, setShowNav] = useState(false)
+  const [showNav, setShowNav] = useState(false);
 
   return (
     <div className="App">
-      {/* Trigger area to show navbar on hover */}
+      {/* Trigger area and navbar */}
       <div
-        className="App-nav-trigger"
-        onMouseOver={() => setShowNav(true)}
-        onFocus={() => setShowNav(true)} // only for pc
-        onMouseOut={() => setShowNav(false)}
-        onBlur={() => setShowNav(false)} // only for pc
-      />
-      <nav className={`App-nav ${showNav ? 'show' : ''}`}>
-        {/* Navigation links */}
-        <a href="#home">Home</a>
-        <a href="#menu">Menu</a>
-        <a href="#about">About Us</a>
-      </nav>
+        className="App-nav-wrapper"
+        onMouseEnter={() => setShowNav(true)}
+        onMouseLeave={() => setShowNav(false)}
+      >
+        {/* Trigger area */}
+        <div className="App-nav-trigger" />
+        {/* Navbar */}
+        <nav className={`App-nav ${showNav ? 'show' : ''}`}>
+          {/* Navigation links */}
+          <a href="#home">Home</a>
+          <a href="#menu">Menu</a>
+          <a href="#about">About Us</a>
+        </nav>
+      </div>
       <header
         className="App-header"
         style={{ backgroundImage: `url(${backgroundImage})` }}
@@ -41,7 +43,8 @@ function App() {
         <p>The Exquisite Oaxaca</p>
       </footer>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
+

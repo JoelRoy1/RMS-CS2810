@@ -9,34 +9,39 @@
 }
 
 
-/* Invisible area to trigger navbar appearance */
+/* Navbar wrapper */
+.App-nav-wrapper {
+  position: relative;
+}
+
+/* Trigger area */
 .App-nav-trigger {
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   right: 0;
-  height: 10px; /* Height of the trigger area */
-  z-index: 200; /* Higher than everything else */
+  bottom: 0;
 }
 
 /* Navbar initial state */
 .App-nav {
-  position: fixed;
-  top: -50px; /* Start offscreen */
+  position: absolute;
+  top: -40px; /* Initial higher position */
   left: 0;
   right: 0;
-  background: rgba(255, 165, 0, 0.7); /* Semi-transparent orange */
-  transition: top 0.3s, background-color 0.3s; /* Smooth transitions for sliding and color */
-  z-index: 100; /* To ensure it's above other content */
+  background: rgba(255, 165, 0, 0.7);
+  transition: top 0.6s, background-color 0.6s;
   padding: 1rem;
   text-align: center;
+  z-index: 100;
 }
 
 /* Navbar visible state */
 .App-nav.show {
   top: 0; /* Bring into view */
-  background: rgba(255, 255, 255, 0.7); /* Change to white */
 }
+
+
 
 .App-nav a {
   color: white;           /* White text for the links */
