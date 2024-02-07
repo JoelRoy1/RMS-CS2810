@@ -13,4 +13,15 @@ const pool = new Pool({
   database: "rms_db"
 })
 
-module.exports = pool;
+//function to retrieve all the items from the menu table in the db
+async function getAllMenuItems() {
+  try {
+    const query = 'SELECT * FROM menu';
+    const result = await pool.query(query);
+    return result.rows;
+  } catch (error) {
+    throw new Error(`Error fetching menu items: ${error.message}`);
+  }
+}
+
+module.exports = { pool, getAllMenuItems };
