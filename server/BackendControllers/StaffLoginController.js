@@ -1,4 +1,5 @@
-const pool = require('../db');
+const db = require('../db');
+const pool = db.pool;
 
 async function signIn(username, pin) {
   try {

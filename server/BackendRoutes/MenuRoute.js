@@ -4,7 +4,7 @@ const controller = require('../BackendControllers/MenuController');
 
 router.get('/', async (req, res) => {
     try {
-      const menu = await controller.getMenuItems();
+      const menu = await controller.getAllMenuItems();
       res.json(menu);
     } catch (error) {
       console.error(`Error: ${error.message}`);
