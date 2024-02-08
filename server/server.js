@@ -5,8 +5,8 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const port = 9000;
 const app = express();
-const staffRoute = require('./BackendRoutes/StaffLoginRoute');
-const menuRoute = require('./BackendRoutes/MenuRoute');
+const staffRoute = require('./routes/staff-routes');
+const menuRoute = require('./routes/menu-routes');
 
 //middleware
 app.use(express.json());
