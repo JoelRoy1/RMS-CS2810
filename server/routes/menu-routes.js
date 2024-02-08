@@ -4,7 +4,7 @@
  */
 const express = require('express');
 const router = express.Router();
-const controller = require('../BackendControllers/MenuController');
+const controller = require('../controllers/menu-controller');
 
 /**
  * get menu items route

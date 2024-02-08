@@ -5,7 +5,7 @@
 
 const express = require('express');
 const router = express.Router();
-const controller = require('../BackendControllers/StaffLoginController');
+const controller = require('../controllers/staff-controller');
 
 /**
  * Sign in route
