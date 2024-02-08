@@ -1,7 +1,14 @@
+/**
+ * @file Manges all menu routes.
+ * @version 1.0.0
+ */
 const express = require('express');
 const router = express.Router();
 const controller = require('../BackendControllers/MenuController');
 
+/**
+ * get menu items route
+ */
 router.get('/', async (req, res) => {
     try {
       const menu = await controller.getAllMenuItems();
