@@ -1,7 +1,15 @@
+/**
+ * @file Manges all staff routes.
+ * @version 1.0.0
+ */
+
 const express = require('express');
 const router = express.Router();
 const controller = require('../BackendControllers/StaffLoginController');
 
+/**
+ * Sign in route
+ */
 router.post('/', async (req, res) => {
   const { username, pin } = req.body;
   try {
@@ -13,6 +21,9 @@ router.post('/', async (req, res) => {
   }
 });
 
+/**
+ * Create account route
+ */
 router.post('/create-account', async (req, res) => {
   const { username, pin } = req.body;
   try {
