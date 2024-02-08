@@ -3,7 +3,7 @@ const pool = require('../db');
 async function signIn(username, pin) {
   try {
     console.log('Attempting to sign in...');
-    const client = await pool.connect();
+    const client = await pool.connect();//Establish Connection
     console.log('Connected to the database');
     const query = {
       text: 'SELECT * FROM staff WHERE staff_name = $1 AND staff_pin = $2',
@@ -26,7 +26,7 @@ async function signIn(username, pin) {
 async function createAccount(username, pin) {
   try {
     console.log('Creating account...');
-    const client = await pool.connect();
+    const client = await pool.connect(); //Establish Connection
     console.log('Connected to the database');
     const query = {
       text: 'INSERT INTO staff (staff_name, staff_pin) VALUES ($1, $2) RETURNING *',

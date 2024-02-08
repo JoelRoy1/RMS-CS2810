@@ -2,6 +2,14 @@ const express = require('express');
 const router = express.Router();
 const controller = require('../BackendControllers/MenuController');
 
-router.get('/', controller.getMenuItems);
+router.get('/', async (req, res) => {
+    try {
+      const menu = await controller.getMenuItems();
+      res.json(menu);
+    } catch (error) {
+      console.error(`Error: ${error.message}`);
+      res.status(500).json({ error: 'Failed to retrieve menu items' });
+    }
+});
 
 module.exports = router;
