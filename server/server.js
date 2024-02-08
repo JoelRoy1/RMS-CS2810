@@ -1,3 +1,7 @@
+/**
+ * @file Core script of the api. Starts server and manages ports and routes.
+ * @version 1.0.0
+ */
 //initializing dependencies and constants needed for the api.
 const express = require('express');
 const pool = require('./db');
