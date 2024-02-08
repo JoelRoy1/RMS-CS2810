@@ -13,6 +13,8 @@ CREATE TABLE staff(
 
 GRANT ALL ON staff TO root;
 
+-- Create Dummy admin user
+INSERT INTO staff(staff_name, staff_pin) VALUES ('admin', 1234);
 
 -- Create customer table
 CREATE TABLE customer(
