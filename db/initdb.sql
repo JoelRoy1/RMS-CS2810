@@ -14,7 +14,8 @@ CREATE TABLE staff(
 GRANT ALL ON staff TO root;
 
 -- Create Dummy admin user
-INSERT INTO staff(staff_name, staff_pin) VALUES ('admin', 1234);
+INSERT INTO staff(staff_name, staff_pin) 
+VALUES ('admin', 1234);
 
 -- Create customer table
 CREATE TABLE customer(
@@ -34,12 +35,17 @@ CREATE TABLE menu(
   dish_allergens VARCHAR(255)
 );
 
--- Dummy values to test that they are being retrieved and displayed correctly. (Temporary)
-INSERT INTO menu (dish_name, dish_calories, dish_price, dish_allergens) VALUES ('Pizza', 800, 10.99, 'Gluten, Dairy');
-INSERT INTO menu (dish_name, dish_calories, dish_price, dish_allergens) VALUES ('Burger', 700, 8.99, 'Gluten');
-INSERT INTO menu (dish_name, dish_calories, dish_price, dish_allergens) VALUES ('Salad', 300, 6.99, 'Nuts');
-
 GRANT ALL ON menu TO root;
+
+-- Dummy values to test that they are being retrieved and displayed correctly. (Temporary)
+INSERT INTO menu (dish_name, dish_calories, dish_price, dish_allergens) 
+VALUES ('Pizza', 800, 10.99, 'Gluten, Dairy');
+
+INSERT INTO menu (dish_name, dish_calories, dish_price, dish_allergens) 
+VALUES ('Burger', 700, 8.99, 'Gluten');
+
+INSERT INTO menu (dish_name, dish_calories, dish_price, dish_allergens) 
+VALUES ('Salad', 300, 6.99, 'Nuts');
 
 -- Create orders table
 CREATE TABLE orders(
