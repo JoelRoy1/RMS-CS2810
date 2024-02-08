@@ -1,6 +1,18 @@
+/**
+ * @file Manages all interactions with the Staff table.
+ * @version 1.0.0
+ */
+
 const db = require('../db');
 const pool = db.pool;
 
+/**
+ * The signIn function handles authentication when a user tries to sign in.
+ * 
+ * @param {string} username the username to authenticate
+ * @param {int} pin the pin number to authenticate
+ * @returns the matching data from the database
+ */
 async function signIn(username, pin) {
   try {
     console.log('Attempting to sign in...');
@@ -24,6 +36,13 @@ async function signIn(username, pin) {
   }
 }
 
+/**
+ * The create account function handles creating new users.
+ * 
+ * @param {string} username new username
+ * @param {int} pin new pin number
+ * @returns newly created user
+ */
 async function createAccount(username, pin) {
   try {
     console.log('Creating account...');
