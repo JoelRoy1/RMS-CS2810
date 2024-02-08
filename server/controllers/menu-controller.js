@@ -1,7 +1,15 @@
+/**
+ * @file Manages all interactions with the Menu table.
+ * @version 1.0.0
+ */
 const db = require('../db');
 const pool = db.pool;
 
-//function to retrieve all the items from the menu table in the db
+/**
+ * function to retrieve all the items from the menu table in the db.
+ * 
+ * @returns menu items in db
+ */
 async function getAllMenuItems() {
   try {
     console.log('Attempting to connect to database...');
