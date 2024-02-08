@@ -10,7 +10,7 @@ const pool = new Pool({
   port: 5432,
   user: 'root',
   password: 'pass',
-  database: "test_db"
+  database: "rms_db"
 })
 
-module.exports = pool;
+module.exports = { pool };
