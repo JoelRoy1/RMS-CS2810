@@ -1,0 +1,37 @@
+/* LandingPage.css */
+.App-header {
+  text-align: center; /* Center text horizontally */
+  background-image: url('./restaurant_background.jpg'); /* Assuming the path is correct */
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  min-height: 100vh; /* Set minimum height to full viewport to cover the whole area */
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Center content vertically */
+  color: white;
+}
+
+.App-buttons {
+  display: flex;
+  justify-content: center; /* Center buttons horizontally */
+  gap: 10px; /* Add space between buttons */
+}
+
+.App-button-customer,
+.App-button-staff {
+  padding: 10px 20px; /* Add some padding inside the buttons */
+  border: none; /* Remove borders */
+  background-color: #ffdf00; /* Use the theme color for the button background */
+  color: #563d7c; /* Color for the text inside the buttons */
+  font-weight: bold; /* Make button text bold */
+  cursor: pointer; /* Change mouse cursor to indicate clickable */
+  border-radius: 5px; /* Round the button corners */
+}
+
+.App-button-customer:hover,
+.App-button-staff:hover {
+  background-color: #fff; /* Light background color on hover */
+  color: #563d7c; /* Dark text on hover */
+}

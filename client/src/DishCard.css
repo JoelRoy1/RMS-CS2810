@@ -1,0 +1,36 @@
+.dish-card {
+  width: 300px; /* Adjust the width of the card */
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  overflow: hidden;
+  margin: 16px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.dish-image {
+  width: 100%;
+  height: auto; /* Adjust the height of the image*/
+}
+
+.dish-info {
+  padding: 16px;
+  background: #fff;
+}
+
+.dish-name {
+  margin-top: 0;
+  color: #333;
+}
+
+.dish-description {
+  color: #666;
+  font-size: 14px;
+}
+
+.dish-price,
+.dish-calories,
+.dish-allergy {
+  color: #333;
+  font-size: 14px;
+  margin: 4px 0;
+}
