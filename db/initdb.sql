@@ -31,21 +31,42 @@ CREATE TABLE menu(
   dish_id SERIAL PRIMARY KEY,
   dish_name VARCHAR(255) NOT NULL,
   dish_calories INT NOT NULL,
-  dish_price DECIMAL(10,2) NOT NULL,
-  dish_allergens VARCHAR(255)
+  dish_price DECIMAL(10,2) NOT NULL
 );
 
 GRANT ALL ON menu TO root;
 
--- Dummy values to test that they are being retrieved and displayed correctly. (Temporary)
-INSERT INTO menu (dish_name, dish_calories, dish_price, dish_allergens) 
-VALUES ('Pizza', 800, 10.99, 'Gluten, Dairy');
+--insert dummy values for dishes, allergens and the menu-allergen relation
+INSERT INTO menu (dish_name, dish_calories, dish_price) VALUES ('Pizza', 800, 10.99);
+INSERT INTO menu (dish_name, dish_calories, dish_price) VALUES ('Burger', 700, 8.99);
+INSERT INTO menu (dish_name, dish_calories, dish_price) VALUES ('Salad', 300, 6.99);
 
-INSERT INTO menu (dish_name, dish_calories, dish_price, dish_allergens) 
-VALUES ('Burger', 700, 8.99, 'Gluten');
+CREATE TABLE allergens(
+  allergen_id SERIAL PRIMARY KEY,
+  allergen_name VARCHAR(255)
+);
 
-INSERT INTO menu (dish_name, dish_calories, dish_price, dish_allergens) 
-VALUES ('Salad', 300, 6.99, 'Nuts');
+GRANT ALL ON allergens TO root;
+
+INSERT INTO allergens (allergen_name) VALUES ('Gluten');
+INSERT INTO allergens (allergen_name) VALUES ('Dairy');
+INSERT INTO allergens (allergen_name) VALUES ('Nuts');
+
+--create table relation for menu items and allergens
+CREATE TABLE dish_allergens (
+    dish_id INT,
+    allergen_id INT,
+    FOREIGN KEY (dish_id) REFERENCES menu(dish_id),
+    FOREIGN KEY (allergen_id) REFERENCES allergens(allergen_id)
+);
+
+GRANT ALL ON dish_allergens TO root;
+
+-- Assign allergens to dishes
+INSERT INTO dish_allergens (dish_id, allergen_id) VALUES (1, 1); -- Pizza contains Gluten
+INSERT INTO dish_allergens (dish_id, allergen_id) VALUES (1, 2); -- Pizza contains Dairy
+INSERT INTO dish_allergens (dish_id, allergen_id) VALUES (2, 1); -- Burger contains Gluten
+INSERT INTO dish_allergens (dish_id, allergen_id) VALUES (3, 3); -- Salad contains Nuts
 
 -- Create orders table
 CREATE TABLE orders(

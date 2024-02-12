@@ -1,6 +1,6 @@
 /**
  * @file Core script of the api. Starts server and manages ports and routes.
- * @version 1.0.0
+ * @version 1.2.0
  */
 //initializing dependencies and constants needed for the api.
 const express = require('express');
@@ -17,12 +17,13 @@ app.use(express.json());
 app.use(bodyParser.json())
 app.use(cors())
 
-//test staff login route (this is temporary)
+//test staff login route
 app.use('/signin', staffRoute);
 app.use('/signin/create-account', staffRoute);
 
-//testing retrieval of menu items
+//testing retrieval/filtering of menu items
 app.use('/menu', menuRoute);
+app.use('/menu/filter-allergens',menuRoute)
 
 /**
  * HTTP get request. sends the result from the database.
