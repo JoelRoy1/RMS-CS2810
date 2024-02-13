@@ -21,4 +21,15 @@ router.delete('/:orderId', async (req, res) => {
   }
 });
 
+router.post('/placeOrder', async (req, res) => {
+  const { customerId, staffId, orderStatus, orderItems, orderDetails } = req.body;
+  try {
+    await orderController.placeOrder(customerId, staffId, orderStatus, orderDetails);
+    res.status(200).json({ message: 'Order placed successfully' });
+  } catch (error) {
+    console.error(`Error placing order: ${error.message}`);
+    res.status(500).json({ error: error.message });
+  }
+});
+
 module.exports = router;

@@ -25,4 +25,23 @@ async function cancelOrder(orderId) {
   }
 }
 
-module.exports = { cancelOrder };
+async function placeOrder(customerId, staffId, orderStatus, orderDetails) {
+  const client = await pool.connect();
+  try {
+    const orderTime = new Date().toISOString().slice(11, 19); // Get current time in 'HH:MM:SS' format
+    const query = `
+      INSERT INTO orders (customer_id, staff_id, order_status, order_details, order_time)
+      VALUES ($1, $2, $3, $4, $5)
+      RETURNING order_id;
+    `;
+    const values = [customerId, staffId, orderStatus, orderDetails, orderTime];
+    const result = await client.query(query, values);
+    console.log('New order added with ID:', result.rows[0].order_id);
+  } catch (error) {
+    console.error('Error adding new order:', error);
+  } finally {
+    client.release();
+  }
+}
+
+module.exports = { cancelOrder, placeOrder};

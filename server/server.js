@@ -12,6 +12,7 @@ const app = express();
 const staffRoute = require('./routes/staff-routes');
 const menuRoute = require('./routes/menu-routes');
 const orderRoute = require('./routes/order-routes');
+
 //middleware
 app.use(express.json());
 app.use(bodyParser.json())
@@ -27,19 +28,7 @@ app.use('/menu/filter-allergens',menuRoute)
 
 //testing the deletion/cancellation of orders
 /app.use('/cancel-orders', orderRoute);
-/**
- * HTTP get request. sends the result from the database.
- */
-app.get('/', async (req,res) => {
-  try {
-    const data = await pool.query('SELECT * FROM test_table WHERE id = 1');
-    res.status(200).send(data.rows[0])
-  } catch (err) {
-    console.log(err);
-    res.sendStatus(500);
-  }
-
-})
+app.use('/place-order', orderRoute)
 
 /**
  * Listens for connections on port 9000 and
