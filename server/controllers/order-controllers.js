@@ -1,3 +1,14 @@
+/**
+ * @file Manages all interactions with the orders table.
+ * @version 1.0.0
+ */
+
+/**
+ * The cancelOrder function deletes the corresponding order when a csutomer wishes to cancel.
+ * 
+ * @param {int} orderId the orderId of the order to delete
+ * @returns the matching data from the database
+ */
 const db = require('../db');
 const pool = db.pool;
 

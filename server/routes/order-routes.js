@@ -1,7 +1,15 @@
+/**
+ * @file Manges all order routes.
+ * @version 1.0.0
+ */
+
 const express = require('express');
 const router = express.Router();
 const orderController = require('../controllers/order-controllers');
 
+/**
+ * delete order route
+ */
 router.delete('/:orderId', async (req, res) => {
   const orderId = req.params.orderId;
   try {
