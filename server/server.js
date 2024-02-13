@@ -11,7 +11,7 @@ const port = 9000;
 const app = express();
 const staffRoute = require('./routes/staff-routes');
 const menuRoute = require('./routes/menu-routes');
-const orderRoutes = require('./routes/order-routes');
+const orderRoute = require('./routes/order-routes');
 //middleware
 app.use(express.json());
 app.use(bodyParser.json())
@@ -26,7 +26,7 @@ app.use('/menu', menuRoute);
 app.use('/menu/filter-allergens',menuRoute)
 
 //testing the deletion/cancellation of orders
-app.use('/orders', orderRoutes);
+/app.use('/cancel-orders', orderRoute);
 /**
  * HTTP get request. sends the result from the database.
  */

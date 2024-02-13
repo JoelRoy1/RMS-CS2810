@@ -24,6 +24,9 @@ CREATE TABLE customer(
   customer_allergies TEXT
 );
 
+-- Add a dummy customer to test cancellation of orders
+INSERT INTO customer (customer_name, customer_allergies) VALUES ('John Doe', 'None');
+
 GRANT ALL ON customer TO root;
 
 -- Create menu table
@@ -77,4 +80,6 @@ CREATE TABLE orders(
   order_allergies VARCHAR(255)
 );
 
+-- Add a dummy order for the customer
+INSERT INTO orders (order_id, customer_id, staff_id, order_status, order_allergies) VALUES (21, 1, 1, 'active', 'None');
 GRANT ALL ON orders TO root;
