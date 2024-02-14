@@ -61,4 +61,18 @@ router.delete(`/:itemID`, async (req, res) => {
    }
 })
 
+/**
+ * filter menu items based on calories route
+ */
+router.get('/filter-calories', async (req, res) => {
+  const { calories } = req.body;
+  try {
+    const menu = await controller.filterCalories(calories);
+    res.json(menu);
+  } catch (error) {
+    console.error(`Error: ${error.message}`);
+    res.status(500).json({ error: 'Failed to retrieve menu items' });
+  }
+});
+
 module.exports = router;
