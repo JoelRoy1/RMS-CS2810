@@ -52,4 +52,48 @@ async function filterOutAllergens(allergens) {
   }
 };
 
-module.exports = { getAllMenuItems, filterOutAllergens }; //Export controller for use in router
+/**
+ * function to add items to the menu table.
+ * @param {stringtring} dishName  the name of the dish to add
+ * @param {int} dishCalories the number of calories in the dish
+ * @param {float} dishPrice the price of the dish
+ */
+async function createMenuItem(dishName, dishCalories, dishPrice) { 
+  console.log('Attempting to create item...')
+  const client = await pool.connect(); // Establish connection to db
+  try {
+    const query = `
+      INSERT INTO menu (dish_name, dish_calories, dish_price)
+      VALUES ($1, $2, $3)
+      RETURNING dish_id;
+    `;
+    const values = [dishName, dishCalories, dishPrice];
+    const result = await client.query(query, values);
+    console.log('New item added with ID:', result.rows[0].dish_id);
+  } catch (error) {
+    console.error('Error adding new item:', $(error.message));
+  } finally {
+    client.release();
+  }
+};
+
+/**
+ * function to delete menu items from the db based on dish ID.
+ * @param {int} dishID the ID of menu item to delete
+ */
+async function deleteMenuItem(dishID) {
+  try {
+    console.log('Attempting to delete item...');
+    const client = await pool.connect();  // Establish connection to db
+    const query = 'DELETE FROM menu WHERE dish_id = $1 RETURNING *;';
+    const values = [dishID];
+    const result = await client.query(query, values);
+    console.log('item deleted: ', result.rows[0]);
+  } catch (error) {
+    console.error(`Error deleting item: ${error.message}`);
+  } finally {
+    client.release();
+  }
+}
+
+module.exports = { getAllMenuItems, filterOutAllergens, createMenuItem, deleteMenuItem }; //Export controller for use in router
