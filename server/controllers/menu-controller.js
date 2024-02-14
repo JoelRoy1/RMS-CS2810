@@ -55,6 +55,27 @@ async function filterOutAllergens(allergens) {
 };
 
 /**
+ * function to filter items from the menu table based on if calories are lower
+ * than input value.
+ * @param {int} calories calorie limit 
+ * @returns menu items below the calorie limit
+ */
+async function filterCalories(calories) {
+  const client = await pool.connect(); //Establish connection to db
+  try {
+    console.log('connection successful');
+    const query = `SELECT * FROM menu WHERE dish_calories <= $1`;
+    const result = await client.query(query, calories);
+    console.log('calorie filtering successful');
+    return result.rows;
+  } catch (error) {
+    console.error('error filtering calories: ', $(error.message));
+  } finally {
+    client.release();
+  }
+};
+
+/**
  * function to add items to the menu table.
  * @param {string} dishName  the name of the dish to add
  * @param {int} dishCalories the number of calories in the dish
