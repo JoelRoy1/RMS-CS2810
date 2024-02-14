@@ -16,7 +16,9 @@ function StaffLoginPage() {
             Password
           </label>
           <input type="password" id="password" className="login-input" />
-
+          <label htmlFor="Error-message" className="error-label">
+            Error message placeholder
+          </label>
           <button type="submit" className="login-button">
             Submit
           </button>
