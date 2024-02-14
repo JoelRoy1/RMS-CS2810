@@ -23,7 +23,6 @@ async function signIn(username, pin) {
       values: [username, pin],
     };
     const result = await client.query(query);
-    client.release(); // Release the client back to the pool
     if (result.rows.length === 0) {
       console.log('No matching user found');
       throw new Error('Invalid username or PIN. Please check your credentials and try again.');
@@ -33,6 +32,8 @@ async function signIn(username, pin) {
   } catch (error) {
     console.error(`Error signing in: ${error.message}`);
     throw new Error(`Unable to sign in: ${error.message}`);
+  } finally {
+    client.release(); // Release the client back to the pool
   }
 }
 
@@ -53,11 +54,12 @@ async function createAccount(username, pin) {
       values: [username, pin],
     };
     const result = await client.query(query);
-    client.release(); // Release the client back to the pool
     console.log('Account created successfully');
     return result.rows[0]; // Return the newly created staff member
   } catch (error) {
     throw new Error(`Unable to create account: ${error.message}`);
+  } finally {
+    client.release(); // Release the client back to the pool
   }
 }
 
