@@ -33,4 +33,32 @@ router.get('/filter-allergens', async (req, res) => {
   }
 });
 
+/**
+ * create menu items
+ */
+router.post(`/create-item`, async (req, res) => {
+  const {dishName, dishCalories, dishPrice} = req.body;
+  try{
+    const menu = await controller.createMenuItem(dishName, dishCalories, dishPrice);
+    res.status(200).json({ message: 'Dish created succesfully' });
+  } catch (error) {
+    console.error(`Error creating dish: ${error.message}`);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+/**
+ * delete menu items
+ */
+router.delete(`/:itemID`, async (req, res) => {
+  const dishID = req.params.itemID;
+  try{
+    await controller.deleteMenuItem(dishID);
+    res.status(200).json({ message: 'Dish deleted succesfully' });
+   } catch (error) {
+    console.error(`Error deleting dish: ${error.message}`);
+    res.status(500).json({ error: 'Failed to delete dish' });
+   }
+})
+
 module.exports = router;

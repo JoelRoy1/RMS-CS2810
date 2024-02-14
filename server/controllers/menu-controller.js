@@ -54,7 +54,7 @@ async function filterOutAllergens(allergens) {
 
 /**
  * function to add items to the menu table.
- * @param {stringtring} dishName  the name of the dish to add
+ * @param {string} dishName  the name of the dish to add
  * @param {int} dishCalories the number of calories in the dish
  * @param {float} dishPrice the price of the dish
  */
@@ -82,9 +82,9 @@ async function createMenuItem(dishName, dishCalories, dishPrice) {
  * @param {int} dishID the ID of menu item to delete
  */
 async function deleteMenuItem(dishID) {
+  const client = await pool.connect();  // Establish connection to db
   try {
     console.log('Attempting to delete item...');
-    const client = await pool.connect();  // Establish connection to db
     const query = 'DELETE FROM menu WHERE dish_id = $1 RETURNING *;';
     const values = [dishID];
     const result = await client.query(query, values);
