@@ -24,11 +24,15 @@ app.use('/signin/create-account', staffRoute);
 
 //testing retrieval/filtering of menu items
 app.use('/menu', menuRoute);
-app.use('/menu/filter-allergens',menuRoute)
+app.use('/menu/filter-allergens',menuRoute);
 
 //testing the deletion/cancellation of orders
-/app.use('/cancel-orders', orderRoute);
-app.use('/place-order', orderRoute)
+app.use('/cancel-orders', orderRoute);
+app.use('/place-order', orderRoute);
+
+//test create/delete menu items
+app.use('/menu/create-item', menuRoute);
+app.use('/menu/delete-item', menuRoute);
 
 /**
  * Listens for connections on port 9000 and
