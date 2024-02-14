@@ -34,6 +34,9 @@ app.use('/place-order', orderRoute);
 app.use('/menu/create-item', menuRoute);
 app.use('/menu/delete-item', menuRoute);
 
+//test filter calories
+app.use('/menu/filter-calories', menuRoute);
+
 /**
  * Listens for connections on port 9000 and
  * initializes http server if found.
