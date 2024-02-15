@@ -2,24 +2,25 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
-import MenuPage from './MenuPage';
+import StaffLoginPage from './StaffLoginPage';
 import reportWebVitals from './reportWebVitals';
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 const path = window.location.pathname;
-if (path === '/Menu'){ //Temporary path for testing
+
+if (path === '/staff') {
   root.render(
     <React.StrictMode>
-      <MenuPage />
+      <StaffLoginPage />
     </React.StrictMode>
   );
-
 } else {
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
+  root.render(
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>
+  );
 }
 
 // If you want to start measuring performance in your app, pass a function
