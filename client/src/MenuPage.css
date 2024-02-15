@@ -42,5 +42,13 @@
     padding: 10px;
   }
   
+  .filter-checkboxes {
+    display: flex;
+    flex-direction:column;
+    position: relative;
+    top: 200px;
+    left: 800px;
+    margin-bottom: 20px;
+  }
   /* Add any additional styles below as you see fit :) */
   

@@ -57,7 +57,7 @@ const MenuPage = () => {
       description: 'Slow-cooked pork shoulder seasoned with citrus and spices, served with tortillas and salsa.',
       price: '$14.99',
       calories: '650 kcal',
-      allergens: [],
+      allergens: ['Gluten'],
       image: CarnitasImage
     },
     {
@@ -75,6 +75,32 @@ const MenuPage = () => {
   return (
     <div className="menu-page">
       <h1>Menu</h1>
+      <div className="filter-checkboxes">
+        <label>
+          <input type="checkbox" defaultChecked={true} />
+          Dairy
+        </label>
+        <label>
+          <input type="checkbox" defaultChecked={true}/>
+          Gluten
+        </label>
+        <label>
+          <input type="checkbox" defaultChecked={true}/>
+          Nuts
+        </label>
+        <label>
+          <input type="checkbox" defaultChecked={true}/>
+          Shellfish
+        </label>
+        <label>
+          <input type="checkbox" defaultChecked={false}/>
+          Vegetarian
+        </label>
+        <label>
+          <input type="checkbox" defaultChecked={false}/>
+          Vegan
+        </label>
+      </div>
       <div className="dishes-list">
         {dishes.map((dish, index) => (
           <DishCard key={index} dish={dish} />

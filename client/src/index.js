@@ -7,7 +7,7 @@ import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 const path = window.location.pathname;
-if (path === '/Menu'){
+if (path === '/Menu'){ //Temporary path for testing
   root.render(
     <React.StrictMode>
       <MenuPage />
