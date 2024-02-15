@@ -31,7 +31,7 @@ services:
     depends_on:
       - rms-api
     ports:
-      - 1023:3000
+      - 3000:3000
 volumes:
   pgdata:
     name: pgdata
