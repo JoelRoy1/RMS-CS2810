@@ -1,4 +1,6 @@
 import React from 'react';
+import DishCard from './DishCard'; 
+import './MenuPage.css';
 
 function MenuPage() {
   return (
@@ -10,9 +12,16 @@ function MenuPage() {
         <button>Tacos</button>
         <button>Platos</button>
       </div>
-      {/* Add menu items for each category */}
+      <div className="dishes-list">
+        {/* Example usage of DishCard component */}
+        <DishCard />
+        <DishCard />
+        {/* Add more DishCard components for each menu item */}
+      </div>
     </div>
   );
 }
 
-export default MenuPage;
+export default MenuPage; // Type localhost:3000/Menu to checkout MenuPage
+
+
