@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import "./styles.css";
-function LoginForm() {
+import "./CustomerLoginPage.css";
+function CustomerLoginPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
@@ -188,5 +188,5 @@ function LoginForm() {
   );
 }
 
-export default LoginForm;
+export default CustomerLoginPage;
 

@@ -4,6 +4,7 @@ import LandingPage from './LandingPage'
 import StaffLoginPage from './StaffLoginPage'
 import MenuPage from './MenuPage'
 import './App.css'
+import CustomerLoginPage from './CustomerLoginPage'
 
 function App() {
   const [showNav, setShowNav] = useState(false)
@@ -30,6 +31,7 @@ function App() {
           <Route path="/" element={<LandingPage />} />
           <Route path="/menu" element={<MenuPage />} />
           <Route path="/staff-login" element={<StaffLoginPage />} />
+          <Route path="/customer-login" element={<CustomerLoginPage />} />
           {/* Other routes here */}
         </Routes>
 

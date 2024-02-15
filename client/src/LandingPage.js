@@ -8,6 +8,10 @@ const LandingPage = () => {
 
   const handleStaffClick = () => {
     navigate('/staff-login')
+
+  }
+  const handleCustomerClick = () => {
+    navigate('/customer-login')
   }
 
   return (
@@ -19,7 +23,7 @@ const LandingPage = () => {
       <p>CHICKEN WINGS EXTRAORDINAIRE</p>
       <p>Est. 2005</p>
       <div className="App-buttons">
-        <button className="App-button-customer">Customer</button>
+        <button className="App-button-customer" onClick= {handleCustomerClick}>Customer</button>
         <button className="App-button-staff" onClick={handleStaffClick}>
           Staff
         </button>
