@@ -1,0 +1,107 @@
+.dashboard-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  padding: 20px;
+  background-color: #f4f4f4;
+}
+
+.header-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 10px;
+}
+
+.stat-item {
+  background: #ffffff;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  color: #333; /* changed from white to dark grey */
+}
+
+.order-status {
+  background: #ffffff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.order-status h2 {
+  background-color: #e8e8e8;
+  margin: 0;
+  padding: 10px;
+  text-align: center;
+  color: #333; /* ensure header text is also dark grey */
+}
+
+.table-dashboard {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center; /* centering text in all columns */
+}
+
+.table-dashboard th, .table-dashboard td {
+  text-align: center; /* centering header and cell text */
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.table-dashboard th {
+  background-color: #f8f8f8;
+  font-weight: bold;
+}
+
+/* Responsive table */
+@media (max-width: 600px) {
+  .table-dashboard {
+    border: 0;
+  }
+
+  .table-dashboard thead {
+    display: none;
+  }
+
+  .table-dashboard tr {
+    margin-bottom: 10px;
+    display: block;
+    border-bottom: 2px solid #ddd;
+  }
+
+  .table-dashboard td {
+    display: block;
+    text-align: right;
+    font-size: 13px;
+    border-bottom: 1px dotted #ccc;
+  }
+  .table-dashboard th,
+.table-dashboard td {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  text-align: center; /* Centers the text horizontally */
+  color: #333; /* Sets the text color to dark gray */
+}
+
+.table-dashboard th {
+  background-color: #f8f8f8;
+  font-weight: bold;
+}
+
+
+  .table-dashboard td::before {
+    content: attr(data-label);
+    float: left;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+
+  .table-dashboard td:last-child {
+    border-bottom: 0;
+  }
+}
+
+/* Add more styles below my homies if you feel like it */
