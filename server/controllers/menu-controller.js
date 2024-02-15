@@ -11,9 +11,10 @@ const pool = db.pool;
  * @returns menu items in db
  */
 async function getAllMenuItems() {
-  console.log('Attempting to connect to database...');
-  const client = await pool.connect(); //Establish connection to db
+  let client;
   try {
+    console.log('Attempting to connect to database...');
+    const client = await pool.connect(); //Establish connection to db
     console.log('Connection successful');
     const query = 'SELECT * FROM menu';
     const result = await client.query(query);
@@ -22,7 +23,9 @@ async function getAllMenuItems() {
   } catch (error) {
     throw new Error(`Error fetching menu items: ${error.message}`);
   } finally {
-    client.release(); //Release client back into pool
+    if (client) {
+      client.release(); //Release client back into pool
+    }
   }
 };
 
@@ -50,7 +53,9 @@ async function filterOutAllergens(allergens) {
   } catch (error) {
     throw new Error(`Error filtering out allergens: ${error.message}`);
   } finally {
-    client.release(); //Release client back into pool
+    if (client) {
+      client.release(); //Release client back into pool
+    }
   }
 };
 
@@ -82,9 +87,10 @@ async function filterCalories(calories) {
  * @param {float} dishPrice the price of the dish
  */
 async function createMenuItem(dishName, dishCalories, dishPrice) { 
-  console.log('Attempting to create item...')
-  const client = await pool.connect(); // Establish connection to db
+  let client;
   try {
+    console.log('Attempting to create item...')
+    const client = await pool.connect(); // Establish connection to db
     const query = `
       INSERT INTO menu (dish_name, dish_calories, dish_price)
       VALUES ($1, $2, $3)
@@ -105,9 +111,10 @@ async function createMenuItem(dishName, dishCalories, dishPrice) {
  * @param {int} dishID the ID of menu item to delete
  */
 async function deleteMenuItem(dishID) {
-  const client = await pool.connect();  // Establish connection to db
+  let client;
   try {
     console.log('Attempting to delete item...');
+    const client = await pool.connect();  // Establish connection to db
     const query = 'DELETE FROM menu WHERE dish_id = $1 RETURNING *;';
     const values = [dishID];
     const result = await client.query(query, values);
@@ -119,4 +126,10 @@ async function deleteMenuItem(dishID) {
   }
 }
 
-module.exports = { getAllMenuItems, filterOutAllergens, createMenuItem, deleteMenuItem }; //Export controller for use in router
+module.exports = { 
+  getAllMenuItems, 
+  filterOutAllergens, 
+  filterCalories,
+  createMenuItem, 
+  deleteMenuItem 
+}; //Export controller for use in router

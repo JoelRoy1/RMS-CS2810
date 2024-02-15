@@ -1,6 +1,6 @@
 /**
  * @file Manges all staff routes.
- * @version 1.0.0
+ * @version 1.1.0
  */
 
 const express = require('express');
@@ -16,8 +16,8 @@ router.post('/', async (req, res) => {
     const user = await controller.signIn(username, pin);
     res.json(user);
   } catch (error) {
-    console.error(`Error signing in: ${error.message}`);
-    res.status(500).json({ error: 'Failed to sign in' });
+    //console.error(`Error signing in: ${error.message}`);
+    res.status(500).json({ error: `Error signing in: ${error.message}` });
   }
 });
 
@@ -30,8 +30,8 @@ router.post('/create-account', async (req, res) => {
     const newUser = await controller.createAccount(username, pin);
     res.status(201).json(newUser);
   } catch (error) {
-    console.error(`Error creating user: ${error.message}`);
-    res.status(500).json({ error: 'Failed to create user' });
+    //console.error(`Error creating user: ${error.message}`);
+    res.status(500).json({ error: `Error signing in: ${error.message}` });
   }
 });
 

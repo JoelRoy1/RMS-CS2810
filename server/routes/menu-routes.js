@@ -1,6 +1,6 @@
 /**
  * @file Manges all menu routes.
- * @version 1.1.0
+ * @version 1.1.1
  */
 const express = require('express');
 const router = express.Router();
@@ -28,8 +28,7 @@ router.get('/filter-allergens', async (req, res) => {
     const menu = await controller.filterOutAllergens(allergens);
     res.json(menu);
   } catch (error) {
-    console.error(`Error: ${error.message}`);
-    res.status(500).json({ error: 'Failed to retrieve menu items' });
+    res.status(500).json({ error: `Error: ${error.message}` });
   }
 });
 
@@ -42,8 +41,7 @@ router.post(`/create-item`, async (req, res) => {
     const menu = await controller.createMenuItem(dishName, dishCalories, dishPrice);
     res.status(200).json({ message: 'Dish created succesfully' });
   } catch (error) {
-    console.error(`Error creating dish: ${error.message}`);
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ error: `Error creating dish: ${error.message}` });
   }
 });
 
@@ -56,8 +54,7 @@ router.delete(`/:itemID`, async (req, res) => {
     await controller.deleteMenuItem(dishID);
     res.status(200).json({ message: 'Dish deleted succesfully' });
    } catch (error) {
-    console.error(`Error deleting dish: ${error.message}`);
-    res.status(500).json({ error: 'Failed to delete dish' });
+    res.status(500).json({ error: `Error deleting dish: ${error.message}` });
    }
 })
 
@@ -70,8 +67,7 @@ router.get('/filter-calories', async (req, res) => {
     const menu = await controller.filterCalories(calories);
     res.json(menu);
   } catch (error) {
-    console.error(`Error: ${error.message}`);
-    res.status(500).json({ error: 'Failed to retrieve menu items' });
+    res.status(500).json({ error: `Error: ${error.message}`});
   }
 });
 

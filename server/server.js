@@ -1,6 +1,6 @@
 /**
  * @file Core script of the api. Starts server and manages ports and routes.
- * @version 1.2.0
+ * @version 1.2.2
  */
 //initializing dependencies and constants needed for the api.
 const express = require('express');
@@ -18,24 +18,20 @@ app.use(express.json());
 app.use(bodyParser.json())
 app.use(cors())
 
-//test staff login route
+//staff login endpoints
 app.use('/signin', staffRoute);
 app.use('/signin/create-account', staffRoute);
 
-//testing retrieval/filtering of menu items
+//menu endpoints
 app.use('/menu', menuRoute);
 app.use('/menu/filter-allergens',menuRoute);
-
-//testing the deletion/cancellation of orders
-app.use('/cancel-orders', orderRoute);
-app.use('/place-order', orderRoute);
-
-//test create/delete menu items
+app.use('/menu/filter-calories', menuRoute);
 app.use('/menu/create-item', menuRoute);
 app.use('/menu/delete-item', menuRoute);
 
-//test filter calories
-app.use('/menu/filter-calories', menuRoute);
+//order enpoints
+app.use('order/cancel-order', orderRoute);
+app.use('order', orderRoute);
 
 /**
  * Listens for connections on port 9000 and

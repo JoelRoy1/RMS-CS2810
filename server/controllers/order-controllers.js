@@ -13,6 +13,7 @@ const db = require('../db');
 const pool = db.pool;
 
 async function cancelOrder(orderId) {
+  let client;
   try {
     console.log('Attempting to cancel order...');
     const client = await pool.connect();
@@ -22,13 +23,16 @@ async function cancelOrder(orderId) {
   } catch (error) {
     console.error(`Error cancelling order: ${error.message}`);
   } finally {
-    client.release();
+    if (client) {
+      client.release();
+    }
   }
 }
 
 async function placeOrder(customerId, staffId, orderStatus, orderDetails) {
-  const client = await pool.connect();
+  let client;
   try {
+    const client = await pool.connect();
     const orderTime = new Date().toISOString().slice(11, 19); // Get current time in 'HH:MM:SS' format
     const query = `
       INSERT INTO orders (customer_id, staff_id, order_status, order_details, order_time)
@@ -41,8 +45,10 @@ async function placeOrder(customerId, staffId, orderStatus, orderDetails) {
   } catch (error) {
     console.error('Error adding new order:', error);
   } finally {
-    client.release();
+    if (client) {
+      client.release();
+    }
   }
 }
 
-module.exports = { cancelOrder, placeOrder};
+module.exports = { cancelOrder, placeOrder };
