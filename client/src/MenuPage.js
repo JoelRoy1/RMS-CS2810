@@ -1,27 +1,39 @@
 import React from 'react';
-import DishCard from './DishCard'; 
+import DishCard from './DishCard';
 import './MenuPage.css';
+import vegPastaImage from './assets/veg-pasta.jpg';
+import chickenTacosImage from './assets/chicken-tacos.jpg';
 
-function MenuPage() {
+const MenuPage = () => {
+  const dishes = [
+    {
+      name: 'Veg Pasta',
+      description: 'Whole wheat pasta with a variety of fresh vegetables.',
+      price: '$12.99',
+      calories: '550 kcal',
+      allergens: ['Nuts', 'Gluten'],
+      image: vegPastaImage 
+    },
+    {
+      name: 'Crunchy Chicken Tacos',
+      description: 'Crispy corn tacos filled with seasoned chicken, lettuce, cheese, and salsa.',
+      price: '$10.99',
+      calories: '450 kcal',
+      allergens: ['Gluten', 'Dairy'],
+      image: chickenTacosImage
+    }
+  ];
+
   return (
     <div className="menu-page">
       <h1>Menu</h1>
-      <div className="categories">
-        <button>Popular</button>
-        <button>Antojitos</button>
-        <button>Tacos</button>
-        <button>Platos</button>
-      </div>
       <div className="dishes-list">
-        {/* Example usage of DishCard component */}
-        <DishCard />
-        <DishCard />
-        {/* Add more DishCard components for each menu item */}
+        {dishes.map((dish, index) => (
+          <DishCard key={index} dish={dish} />
+        ))}
       </div>
     </div>
   );
 }
 
-export default MenuPage; // Type localhost:3000/Menu to checkout MenuPage
-
-
+export default MenuPage;

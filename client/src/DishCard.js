@@ -1,19 +1,10 @@
-import React from 'react'
-import './DishCard.css' 
-import vegPastaImage from './assets/veg-pasta.jpg'; 
+import React from 'react';
+import './DishCard.css';
 
-const DishCard = () => {
-  // Dummy data for a dish
-  const dish = {
-    description: 'Whole wheat pasta with a variety of fresh vegetables.',
-    price: '$12.99',
-    calories: '550 kcal',
-    allergens: ['Nuts', 'Gluten'],
-  }
-
+const DishCard = ({ dish }) => {
   return (
     <div className="dish-card">
-      <img src={vegPastaImage} alt={dish.name} className="dish-image" />
+      <img src={dish.image} alt={dish.name} className="dish-image" />
       <div className="dish-info">
         <h3 className="dish-name">{dish.name}</h3>
         <p className="dish-description">{dish.description}</p>
@@ -24,7 +15,7 @@ const DishCard = () => {
         </p>
       </div>
     </div>
-  )
+  );
 }
 
-export default DishCard
+export default DishCard;
