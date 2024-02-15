@@ -8,9 +8,15 @@ import ChilesRellenosImage from './assets/ChilesRellenosImage.jpg';
 import EnchiladasSuizasImage from './assets/EnchiladasSuizasImage.jpg';
 import CarnitasImage from './assets/CarnitasImage.jpg';
 import ShrimpTacosImage from './assets/ShrimpTacosImage.jpg';
-
+import { useState } from 'react';
 
 const MenuPage = () => {
+  const [Dairy, setDairy] = useState(false);
+  const [Gluten, setGluten] = useState(false);
+  const [Nuts, setNuts] = useState(false);
+  const [Shellfish, setShellfish] = useState(false);
+  const [Vegetarian, setVegetarian] = useState(false);
+  const [Vegan, setVegan] = useState(false);
   const dishes = [
     {
       name: 'Veg Pasta',
@@ -72,37 +78,53 @@ const MenuPage = () => {
     
   ];
 
+  const filteredDishes = dishes.filter(dish => {
+    if (
+      (!Dairy || !dish.allergens.includes('Dairy')) &&
+      (!Gluten || !dish.allergens.includes('Gluten')) &&
+      (!Nuts || !dish.allergens.includes('Nuts')) &&
+      (!Shellfish || !dish.allergens.includes('Shellfish'))
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  });
+
   return (
     <div className="menu-page">
       <h1>Menu</h1>
       <div className="filter-checkboxes">
         <label>
-          <input type="checkbox" defaultChecked={true} />
+          Filter by allergens and dietary preferences:
+        </label>
+        <label>
+          <input type="checkbox" checked={Dairy}  onChange={() => setDairy((prev) => !prev)} />
           Dairy
         </label>
         <label>
-          <input type="checkbox" defaultChecked={true}/>
+          <input type="checkbox"  checked={Gluten} onChange={() => setGluten((prev) => !prev)}/>
           Gluten
         </label>
         <label>
-          <input type="checkbox" defaultChecked={true}/>
+          <input type="checkbox" checked={Nuts} onChange={() => setNuts((prev) => !prev)}/>
           Nuts
         </label>
         <label>
-          <input type="checkbox" defaultChecked={true}/>
+          <input type="checkbox"  checked={Shellfish} onChange={() => setShellfish((prev) => !prev)}/>
           Shellfish
         </label>
         <label>
-          <input type="checkbox" defaultChecked={false}/>
+          <input type="checkbox" checked={Vegetarian} onChange={() => setVegetarian((prev) => !prev)}/>
           Vegetarian
         </label>
         <label>
-          <input type="checkbox" defaultChecked={false}/>
+          <input type="checkbox"  checked={Vegan} onChange={() => setVegan((prev) => !prev)}/>
           Vegan
         </label>
       </div>
       <div className="dishes-list">
-        {dishes.map((dish, index) => (
+        {filteredDishes.map((dish, index) => (
           <DishCard key={index} dish={dish} />
         ))}
       </div>
