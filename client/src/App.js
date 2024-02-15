@@ -19,7 +19,7 @@ function App() {
         <nav className={`App-nav ${showNav ? 'show' : ''}`}>
           {/* Navigation links */}
           <a href="#home">Home</a>
-          <a href="#menu">Menu</a>
+          <a href="menu">Menu</a>
           <a href="#about">About Us</a>
         </nav>
       </div>
