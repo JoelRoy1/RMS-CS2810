@@ -3,7 +3,10 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import StaffLoginPage from './StaffLoginPage';
+import MenuPage from './MenuPage';
+import Dashboard from './Dashboard';
 import reportWebVitals from './reportWebVitals';
+
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -15,7 +18,22 @@ if (path === '/staff') {
       <StaffLoginPage />
     </React.StrictMode>
   );
-} else {
+  }
+if (path === '/Menu') {
+  root.render(
+    <React.StrictMode>
+      <MenuPage />
+    </React.StrictMode>
+  );
+}
+if (path === '/dashboard') {
+  root.render(
+    <React.StrictMode>
+      <Dashboard />
+    </React.StrictMode>
+  );
+}
+if (path === '') {
   root.render(
     <React.StrictMode>
       <App />

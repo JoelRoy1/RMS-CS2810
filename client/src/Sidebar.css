@@ -1,23 +1,23 @@
 /* DO NOT TOUCH THE CSS PLEASE I PUT IN MY BLOOD AND SWEAT INTO MAKING THIS WORK THANK YOU - ZUL */
-* {
+.sidebar * {
   box-sizing: border-box;
 }
 
-body {
+.sidebar body {
   margin: 0;
   background: #202124;
   font-family: "Poppins", sans-serif;
   color: #f9f9f9;
 }
 
-button {
+.sidebar button {
   background: transparent;
   border: none;
   padding: 0;
   cursor: pointer;
 }
 
-h2 {
+.sidebar h2 {
   font-size: 16px;
   font-weight: 500;
   padding-left: 20px;
