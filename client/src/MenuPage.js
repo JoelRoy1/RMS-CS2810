@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import DishCard from './DishCard';
 import './MenuPage.css';
 import vegPastaImage from './assets/veg-pasta.jpg';
@@ -8,8 +8,7 @@ import ChilesRellenosImage from './assets/ChilesRellenosImage.jpg';
 import EnchiladasSuizasImage from './assets/EnchiladasSuizasImage.jpg';
 import CarnitasImage from './assets/CarnitasImage.jpg';
 import ShrimpTacosImage from './assets/ShrimpTacosImage.jpg';
-import { useState } from 'react';
-
+ 
 const MenuPage = () => {
   const [Dairy, setDairy] = useState(false);
   const [Gluten, setGluten] = useState(false);
@@ -17,6 +16,13 @@ const MenuPage = () => {
   const [Shellfish, setShellfish] = useState(false);
   const [Vegetarian, setVegetarian] = useState(false);
   const [Vegan, setVegan] = useState(false);
+  const [tableNumber, setTableNumber] = useState('');
+ 
+  const callWaiter = () => {
+    alert("Waiter called for Table " + tableNumber);
+    setTableNumber('');
+  };
+ 
   const dishes = [
     {
       name: 'Veg Pasta',
@@ -74,10 +80,8 @@ const MenuPage = () => {
       allergens: ['Gluten', 'Shellfish'],
       image: ShrimpTacosImage
     }
-    
-    
   ];
-
+ 
   const filteredDishes = dishes.filter(dish => {
     if (
       (!Dairy || !dish.allergens.includes('Dairy')) &&
@@ -90,46 +94,57 @@ const MenuPage = () => {
       return false;
     }
   });
-
+ 
   return (
-    <div className="menu-page">
-      <h1>Menu</h1>
-      <div className="filter-checkboxes">
-        <label>
+<div className="menu-page">
+<h1>Menu</h1>
+<div className="filter-checkboxes">
+<label>
           Filter by allergens and dietary preferences:
-        </label>
-        <label>
-          <input type="checkbox" checked={Dairy}  onChange={() => setDairy((prev) => !prev)} />
+</label>
+<label>
+<input type="checkbox" checked={Dairy}  onChange={() => setDairy((prev) => !prev)} />
           Dairy
-        </label>
-        <label>
-          <input type="checkbox"  checked={Gluten} onChange={() => setGluten((prev) => !prev)}/>
+</label>
+<label>
+<input type="checkbox"  checked={Gluten} onChange={() => setGluten((prev) => !prev)}/>
           Gluten
-        </label>
-        <label>
-          <input type="checkbox" checked={Nuts} onChange={() => setNuts((prev) => !prev)}/>
+</label>
+<label>
+<input type="checkbox" checked={Nuts} onChange={() => setNuts((prev) => !prev)}/>
           Nuts
-        </label>
-        <label>
-          <input type="checkbox"  checked={Shellfish} onChange={() => setShellfish((prev) => !prev)}/>
+</label>
+<label>
+<input type="checkbox"  checked={Shellfish} onChange={() => setShellfish((prev) => !prev)}/>
           Shellfish
-        </label>
-        <label>
-          <input type="checkbox" checked={Vegetarian} onChange={() => setVegetarian((prev) => !prev)}/>
+</label>
+<label>
+<input type="checkbox" checked={Vegetarian} onChange={() => setVegetarian((prev) => !prev)}/>
           Vegetarian
-        </label>
-        <label>
-          <input type="checkbox"  checked={Vegan} onChange={() => setVegan((prev) => !prev)}/>
+</label>
+<label>
+<input type="checkbox"  checked={Vegan} onChange={() => setVegan((prev) => !prev)}/>
           Vegan
-        </label>
-      </div>
-      <div className="dishes-list">
+</label>
+</div>
+<div className="dishes-list">
         {filteredDishes.map((dish, index) => (
-          <DishCard key={index} dish={dish} />
+<DishCard key={index} dish={dish} />
         ))}
-      </div>
-    </div>
+</div>
+<div className="container">
+<h1>Call Waiter for Help</h1>
+<p>Enter your table number to call the waiter:</p>
+<input 
+          type="number" 
+          value={tableNumber} 
+          onChange={(e) => setTableNumber(e.target.value)} 
+          placeholder="Table Number" 
+        />
+<button onClick={callWaiter}>Call Waiter</button>
+</div>
+</div>
   );
 }
-
+ 
 export default MenuPage;
