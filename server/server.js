@@ -32,6 +32,7 @@ app.use('/menu/delete-item', menuRoute);
 //order enpoints
 app.use('order/cancel-order', orderRoute);
 app.use('order', orderRoute);
+app.use('order/mark-delivered', orderRoute);
 
 /**
  * Listens for connections on port 9000 and

@@ -51,4 +51,27 @@ async function placeOrder(customerId, staffId, orderStatus, orderDetails) {
   }
 }
 
-module.exports = { cancelOrder, placeOrder };
+async function orderDelivered(orderId, staffId) {
+  let client;
+  try {
+    console.log('Attempting to deliver order...');
+    const client = await pool.connect();
+    const query = `
+      UPDATE orders
+      SET order_status = 'delivered'
+      WHERE order_id = ${orderId}
+      AND staff_id = ${staffId};
+    `;
+    const result = await client.query(query, values);
+    console.log('Order marked delivered successfully');
+    console.log('Order:', result.rows[0].order_id, ' marked as delivered by staff memeber:',  result.rows[0].staff_id);
+  } catch (error) {
+    console.error('Error confirming order as delivered', error);
+  } finally {
+    if (client) {
+      client.release();
+    }
+  }
+}
+
+module.exports = { cancelOrder, placeOrder, orderDelivered };
