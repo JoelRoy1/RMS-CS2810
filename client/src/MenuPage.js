@@ -23,7 +23,7 @@ const MenuPage = () => {
     setTableNumber('');
   };
  
-  const dishes = [
+  const dishes = [  //Contains all dishes in the menu
     {
       name: 'Veg Pasta',
       description: 'Whole wheat pasta with a variety of fresh vegetables.',
@@ -82,7 +82,7 @@ const MenuPage = () => {
     }
   ];
  
-  const filteredDishes = dishes.filter(dish => {
+  const filteredDishes = dishes.filter(dish => { //Filters dishes based on the user's dietary preferences selected using the checkboxes
     if (
       (!Dairy || !dish.allergens.includes('Dairy')) &&
       (!Gluten || !dish.allergens.includes('Gluten')) &&
@@ -99,11 +99,11 @@ const MenuPage = () => {
 <div className="menu-page">
 <h1>Menu</h1>
 <div className="filter-checkboxes">
-<label>
+<label> 
           Filter by allergens and dietary preferences:
 </label>
 <label>
-<input type="checkbox" checked={Dairy}  onChange={() => setDairy((prev) => !prev)} />
+<input type="checkbox" checked={Dairy}  onChange={() => setDairy((prev) => !prev)} /> 
           Dairy
 </label>
 <label>
@@ -128,7 +128,7 @@ const MenuPage = () => {
 </label>
 </div>
 <div className="dishes-list">
-        {filteredDishes.map((dish, index) => (
+        {filteredDishes.map((dish, index) => ( //Displays the dishes, having filtered out those not compliant to the dietary preferences
 <DishCard key={index} dish={dish} />
         ))}
 </div>
