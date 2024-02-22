@@ -8,6 +8,7 @@ import ChilesRellenosImage from './assets/ChilesRellenosImage.jpg';
 import EnchiladasSuizasImage from './assets/EnchiladasSuizasImage.jpg';
 import CarnitasImage from './assets/CarnitasImage.jpg';
 import ShrimpTacosImage from './assets/ShrimpTacosImage.jpg';
+import Navbar from './Navbar';
  
 const MenuPage = () => {
   const [Dairy, setDairy] = useState(false);
@@ -22,7 +23,7 @@ const MenuPage = () => {
     alert("Waiter called for Table " + tableNumber);
     setTableNumber('');
   };
- 
+
   const dishes = [  //Contains all dishes in the menu
     {
       name: 'Veg Pasta',
@@ -97,6 +98,7 @@ const MenuPage = () => {
  
   return (
 <div className="menu-page">
+<Navbar />
 <h1>Menu</h1>
 <div className="filter-checkboxes">
 <label> 
