@@ -14,4 +14,18 @@ async function requestHelp(customerId) {
   }
 }
 
-module.exports = { requestHelp };
+async function getCustomersNeedingHelp() {
+    try {
+      console.log('Retrieving customers needing help...');
+      const client = await pool.connect();
+      console.log('Connected to the database');
+      const result = await client.query('SELECT * FROM needs_help');
+      client.release();
+      console.log('Customers retrieved successfully');
+      return result.rows;
+    } catch (error) {
+      throw new Error(`Error retrieving customers needing help: ${error.message}`);
+    }
+  }
+
+module.exports = { requestHelp,getCustomersNeedingHelp };
