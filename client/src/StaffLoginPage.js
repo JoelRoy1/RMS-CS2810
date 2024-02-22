@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import './StaffLoginPage.css'
 
 function StaffLoginPage() {
-
   return (
     <div className="staff-login-page">
       <div className="login-container">

@@ -12,6 +12,7 @@ const app = express();
 const staffRoute = require('./routes/staff-routes');
 const menuRoute = require('./routes/menu-routes');
 const orderRoute = require('./routes/order-routes');
+const helpRoute = require('./routes/help-routes');
 
 //middleware
 app.use(express.json());
@@ -29,9 +30,14 @@ app.use('/menu/filter-calories', menuRoute);
 app.use('/menu/create-item', menuRoute);
 app.use('/menu/delete-item', menuRoute);
 
-//order enpoints
-app.use('order/cancel-order', orderRoute);
-app.use('order', orderRoute);
+//order endpoints
+app.use('/order/cancel-order', orderRoute);
+app.use('/order', orderRoute);
+app.use('/order/mark-delivered', orderRoute);
+
+//order endpoints
+app.use('/help/request', helpRoute);
+app.use('/help/retrieve', helpRoute);
 
 /**
  * Listens for connections on port 9000 and
