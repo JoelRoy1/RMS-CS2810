@@ -22,7 +22,7 @@ router.post('/request', async (req, res) => {
 
 
 /**
- * request help using customer id
+ * retrieve all customers in need of help
  */
 router.get('/retrieve', async (req, res) => {
     try {
