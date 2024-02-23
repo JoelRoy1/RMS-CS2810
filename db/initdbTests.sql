@@ -51,6 +51,57 @@ INSERT INTO orders (customer_id, staff_id, order_status, order_allergies) VALUES
 -- (Assuming the customer_id must exist in the customer table, this should result in an error)
 INSERT INTO orders (customer_id, staff_id, order_status, order_allergies) VALUES (999, 1, 'pending', 'None');
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+--Test Case 15: Attempt to Connect to the Database with Invalid User
+\c rms_db invalid_user;
+-- (Expect connection failure with an appropriate error message)
+
+--Test Case 16: Attempt to Insert Staff Member with Missing Required Field
+-- (Assuming staff_name is required, this should result in an error)
+INSERT INTO staff(staff_pin) VALUES (5678);
+--Test Case 17: Attempt to Update Non-existing Menu Item
+-- (Assuming the dish_name in the UPDATE statement does not exist, this should result in an error)
+UPDATE menu SET dish_price = 15.99 WHERE dish_name = 'NonExistingDish';
+
+--Test Case 18: Attempt to Delete Allergen Assigned to a Dish
+-- (Assuming allergens assigned to dishes cannot be deleted, this should result in an error)
+DELETE FROM allergens WHERE allergen_id = 3;
+
+--Test Case 19: Attempt to Insert Dish-Allergen Relation with Non-existing Dish
+-- (Assuming dish_id in dish_allergens must exist in the menu table, this should result in an error)
+INSERT INTO dish_allergens (dish_id, allergen_id) VALUES (999, 1);
+
+
+--Test Case 20: Attempt to Insert Order with Non-existing Staff
+-- (Assuming staff_id in orders must exist in the staff table, this should result in an error)
+INSERT INTO orders (customer_id, staff_id, order_status, order_allergies) VALUES (2, 999, 'pending', 'None');
+
+--Test Case 21: Attempt to Update Help Request Status with Invalid Value
+-- (Assuming resolved in needs_help must be a boolean, this should result in an error)
+UPDATE needs_help SET resolved = 'invalid_value' WHERE help_id = 1;
+
+--Test Case 22: Attempt to Insert Order with Invalid Order Status
+-- (Assuming order_status in orders must be one of the predefined values, this should result in an error)
+INSERT INTO orders (customer_id, staff_id, order_status, order_allergies) VALUES (2, 1, 'invalid_status', 'None');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+=======
+>>>>>>> 83ef247c4d34e5a50e84057474b9d8171b9178a9
+=======
+>>>>>>> 83ef247c4d34e5a50e84057474b9d8171b9178a9
 
 
 
