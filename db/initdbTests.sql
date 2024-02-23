@@ -51,8 +51,7 @@ INSERT INTO orders (customer_id, staff_id, order_status, order_allergies) VALUES
 -- (Assuming the customer_id must exist in the customer table, this should result in an error)
 INSERT INTO orders (customer_id, staff_id, order_status, order_allergies) VALUES (999, 1, 'pending', 'None');
 
-<<<<<<< HEAD
-<<<<<<< HEAD
+
 --Test Case 15: Attempt to Connect to the Database with Invalid User
 \c rms_db invalid_user;
 -- (Expect connection failure with an appropriate error message)
@@ -95,13 +94,6 @@ INSERT INTO orders (customer_id, staff_id, order_status, order_allergies) VALUES
 
 
 
-
-
-
-=======
->>>>>>> 83ef247c4d34e5a50e84057474b9d8171b9178a9
-=======
->>>>>>> 83ef247c4d34e5a50e84057474b9d8171b9178a9
 
 
 
