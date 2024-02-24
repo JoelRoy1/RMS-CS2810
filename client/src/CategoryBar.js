@@ -1,18 +1,14 @@
 import React from 'react';
 import './CategoryBar.css';
 
-const CategoryBar = ({ categories, selectedCategory, onSelectCategory }) => {
+const CategoryBar = ({ }) => {
   return (
     <div className="category-bar">
-      {categories.map((category) => (
-        <div
-          key={category}
-          className={`category-tab ${category === selectedCategory ? 'active' : ''}`}
-          onClick={() => onSelectCategory(category)}
-        >
-          {category}
-        </div>
-      ))}
+
+    <h1>Starters</h1>
+    <h1>Mains</h1>
+    <h1>Desserts</h1>
+    <h1>Drinks</h1>
     </div>
   );
 }

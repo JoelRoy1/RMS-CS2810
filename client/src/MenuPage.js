@@ -9,6 +9,7 @@ import EnchiladasSuizasImage from './assets/EnchiladasSuizasImage.jpg';
 import CarnitasImage from './assets/CarnitasImage.jpg';
 import ShrimpTacosImage from './assets/ShrimpTacosImage.jpg';
 import Navbar from './Navbar';
+import CategoryBar from './CategoryBar';
  
 const MenuPage = () => {
   const [Dairy, setDairy] = useState(false);
@@ -99,7 +100,7 @@ const MenuPage = () => {
   return (
 <div className="menu-page">
 <Navbar />
-<h1>Menu</h1>
+<CategoryBar />
 <div className="filter-checkboxes">
 <label> 
           Filter by allergens and dietary preferences:

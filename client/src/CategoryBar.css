@@ -1,7 +1,15 @@
 .category-bar {
     display: flex;
     background-color: #D9D9D9;
+    margin-top: 40px;
     padding: 10px 20px;
+    width:70%;
+    font-size:0.8rem;
+    justify-content: space-between;
+
+  }
+  .category-bar h1{
+    margin-right:40px;
   }
   
   .category-tab {
