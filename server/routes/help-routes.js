@@ -34,4 +34,19 @@ router.get('/retrieve', async (req, res) => {
     }
 });
 
+/**
+ * resolve a given help request
+ */
+router.post('/resolve', async (req, res) => {
+  const { helpId } = req.body;
+  try {
+    await controller.resolveHelpRequest(helpId);
+    res.status(200).json({ message: 'Help resolved successfully' });
+  } catch (error) {
+    console.error(`Error resolving help: ${error.message}`);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+
 module.exports = router;
