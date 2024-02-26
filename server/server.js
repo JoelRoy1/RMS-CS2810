@@ -38,6 +38,7 @@ app.use('/order/mark-delivered', orderRoute)
 //order endpoints
 app.use('/help', helpRoute)
 app.use('/help/retrieve', helpRoute)
+app.use('/help/resolve', helpRoute)
 
 /**
  * Listens for connections on port 9000 and

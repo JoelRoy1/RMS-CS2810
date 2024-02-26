@@ -69,7 +69,7 @@ async function resolveHelpRequest(helpId) {
     const client = await pool.connect();
     console.log('Connected to the database');
     const query = 'UPDATE needs_help SET resolved = true WHERE help_id = $1 RETURNING *';
-    const { rows } = await client.query(query, [helpId]);
+    const result = await client.query(query, [helpId]);
     console.log('Resolved help request successfully');
     return result.rows;
   } catch (error) {
