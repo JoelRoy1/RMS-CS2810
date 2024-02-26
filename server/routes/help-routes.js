@@ -12,8 +12,8 @@ const controller = require('../controllers/help-controllers');
 router.post('/', async (req, res) => {
     const { customerId } = req.body;
     try {
-      await controller.requestHelp(customerId);
-      res.status(200).json({ message: 'Help requested successfully' });
+      const cust = await controller.requestHelp(customerId);
+      res.json(cust);
     } catch (error) {
       console.error(`Error calling for help: ${error.message}`);
       res.status(500).json({ error: error.message });
