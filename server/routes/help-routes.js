@@ -9,7 +9,7 @@ const controller = require('../controllers/help-controllers');
 /**
  * request help using customer id
  */
-router.post('/request', async (req, res) => {
+router.post('/', async (req, res) => {
     const { customerId } = req.body;
     try {
       await controller.requestHelp(customerId);
