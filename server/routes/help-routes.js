@@ -27,7 +27,7 @@ router.post('/', async (req, res) => {
 router.get('/retrieve', async (req, res) => {
     try {
       const cust = await controller.getCustomersNeedingHelp();
-      res.jsonn(cust);
+      res.json(cust);
     } catch (error) {
       console.error(`Error retrieving help requests: ${error.message}`);
       res.status(500).json({ error: error.message });
