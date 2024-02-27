@@ -82,6 +82,7 @@ CREATE TABLE orders(
 
 -- Add a dummy order for the customer
 INSERT INTO orders (order_id, customer_id, staff_id, order_status, order_allergies) VALUES (21, 1, 1, 'active', 'None');
+INSERT INTO orders (order_id, customer_id, staff_id, order_status, order_allergies) VALUES (15, 2, 3, 'active', 'None');
 GRANT ALL ON orders TO root;
 
 -- Create needs_help table
