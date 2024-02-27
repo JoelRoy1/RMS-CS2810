@@ -7,10 +7,21 @@ const express = require('express');
 const router = express.Router();
 const orderController = require('../controllers/order-controllers');
 
+//fetch order
+router.get('/', async (req, res) => {
+  try {
+    const orders = await orderController.getAllOrders();
+    res.json(orders);
+  } catch (error) {
+    console.error(`Error fetching orders: ${error.message}`);
+    res.status(500).json({ error: error.message });
+  }
+});
+
 /**
  * place an order
  */
-router.post('/', async (req, res) => {
+router.post('/place-order', async (req, res) => {
   const { customerId, staffId, orderStatus, orderDetails } = req.body;
   try {
     await orderController.placeOrder(customerId, staffId, orderStatus, orderDetails);
@@ -48,15 +59,6 @@ router.post('/mark-delivered', async (req, res) => {
   }
 });
 
-//fetch order
-router.get('/orders', async (req, res) => {
-  try {
-    const orders = await orderController.getAllOrders();
-    res.json(orders);
-  } catch (error) {
-    console.error(`Error fetching orders: ${error.message}`);
-    res.status(500).json({ error: error.message });
-  }
-});
+
 
 module.exports = router;

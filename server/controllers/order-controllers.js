@@ -90,4 +90,4 @@ async function getAllOrders(){
 
 }
 
-module.exports = { cancelOrder, placeOrder, orderDelivered };
+module.exports = { cancelOrder, placeOrder, orderDelivered, getAllOrders };
