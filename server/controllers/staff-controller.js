@@ -4,6 +4,7 @@
  */
 
 const db = require('../db');
+const token = require('./token-controller');
 const pool = db.pool;
 
 /**
@@ -29,7 +30,7 @@ async function signIn(username, pin) {
       throw new Error('Invalid username or PIN. Please check your credentials and try again.');
     }
     console.log('Sign in successful');
-    return result.rows[0]; // Return the first matching staff member
+    return token.generateToken(username, pin); // Return the token for staff member (for protected routes)
   } catch (error) {
     console.error(`Error signing in: ${error.message}`);
     throw new Error(`Unable to sign in: ${error.message}`);

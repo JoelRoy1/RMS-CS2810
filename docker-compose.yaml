@@ -12,6 +12,8 @@ services:
       - POSTGRES_USER=postgres
     ports:
       - 5432:5432
+
+  
   rms-api:
     container_name: rms-api
     build:
@@ -22,6 +24,7 @@ services:
       - postgresdb
     ports:
       - 9000:9000
+
   rms-client:
     container_name: rms-client
     build:

@@ -1,0 +1,12 @@
+body, html {
+  margin: 0;
+  padding: 0;
+  background-color: white; /* White background */
+  color: black; /* Black text color */
+  font-weight: bold; /* Bold text */
+  font-family: Arial, sans-serif; /* Arial, sans-serif font */
+  height: 100%; /* Full height */
+  display: flex;
+  justify-content: center; /* Center content horizontally */
+  align-items: center; /* Center content vertically */
+}

@@ -83,3 +83,13 @@ CREATE TABLE orders(
 -- Add a dummy order for the customer
 INSERT INTO orders (order_id, customer_id, staff_id, order_status, order_allergies) VALUES (21, 1, 1, 'active', 'None');
 GRANT ALL ON orders TO root;
+
+-- Create needs_help table
+CREATE TABLE needs_help (
+  help_id SERIAL PRIMARY KEY,
+  customer_id SERIAL REFERENCES customer(customer_id),
+  resolved BOOLEAN DEFAULT FALSE
+);
+
+GRANT ALL ON needs_help TO root;
+
