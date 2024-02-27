@@ -31,17 +31,12 @@ GRANT ALL ON customer TO root;
 
 --create tables table
 CREATE TABLE tables (
-    id SERIAL PRIMARY KEY,
-    customer_id INT,
-    staff_id INT,
-    FOREIGN KEY (customer_id) REFERENCES customers(customer_id),
-    FOREIGN KEY (staff_id) REFERENCES staff(staff_id)
+    table_number SERIAL PRIMARY KEY,
+    customer_id INT REFERENCES customer(customer_id),
+    staff_id INT REFERENCES staff(staff_id)
 );
 
---create 20 empty tables
-INSERT INTO tables (customer_id, staff_id)
-SELECT NULL, NULL
-FROM generate_series(1, 20);
+INSERT INTO tables (customer_id, staff_id) SELECT NULL, NULL FROM generate_series(1, 20);
 
 GRANT ALL ON tables TO root;
 
