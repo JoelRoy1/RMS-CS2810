@@ -29,6 +29,16 @@ INSERT INTO customer (customer_name, customer_allergies) VALUES ('John Doe', 'No
 
 GRANT ALL ON customer TO root;
 
+CREATE TABLE tables (
+    id SERIAL PRIMARY KEY,
+    customer_id INT,
+    staff_id INT,
+    FOREIGN KEY (customer_id) REFERENCES customers(customer_id),
+    FOREIGN KEY (staff_id) REFERENCES staff(staff_id)
+);
+
+GRANT ALL ON tables TO root;
+
 -- Create menu table
 CREATE TABLE menu(
   dish_id SERIAL PRIMARY KEY,
