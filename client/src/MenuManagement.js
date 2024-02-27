@@ -12,9 +12,9 @@ const MenuManagementPage = () => {
   const [editingId, setEditingId] = useState(null)
 
   useEffect(() => {
-    // Fetch dishes from the backend when the component mounts
+    // Fetch dishes from the backend
     axios
-      .get('/api/dishes')
+      .get('http://localhost:9000/menu')
       .then((response) => setDishes(response.data))
       .catch((error) => console.error('Fetch dishes error:', error))
   }, [])
@@ -27,7 +27,9 @@ const MenuManagementPage = () => {
   const handleSubmit = (event) => {
     event.preventDefault()
     const method = editingId ? 'put' : 'post'
-    const url = editingId ? `/api/dishes/${editingId}` : '/api/dishes'
+    const url = editingId
+      ? `http://localhost:9000/menu/${editingId}`
+      : 'http://localhost:9000/menu/create-item'
 
     axios[method](url, form)
       .then((response) => {
@@ -52,7 +54,7 @@ const MenuManagementPage = () => {
   const handleDeleteClick = (dishId) => {
     if (window.confirm('Are you sure you want to delete this dish?')) {
       axios
-        .delete(`/api/dishes/${dishId}`)
+        .delete(`http://localhost:9000/menu/delete-item/${dishId}`)
         .then(() => {
           setDishes(dishes.filter((dish) => dish.id !== dishId))
         })

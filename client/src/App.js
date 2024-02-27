@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
 import LandingPage from './LandingPage'
 import StaffLoginPage from './StaffLoginPage'
 import MenuPage from './MenuPage'
+import MenuManagement from './MenuManagement'
 import './App.css'
 import CustomerLoginPage from './CustomerLoginPage'
 
@@ -23,6 +24,7 @@ function App() {
             <Link to="/">Home</Link>
             <Link to="/menu">Menu</Link>
             <Link to="/about">About Us</Link>
+            <Link to="/menu-management">Menu Management</Link>
           </nav>
         </div>
 
@@ -32,6 +34,7 @@ function App() {
           <Route path="/menu" element={<MenuPage />} />
           <Route path="/staff-login" element={<StaffLoginPage />} />
           <Route path="/customer-login" element={<CustomerLoginPage />} />
+          <Route path="/menu-management" element={<MenuManagement />} />
           {/* Other routes here */}
         </Routes>
 
