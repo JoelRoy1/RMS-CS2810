@@ -4,15 +4,14 @@ import axios from 'axios'
 const MenuManagementPage = () => {
   const [dishes, setDishes] = useState([])
   const [form, setForm] = useState({
-    name: '',
-    description: '',
-    imageUrl: '',
-    price: '',
+    dish_name: '',
+    dish_calories: '',
+    dish_price: '',
   })
   const [editingId, setEditingId] = useState(null)
 
   useEffect(() => {
-    // Fetch dishes from the backend
+    // Fetch dishes from the backend when the component mounts
     axios
       .get('http://localhost:9000/menu')
       .then((response) => setDishes(response.data))
@@ -31,24 +30,30 @@ const MenuManagementPage = () => {
       ? `http://localhost:9000/menu/${editingId}`
       : 'http://localhost:9000/menu/create-item'
 
-    axios[method](url, form)
+    axios[method](url, { ...form, dish_id: editingId })
       .then((response) => {
-        setDishes(
-          editingId
-            ? dishes.map((dish) =>
-                dish.id === editingId ? response.data : dish
-              )
-            : [...dishes, response.data]
-        )
-        setForm({ name: '', description: '', imageUrl: '', price: '' })
+        if (editingId) {
+          setDishes(
+            dishes.map((dish) =>
+              dish.dish_id === editingId ? response.data : dish
+            )
+          )
+        } else {
+          setDishes([...dishes, response.data])
+        }
+        setForm({ dish_name: '', dish_calories: '', dish_price: '' })
         setEditingId(null)
       })
       .catch((error) => console.error('Submit dish error:', error))
   }
 
   const handleEditClick = (dish) => {
-    setForm(dish)
-    setEditingId(dish.id)
+    setForm({
+      dish_name: dish.dish_name,
+      dish_calories: dish.dish_calories,
+      dish_price: dish.dish_price,
+    })
+    setEditingId(dish.dish_id)
   }
 
   const handleDeleteClick = (dishId) => {
@@ -56,7 +61,7 @@ const MenuManagementPage = () => {
       axios
         .delete(`http://localhost:9000/menu/delete-item/${dishId}`)
         .then(() => {
-          setDishes(dishes.filter((dish) => dish.id !== dishId))
+          setDishes(dishes.filter((dish) => dish.dish_id !== dishId))
         })
         .catch((error) => console.error('Delete dish error:', error))
     }
@@ -67,30 +72,23 @@ const MenuManagementPage = () => {
       <h1>Menu Management</h1>
       <form onSubmit={handleSubmit}>
         <input
-          name="name"
-          value={form.name}
+          name="dish_name"
+          value={form.dish_name}
           onChange={handleInputChange}
-          placeholder="Name"
-          required
-        />
-        <textarea
-          name="description"
-          value={form.description}
-          onChange={handleInputChange}
-          placeholder="Description"
+          placeholder="Dish Name"
           required
         />
         <input
-          name="imageUrl"
-          value={form.imageUrl}
-          onChange={handleInputChange}
-          placeholder="Image URL"
-          required
-        />
-        <input
-          name="price"
+          name="dish_calories"
           type="number"
-          value={form.price}
+          value={form.dish_calories}
+          onChange={handleInputChange}
+          placeholder="Calories"
+          required
+        />
+        <input
+          name="dish_price"
+          value={form.dish_price}
           onChange={handleInputChange}
           placeholder="Price"
           required
@@ -99,13 +97,14 @@ const MenuManagementPage = () => {
       </form>
       <ul>
         {dishes.map((dish) => (
-          <li key={dish.id}>
-            <img src={dish.imageUrl} alt={dish.name} />
-            <h3>{dish.name}</h3>
-            <p>{dish.description}</p>
-            <p>{dish.price}</p>
+          <li key={dish.dish_id}>
+            <h3>{dish.dish_name}</h3>
+            <p>Calories: {dish.dish_calories}</p>
+            <p>Price: {dish.dish_price}</p>
             <button onClick={() => handleEditClick(dish)}>Edit</button>
-            <button onClick={() => handleDeleteClick(dish.id)}>Delete</button>
+            <button onClick={() => handleDeleteClick(dish.dish_id)}>
+              Delete
+            </button>
           </li>
         ))}
       </ul>
