@@ -24,8 +24,8 @@ router.post('/', async (req, res) => {
 /**
  * delete order route
  */
-router.delete('/cancel-order', async (req, res) => {
-  const orderId = req.body;
+router.delete('/cancel-order/:orderId', async (req, res) => {
+  const orderId = req.params.orderId;
   try {
     await orderController.cancelOrder(orderId);
     res.status(200).json({ message: 'Order canceled successfully' });
@@ -40,7 +40,7 @@ router.delete('/cancel-order', async (req, res) => {
 router.post('/mark-delivered', async (req, res) => {
   const { orderId, staffId } = req.body;
   try {
-    await orderController.placeOrder(orderId, staffId);
+    await orderController.orderDelivered(orderId, staffId);
     res.status(200).json({ message: 'Order marked devlivered successfully' });
   } catch (error) {
     console.error(`Error confirming delivery: ${error.message}`);

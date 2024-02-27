@@ -85,14 +85,16 @@ INSERT INTO dish_allergens (dish_id, allergen_id) VALUES (3, 3); -- Salad contai
 -- Create orders table
 CREATE TABLE orders(
   order_id SERIAL PRIMARY KEY,
-  customer_id SERIAL REFERENCES customer(customer_id),
-  staff_id SERIAL REFERENCES staff(staff_id),
+  customer_id INT REFERENCES customer(customer_id),
+  staff_id INT REFERENCES staff(staff_id),
   order_status VARCHAR(255),
-  order_allergies VARCHAR(255)
+  order_allergies VARCHAR(255),
+  order_details VARCHAR(255),  -- Assuming order details can be large and need to be stored as text
+  order_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP  -- Default to current timestamp when the order is placed
 );
 
+
 -- Add a dummy order for the customer
-INSERT INTO orders (order_id, customer_id, staff_id, order_status, order_allergies) VALUES (21, 1, 1, 'active', 'None');
 GRANT ALL ON orders TO root;
 
 -- Create needs_help table
