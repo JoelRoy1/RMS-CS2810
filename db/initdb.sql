@@ -29,6 +29,7 @@ INSERT INTO customer (customer_name, customer_allergies) VALUES ('John Doe', 'No
 
 GRANT ALL ON customer TO root;
 
+--create tables table
 CREATE TABLE tables (
     id SERIAL PRIMARY KEY,
     customer_id INT,
@@ -36,6 +37,11 @@ CREATE TABLE tables (
     FOREIGN KEY (customer_id) REFERENCES customers(customer_id),
     FOREIGN KEY (staff_id) REFERENCES staff(staff_id)
 );
+
+--create 20 empty tables
+INSERT INTO tables (customer_id, staff_id)
+SELECT NULL, NULL
+FROM generate_series(1, 20);
 
 GRANT ALL ON tables TO root;
 
