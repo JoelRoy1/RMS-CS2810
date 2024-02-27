@@ -16,7 +16,7 @@ const Dashboard = () => {
 
   const fetchOrders = async () => {
     try {
-      const response = await axios.get('http://localhost:9000/order/orders');
+      const response = await axios.get('http://localhost:9000/order');
       setOrders(response.data);
     } catch (error) {
       console.error('Error fetching orders:', error);
@@ -73,17 +73,16 @@ const Dashboard = () => {
               <th>Waiter</th>
               <th>Time Order Placed</th>
               <th>Price</th>
-              <th>orders.</th>
             </tr>
           </thead>
           <tbody>
             {orders.map(order => (
-              <tr key={order.id}>
-                <td>{order.id}</td>
-                <td>{order.status}</td>
-                <td>{order.waiter}</td>
-                <td>{order.time}</td>
-                <td>{order.price}</td>
+              <tr key={order.order_id}>
+                <td>{order.order_id}</td>
+                <td>{order.customer_id}</td>
+                <td>{order.staff_id}</td>
+                <td>{order.order_status}</td>
+                <td>{order.order_allergies}</td>
               </tr>
             ))}
           </tbody>
