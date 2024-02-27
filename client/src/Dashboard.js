@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import './Dashboard.css'
 import Sidebar from './Sidebar' 
 import { Link } from 'react-router-dom'
+import axios from 'axios'
 
 const Dashboard = () => {
   // State to control the sidebar's visibility
@@ -12,15 +13,16 @@ const Dashboard = () => {
     fetchOrders()
   }, []) //Fetchs all the orders when page is loaded
 
-  const fetchOrders = () => {
-    fetch('/api/orders')
-      .then((res) => res.json())
-      .then((data) => {
-        setOrders(data)
-      })
-      .catch((error) => console.error('Error fetching orders:', error))
-  }
 
+  const fetchOrders = async () => {
+    try {
+      const response = await axios.get('http://localhost:9000/order/orders');
+      setOrders(response.data);
+    } catch (error) {
+      console.error('Error fetching orders:', error);
+    }
+  }
+  
 
   // dummy data for the orders table
   const ordersData = [
@@ -71,10 +73,11 @@ const Dashboard = () => {
               <th>Waiter</th>
               <th>Time Order Placed</th>
               <th>Price</th>
+              <th>orders.</th>
             </tr>
           </thead>
           <tbody>
-            {orders.map((order) => (
+            {orders.map(order => (
               <tr key={order.id}>
                 <td>{order.id}</td>
                 <td>{order.status}</td>

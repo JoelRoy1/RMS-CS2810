@@ -52,7 +52,7 @@ router.post('/mark-delivered', async (req, res) => {
 router.get('/orders', async (req, res) => {
   try {
     const orders = await orderController.getAllOrders();
-    res.status(200).json(orders);
+    res.json(orders);
   } catch (error) {
     console.error(`Error fetching orders: ${error.message}`);
     res.status(500).json({ error: error.message });
