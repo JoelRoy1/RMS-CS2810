@@ -52,3 +52,5 @@ const req = { headers: { authorization: `Bearer ${token}` } }; // Token is inclu
 verifyToken(req, null, () => {
     console.log('Token is valid. User:', req.user);
 });
+
+module.exports = { generateToken, verifyToken };
