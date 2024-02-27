@@ -74,4 +74,20 @@ async function orderDelivered(orderId, staffId) {
   }
 }
 
+async function getAllOrders(){
+  let client;
+  try {
+    client = await pool.connect();
+    const result = await client.query('SELECT * FROM orders');
+    return result.rows;
+  } catch (error) {
+    console.error('Error fetching orders:', error);
+  } finally {
+    if (client) {
+      client.release();
+    }
+  }
+
+}
+
 module.exports = { cancelOrder, placeOrder, orderDelivered };

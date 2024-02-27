@@ -1,10 +1,25 @@
-import React, { useState } from 'react' 
+import React, { useEffect, useState } from 'react' 
 import './Dashboard.css'
 import Sidebar from './Sidebar' 
+import { Link } from 'react-router-dom'
 
 const Dashboard = () => {
   // State to control the sidebar's visibility
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
+  const [orders, setOrders] = useState([])
+
+  useEffect(() => {
+    fetchOrders()
+  }, []) //Fetchs all the orders when page is loaded
+
+  const fetchOrders = () => {
+    fetch('/api/orders')
+      .then((res) => res.json())
+      .then((data) => {
+        setOrders(data)
+      })
+      .catch((error) => console.error('Error fetching orders:', error))
+  }
 
 
   // dummy data for the orders table
@@ -25,6 +40,7 @@ const Dashboard = () => {
     },
     // Add more orders as needed
   ]
+
  const toggleSidebar = () => {
    setIsSidebarOpen(!isSidebarOpen)
  }
@@ -58,7 +74,7 @@ const Dashboard = () => {
             </tr>
           </thead>
           <tbody>
-            {ordersData.map((order) => (
+            {orders.map((order) => (
               <tr key={order.id}>
                 <td>{order.id}</td>
                 <td>{order.status}</td>
