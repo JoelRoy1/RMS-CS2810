@@ -39,6 +39,38 @@
   color: #333; /* ensure header text is also dark grey */
 }
 
+.order-status-table {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+}
+
+.order-status-header-item {
+  flex: 1;
+  text-align: center;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.order-status-header-item::after {
+  content: ' ▲▼';
+}
+
+.order-status-content {
+  padding: 10px;
+}
+
+.order-status-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.order-status-row:last-child {
+  border-bottom: none;
+}
+
 .table-dashboard {
   width: 100%;
   border-collapse: collapse;
@@ -78,19 +110,19 @@
     font-size: 13px;
     border-bottom: 1px dotted #ccc;
   }
+
   .table-dashboard th,
-.table-dashboard td {
-  padding: 10px;
-  border-bottom: 1px solid #ddd;
-  text-align: center; /* Centers the text horizontally */
-  color: #333; /* Sets the text color to dark gray */
-}
+  .table-dashboard td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    text-align: center; /* Centers the text horizontally */
+    color: #333; /* Sets the text color to dark gray */
+  }
 
-.table-dashboard th {
-  background-color: #f8f8f8;
-  font-weight: bold;
-}
-
+  .table-dashboard th {
+    background-color: #f8f8f8;
+    font-weight: bold;
+  }
 
   .table-dashboard td::before {
     content: attr(data-label);

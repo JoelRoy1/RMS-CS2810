@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react'; 
+import React, { useEffect, useState } from 'react';
 import './Dashboard.css';
-import Sidebar from './Sidebar'; 
+import Sidebar from './Sidebar';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
@@ -11,7 +11,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     fetchOrders();
-  }, []); // Fetchs all the orders when the page is loaded
+  }, []);
 
   const fetchOrders = async () => {
     try {
@@ -20,19 +20,6 @@ const Dashboard = () => {
     } catch (error) {
       console.error('Error fetching orders:', error);
     }
-  };
-
-  // render order status table headers with up and down arrows
-  const renderTableHeaders = () => {
-    return (
-      <tr>
-        <th>Order ID ▲▼</th>
-        <th>Status ▲▼</th>
-        <th>Waiter ▲▼</th>
-        <th>Time Order Placed ▲▼</th>
-        <th>Price ▲▼</th>
-      </tr>
-    );
   };
 
   const toggleSidebar = () => {
@@ -44,38 +31,31 @@ const Dashboard = () => {
       {/* Include the Sidebar component */}
       <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
 
-      {/* Header stats */}
-      <div className="header-stats">
-        <div className="stat-item">23 Orders Done</div>
-        <div className="stat-item">6 Preparing</div>
-        <div className="stat-item">8 Pending Orders</div>
-      </div>
-
       {/* Order Status Table */}
       <div className="order-status">
         <h2>Order Status</h2>
-        <table>
-          <thead>
-            {renderTableHeaders()}
-          </thead>
-          <tbody>
-            {orders.length > 0 ? (
-              orders.map(order => (
-                <tr key={order.order_id}>
-                  <td>{order.order_id}</td>
-                  <td>{order.customer_id}</td>
-                  <td>{order.staff_id}</td>
-                  <td>{order.order_status}</td>
-                  <td>{order.order_allergies}</td>
-                </tr>
-              ))
-            ) : (
-              <tr>
-                <td colSpan="5">No orders available</td>
-              </tr>
-            )}
-          </tbody>
-        </table>
+        <div className="order-status-table">
+          <div className="order-status-header-item">Order ID ▲▼</div>
+          <div className="order-status-header-item">Waiter ▲▼</div>
+          <div className="order-status-header-item">Time ▲▼</div>
+          <div className="order-status-header-item">Price ▲▼</div>
+          <div className="order-status-header-item">Order Status ▲▼</div>
+        </div>
+        <div className="order-status-content">
+          {orders.length > 0 ? (
+            orders.map(order => (
+              <div key={order.order_id} className="order-status-row">
+                <div>{order.order_id}</div>
+                <div>{order.staff_id}</div>
+                <div>{order.time}</div>
+                <div>{order.price}</div>
+                <div>{order.order_status}</div>
+              </div>
+            ))
+          ) : (
+            <div>No orders available</div>
+          )}
+        </div>
       </div>
     </div>
   );
