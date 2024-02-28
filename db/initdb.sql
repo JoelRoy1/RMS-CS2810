@@ -8,14 +8,18 @@ GRANT ALL PRIVILEGES ON DATABASE rms_db TO root;
 CREATE TABLE staff(
   staff_id SERIAL PRIMARY KEY,
   staff_name VARCHAR(255) UNIQUE NOT NULL,
-  staff_pin INT NOT NULL
+  staff_pin INT NOT NULL,
+  specialization VARCHAR(50) NOT NULL
 );
 
 GRANT ALL ON staff TO root;
 
 -- Create Dummy admin user
-INSERT INTO staff(staff_name, staff_pin) 
-VALUES ('admin', 1234);
+INSERT INTO staff(staff_name, staff_pin, specialization) 
+VALUES ('admin', 1234, 'boss');
+
+INSERT INTO staff(staff_name, staff_pin, specialization) 
+VALUES ('Waiter1', 1234, 'waiter');
 
 -- Create customer table
 CREATE TABLE customer(
