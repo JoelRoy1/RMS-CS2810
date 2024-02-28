@@ -22,6 +22,11 @@ const Dashboard = () => {
     }
   };
 
+  const dummyOrders = [
+    { id: 1, waiter: 'woo', time: '10:30 AM', price: '£1000.00', status: 'Pending' },
+    { id: 2, waiter: 'adi', time: '11:45 AM', price: '£32.50', status: 'Completed' },
+  ];
+
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
@@ -44,16 +49,24 @@ const Dashboard = () => {
         <div className="order-status-content">
           {orders.length > 0 ? (
             orders.map(order => (
-              <div key={order.order_id} className="order-status-row">
-                <div>{order.order_id}</div>
-                <div>{order.staff_id}</div>
+              <div key={order.id} className="order-status-row">
+                <div>{order.id}</div>
+                <div>{order.waiter}</div>
                 <div>{order.time}</div>
                 <div>{order.price}</div>
-                <div>{order.order_status}</div>
+                <div>{order.status}</div>
               </div>
             ))
           ) : (
-            <div>No orders available</div>
+            dummyOrders.map(order => (
+              <div key={order.id} className="order-status-row">
+                <div>{order.id}</div>
+                <div>{order.waiter}</div>
+                <div>{order.time}</div>
+                <div>{order.price}</div>
+                <div>{order.status}</div>
+              </div>
+            ))
           )}
         </div>
       </div>
