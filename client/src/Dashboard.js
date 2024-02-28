@@ -76,15 +76,21 @@ const Dashboard = () => {
             </tr>
           </thead>
           <tbody>
-            {orders.map(order => (
-              <tr key={order.order_id}>
-                <td>{order.order_id}</td>
-                <td>{order.customer_id}</td>
-                <td>{order.staff_id}</td>
-                <td>{order.order_status}</td>
-                <td>{order.order_allergies}</td>
+            {orders.length > 0 ? (
+              orders.map(order => (
+                <tr key={order.order_id}>
+                  <td>{order.order_id}</td>
+                  <td>{order.customer_id}</td>
+                  <td>{order.staff_id}</td>
+                  <td>{order.order_status}</td>
+                  <td>{order.order_allergies}</td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="5">No orders available</td>
               </tr>
-            ))}
+            )}
           </tbody>
         </table>
       </div>
