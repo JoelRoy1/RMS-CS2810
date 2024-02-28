@@ -31,26 +31,57 @@ async function cancelOrder(orderId) {
   }
 }
 
-async function placeOrder(customerId, staffId, orderStatus, orderDetails) {
+async function placeOrder(customerId, staffId, orderStatus, orderAllergies, items) {
   let client;
   try {
-    const client = await pool.connect();
-    const query = `
-      INSERT INTO orders (customer_id, staff_id, order_status, order_details)
-      VALUES ($1, $2, $3, $4)
-      RETURNING order_id;
+    client = await pool.connect();
+    // Start a transaction
+    await client.query('BEGIN');
+    let totalPrice = 0;
+    const values = [];
+    for (const item of items) {
+      // Fetch dish price from the menu table
+      const menuQuery = 'SELECT dish_price FROM menu WHERE dish_id = $1';
+      const menuResult = await client.query(menuQuery, [item.dishId]);
+      const dishPrice = menuResult.rows[0].dish_price;
+      // Calculate total price for this item
+      const itemTotalPrice = dishPrice * item.quantity;
+      totalPrice += itemTotalPrice;
+      // Add item data to the values array
+      values.push([customerId, staffId, orderStatus, orderAllergies, item.dishId, item.quantity, dishPrice]);
+      // Log the item and its total price
+      console.log(`Item ${item.dishId}: Price: ${dishPrice}, Quantity: ${item.quantity}, Total Price: ${itemTotalPrice}`);
+    }
+    // Construct the SQL query to insert all items in a single transaction
+    const orderQuery = `
+      INSERT INTO orders (customer_id, staff_id, order_status, order_allergies, quantity, price)
+      VALUES ($1, $2, $3, $4, $5, $6)
+      RETURNING *;
     `;
-    const values = [customerId, staffId, orderStatus, orderDetails];
-    const result = await client.query(query, values);
-    console.log('New order added with ID:', result.rows[0].order_id);
+    // Execute the query
+    const orderResult = await client.query(orderQuery, [customerId, staffId, orderStatus, orderAllergies, items.length, totalPrice]);
+    // Commit the transaction
+    await client.query('COMMIT');
+    // Log the entire order with total price
+    console.log('New order:', orderResult.rows[0], 'Total Price:', totalPrice);
   } catch (error) {
+    // Rollback the transaction if an error occurs
+    await client.query('ROLLBACK');
     console.error('Error adding new order:', error);
+    throw error; // Rethrow the error to be caught by the caller
   } finally {
     if (client) {
       client.release();
     }
   }
 }
+
+
+
+
+
+
+
 
 async function orderDelivered(orderId, staffId) {
   let client;

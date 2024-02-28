@@ -88,9 +88,10 @@ CREATE TABLE orders(
   customer_id INT REFERENCES customer(customer_id),
   staff_id INT REFERENCES staff(staff_id),
   order_status VARCHAR(255),
-  order_allergies VARCHAR(255),
-  order_details VARCHAR(255),  -- Assuming order details can be large and need to be stored as text
-  order_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP  -- Default to current timestamp when the order is placed
+  order_allergies  VARCHAR(255),
+  order_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  quantity INT,
+  price DECIMAL(10,2)  -- Default to current timestamp when the order is placed
 );
 
 

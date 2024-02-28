@@ -11,15 +11,16 @@ const orderController = require('../controllers/order-controllers');
  * place an order
  */
 router.post('/', async (req, res) => {
-  const { customerId, staffId, orderStatus, orderDetails } = req.body;
+  const { customerId, staffId, orderStatus, orderAllergies, items } = req.body;
   try {
-    await orderController.placeOrder(customerId, staffId, orderStatus, orderDetails);
+    await orderController.placeOrder(customerId, staffId, orderStatus, orderAllergies, items);
     res.status(200).json({ message: 'Order placed successfully' });
   } catch (error) {
     console.error(`Error placing order: ${error.message}`);
     res.status(500).json({ error: error.message });
   }
 });
+
 
 /**
  * delete order route
