@@ -5,6 +5,22 @@
 const db = require('../db');
 const pool = db.pool;
 
+async function showTables() {
+    let client;
+    try {
+        client = await pool.connect();
+        const query = 'SELECT * FROM tables';
+        const result = await client.query(query);
+        return result.rows;
+    } catch (error) {
+        console.error('Error getting tables from database:', error);
+    } finally {
+        if (client) {
+            client.release(); // Release the client back to the pool
+        }
+    }
+}
+
 //customer joins a table so assign staff memeber to the table
 async function assignToTable(customerId) {
     let client;
@@ -52,4 +68,4 @@ async function assignToTable(customerId) {
     }
 }
 
-module.exports = { assignToTable }
+module.exports = { showTables, assignToTable }
