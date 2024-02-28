@@ -15,8 +15,15 @@ const Dashboard = () => {
 
   const fetchOrders = async () => {
     try {
-      const response = await axios.get('http://localhost:9000/order');
+      console.log("fetching orders")
+      const response = await axios.get('http://localhost:9000/order/fetch-all');
+      console.log(response)
       setOrders(response.data);
+      if (response.data.length === 0) console.log('No orders found');
+      else{
+        console.log(response.data[0].id)
+      }
+      console.log('Orders:', response.data)
     } catch (error) {
       console.error('Error fetching orders:', error);
     }

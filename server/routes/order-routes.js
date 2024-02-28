@@ -58,7 +58,16 @@ router.post('/mark-delivered', async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
-
+//fetch all orders
+router.get('/fetch-all',  async (req, res) => {
+  try {
+    const orders = await orderController.getAllOrders();
+    res.json(orders);
+  } catch (error) {
+    console.error(`Error fetching orders: ${error.message}`);
+    res.status(500).json({ error: error.message });
+  }
+});
 
 
 module.exports = router;

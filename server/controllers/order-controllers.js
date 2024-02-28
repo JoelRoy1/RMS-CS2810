@@ -79,7 +79,8 @@ async function getAllOrders(){
   try {
     client = await pool.connect();
     const result = await client.query('SELECT * FROM orders');
-    return result.rows;
+    const orders = result.rows;
+    res.json(orders);
   } catch (error) {
     console.error('Error fetching orders:', error);
   } finally {
