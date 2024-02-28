@@ -76,13 +76,6 @@ async function placeOrder(customerId, staffId, orderStatus, orderAllergies, item
   }
 }
 
-
-
-
-
-
-
-
 async function orderDelivered(orderId, staffId) {
   let client;
   try {
