@@ -35,11 +35,11 @@ const Dashboard = () => {
       <div className="order-status">
         <h2>Order Status</h2>
         <div className="order-status-table">
-          <div className="order-status-header-item">Order ID ▲▼</div>
-          <div className="order-status-header-item">Waiter ▲▼</div>
-          <div className="order-status-header-item">Time ▲▼</div>
-          <div className="order-status-header-item">Price ▲▼</div>
-          <div className="order-status-header-item">Order Status ▲▼</div>
+          <div className="order-status-header-item">Order ID</div>
+          <div className="order-status-header-item">Waiter</div>
+          <div className="order-status-header-item">Time</div>
+          <div className="order-status-header-item">Price</div>
+          <div className="order-status-header-item">Order Status</div>
         </div>
         <div className="order-status-content">
           {orders.length > 0 ? (
