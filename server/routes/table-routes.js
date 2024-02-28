@@ -7,7 +7,7 @@ const router = express.Router();
 const tableController = require('../controllers/table-controller'); // Import the module containing table functionality
 
 // POST route to assign a customer to a table and assign staff
-router.post('/assign', async (req, res) => {
+router.post('/', async (req, res) => {
     try {
         const { customerId } = req.body;
         await tableController.assignToTable(customerId); // Call the assignToTable function with customerId

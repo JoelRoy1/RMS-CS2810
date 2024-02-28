@@ -42,7 +42,7 @@ app.use('/help/retrieve', helpRoute)
 app.use('/help/resolve', helpRoute)
 
 //table endpoints
-app.use('/table/assign', tableRoute)
+app.use('/table', tableRoute)//assigns staff and customer to a table
 
 /**
  * Listens for connections on port 9000 and
