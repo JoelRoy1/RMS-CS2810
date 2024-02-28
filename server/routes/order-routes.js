@@ -13,8 +13,9 @@ const orderController = require('../controllers/order-controllers');
 router.post('/', async (req, res) => {
   const { customerId, staffId, orderStatus, orderAllergies, items } = req.body;
   try {
-    await orderController.placeOrder(customerId, staffId, orderStatus, orderAllergies, items);
-    res.status(200).json({ message: 'Order placed successfully' });
+    const orderSummary = await orderController.placeOrder(customerId, staffId, orderStatus, orderAllergies, items);
+    // Send the order summary as JSON response
+    res.status(200).json(orderSummary);
   } catch (error) {
     console.error(`Error placing order: ${error.message}`);
     res.status(500).json({ error: error.message });
