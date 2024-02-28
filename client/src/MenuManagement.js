@@ -4,14 +4,13 @@ import axios from 'axios'
 const MenuManagementPage = () => {
   const [dishes, setDishes] = useState([])
   const [form, setForm] = useState({
-    dish_name: '',
-    dish_calories: '',
-    dish_price: '',
+    dishName: '',
+    dishCalories: '',
+    dishPrice: '',
   })
-  const [editingId, setEditingId] = useState(null)
+  const [editingID, setEditingId] = useState(null)
 
   useEffect(() => {
-    // Fetch dishes from the backend when the component mounts
     axios
       .get('http://localhost:9000/menu')
       .then((response) => setDishes(response.data))
@@ -20,28 +19,35 @@ const MenuManagementPage = () => {
 
   const handleInputChange = (event) => {
     const { name, value } = event.target
+    if (name === 'dishName' && !/^[a-zA-Z\s]*$/.test(value)) {
+      return
+    }
     setForm({ ...form, [name]: value })
   }
 
   const handleSubmit = (event) => {
     event.preventDefault()
-    const method = editingId ? 'put' : 'post'
-    const url = editingId
-      ? `http://localhost:9000/menu/${editingId}`
-      : 'http://localhost:9000/menu/create-item'
+    const endpoint = editingID ? `/menu/${editingID}` : '/menu/create-item'
+    const payload = {
+      dishName: form.dishName,
+      dishCalories: parseInt(form.dishCalories),
+      dishPrice: parseFloat(form.dishPrice).toFixed(2), // Ensures the price is a string with two decimal places
+    }
 
-    axios[method](url, { ...form, dish_id: editingId })
+    axios
+      .post(`http://localhost:9000${endpoint}`, payload)
       .then((response) => {
-        if (editingId) {
+        // Update the dishes state based on whether we're adding or editing
+        if (editingID) {
           setDishes(
             dishes.map((dish) =>
-              dish.dish_id === editingId ? response.data : dish
+              dish.dish_id === editingID ? response.data : dish
             )
           )
         } else {
           setDishes([...dishes, response.data])
         }
-        setForm({ dish_name: '', dish_calories: '', dish_price: '' })
+        setForm({ dishName: '', dishCalories: '', dishPrice: '' })
         setEditingId(null)
       })
       .catch((error) => console.error('Submit dish error:', error))
@@ -49,19 +55,19 @@ const MenuManagementPage = () => {
 
   const handleEditClick = (dish) => {
     setForm({
-      dish_name: dish.dish_name,
-      dish_calories: dish.dish_calories,
-      dish_price: dish.dish_price,
+      dishName: dish.dish_name,
+      dishCalories: dish.dish_calories.toString(),
+      dishPrice: dish.dish_price.toString(),
     })
     setEditingId(dish.dish_id)
   }
 
-  const handleDeleteClick = (dishId) => {
+  const handleDeleteClick = (dishID) => {
     if (window.confirm('Are you sure you want to delete this dish?')) {
       axios
-        .delete(`http://localhost:9000/menu/delete-item/${dishId}`)
+        .delete(`http://localhost:9000/menu/delete-item/${dishID}`)
         .then(() => {
-          setDishes(dishes.filter((dish) => dish.dish_id !== dishId))
+          setDishes(dishes.filter((dish) => dish.dish_id !== dishID))
         })
         .catch((error) => console.error('Delete dish error:', error))
     }
@@ -72,28 +78,29 @@ const MenuManagementPage = () => {
       <h1>Menu Management</h1>
       <form onSubmit={handleSubmit}>
         <input
-          name="dish_name"
-          value={form.dish_name}
+          name="dishName"
+          value={form.dishName}
           onChange={handleInputChange}
           placeholder="Dish Name"
           required
         />
         <input
-          name="dish_calories"
+          name="dishCalories"
           type="number"
-          value={form.dish_calories}
+          value={form.dishCalories}
           onChange={handleInputChange}
           placeholder="Calories"
           required
         />
         <input
-          name="dish_price"
-          value={form.dish_price}
+          name="dishPrice"
+          type="text"
+          value={form.dishPrice}
           onChange={handleInputChange}
           placeholder="Price"
           required
         />
-        <button type="submit">{editingId ? 'Update' : 'Add'} Dish</button>
+        <button type="submit">{editingID ? 'Update' : 'Add'} Dish</button>
       </form>
       <ul>
         {dishes.map((dish) => (
