@@ -25,9 +25,9 @@ router.post('/', async (req, res) => {
  * Create account route
  */
 router.post('/create-account', async (req, res) => {
-  const { username, pin } = req.body;
+  const { username, pin, specialization } = req.body;
   try {
-    const newUser = await controller.createAccount(username, pin);
+    const newUser = await controller.createAccount(username, pin, specialization);
     res.status(201).json(newUser);
   } catch (error) {
     //console.error(`Error creating user: ${error.message}`);
