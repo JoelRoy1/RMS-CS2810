@@ -129,28 +129,4 @@ async function getDeliveredOrderCount() {
   }
 }
 
-async function getDeliveredOrderCount() {
-  let client;
-  try {
-    console.log('Retrieving delivered order count...');
-    client = await pool.connect();
-    const query = `
-      SELECT COUNT(*) AS delivered_order_count
-      FROM orders
-      WHERE order_status = 'delivered';
-    `;
-    const result = await client.query(query);
-    const deliveredOrderCount = parseInt(result.rows[0].delivered_order_count);
-    console.log('Delivered order count:', deliveredOrderCount);
-    return deliveredOrderCount;
-  } catch (error) {
-    console.error('Error retrieving delivered order count:', error);
-    throw error;
-  } finally {
-    if (client) {
-      client.release();
-    }
-  }
-}
-
 module.exports = { cancelOrder, placeOrder, orderDelivered, getDeliveredOrderCount };
