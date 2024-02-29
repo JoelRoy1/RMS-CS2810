@@ -4,6 +4,7 @@
  */
 
 const db = require('../db');
+const token = require('./token-controller');
 const pool = db.pool;
 
 /**
@@ -29,7 +30,7 @@ async function signIn(username, pin) {
       throw new Error('Invalid username or PIN. Please check your credentials and try again.');
     }
     console.log('Sign in successful');
-    return result.rows[0]; // Return the first matching staff member
+    return token.generateToken(username, pin); // Return the token for staff member (for protected routes)
   } catch (error) {
     console.error(`Error signing in: ${error.message}`);
     throw new Error(`Unable to sign in: ${error.message}`);
@@ -47,11 +48,11 @@ async function signIn(username, pin) {
  * @param {int} pin new pin number
  * @returns newly created user
  */
-async function createAccount(username, pin) {
+async function createAccount(username, pin, specialization) {
   let client;
   try {
     console.log('Creating account...');
-    const client = await pool.connect(); //Establish Connection
+    client = await pool.connect(); //Establish Connection
     console.log('Connected to the database');
     const checkQuery = {
       text: 'SELECT * FROM staff WHERE staff_name = $1',
@@ -62,8 +63,8 @@ async function createAccount(username, pin) {
       throw new Error('An account with this username already exists.');
     }
     const query = {
-      text: 'INSERT INTO staff (staff_name, staff_pin) VALUES ($1, $2) RETURNING *',
-      values: [username, pin],
+      text: 'INSERT INTO staff (staff_name, staff_pin, specialization) VALUES ($1, $2, $3) RETURNING *',
+      values: [username, pin, specialization],
     };
     const result = await client.query(query);
     console.log('Account created successfully');

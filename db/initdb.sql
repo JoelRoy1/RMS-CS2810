@@ -8,14 +8,18 @@ GRANT ALL PRIVILEGES ON DATABASE rms_db TO root;
 CREATE TABLE staff(
   staff_id SERIAL PRIMARY KEY,
   staff_name VARCHAR(255) UNIQUE NOT NULL,
-  staff_pin INT NOT NULL
+  staff_pin INT NOT NULL,
+  specialization VARCHAR(50) NOT NULL
 );
 
 GRANT ALL ON staff TO root;
 
 -- Create Dummy admin user
-INSERT INTO staff(staff_name, staff_pin) 
-VALUES ('admin', 1234);
+INSERT INTO staff(staff_name, staff_pin, specialization) 
+VALUES ('admin', 1234, 'boss');
+
+INSERT INTO staff(staff_name, staff_pin, specialization) 
+VALUES ('Waiter1', 1234, 'waiter');
 
 -- Create customer table
 CREATE TABLE customer(
@@ -28,6 +32,17 @@ CREATE TABLE customer(
 INSERT INTO customer (customer_name, customer_allergies) VALUES ('John Doe', 'None');
 
 GRANT ALL ON customer TO root;
+
+--create tables table
+CREATE TABLE tables (
+    table_number SERIAL PRIMARY KEY,
+    customer_id INT REFERENCES customer(customer_id),
+    staff_id INT REFERENCES staff(staff_id)
+);
+
+INSERT INTO tables (customer_id, staff_id) SELECT NULL, NULL FROM generate_series(1, 20);
+
+GRANT ALL ON tables TO root;
 
 -- Create menu table
 CREATE TABLE menu(
@@ -74,12 +89,25 @@ INSERT INTO dish_allergens (dish_id, allergen_id) VALUES (3, 3); -- Salad contai
 -- Create orders table
 CREATE TABLE orders(
   order_id SERIAL PRIMARY KEY,
-  customer_id SERIAL REFERENCES customer(customer_id),
-  staff_id SERIAL REFERENCES staff(staff_id),
+  customer_id INT REFERENCES customer(customer_id),
+  staff_id INT REFERENCES staff(staff_id),
   order_status VARCHAR(255),
-  order_allergies VARCHAR(255)
+  order_allergies  VARCHAR(255),
+  order_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  quantity INT,
+  price DECIMAL(10,2)  -- Default to current timestamp when the order is placed
 );
 
+
 -- Add a dummy order for the customer
-INSERT INTO orders (order_id, customer_id, staff_id, order_status, order_allergies) VALUES (21, 1, 1, 'active', 'None');
 GRANT ALL ON orders TO root;
+
+-- Create needs_help table
+CREATE TABLE needs_help (
+  help_id SERIAL PRIMARY KEY,
+  customer_id SERIAL REFERENCES customer(customer_id),
+  resolved BOOLEAN DEFAULT FALSE
+);
+
+GRANT ALL ON needs_help TO root;
+
