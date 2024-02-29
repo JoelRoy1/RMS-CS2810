@@ -63,4 +63,18 @@ router.get('/get-delivered', async (req, res) => {
   }
 });
 
+/**
+ * Retrieves the count of pending orders.
+ */
+router.get('/get-pending-orders', async (req, res) => {
+  try {
+    const pendingOrderCount = await orderController.getPendingOrderCount();
+    res.status(200).json({ pendingOrderCount });
+  } catch (error) {
+    console.error(`Error retrieving pending order count: ${error.message}`);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+
 module.exports = router;

@@ -129,4 +129,29 @@ async function getDeliveredOrderCount() {
   }
 }
 
-module.exports = { cancelOrder, placeOrder, orderDelivered, getDeliveredOrderCount };
+async function getPendingOrderCount() {
+  let client;
+  try {
+    console.log('Retrieving pending order count...');
+    client = await pool.connect();
+    const query = `
+      SELECT COUNT(*) AS pending_order_count
+      FROM orders
+      WHERE order_status <> 'delivered';
+    `;
+    const result = await client.query(query);
+    const pendingOrderCount = parseInt(result.rows[0].pending_order_count);
+    console.log('Pending order count:', pendingOrderCount);
+    return pendingOrderCount;
+  } catch (error) {
+    console.error('Error retrieving pending order count:', error);
+    throw error;
+  } finally {
+    if (client) {
+      client.release();
+    }
+  }
+}
+
+
+module.exports = { cancelOrder, placeOrder, orderDelivered, getDeliveredOrderCount, getPendingOrderCount };
