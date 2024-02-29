@@ -43,6 +43,13 @@ const Dashboard = () => {
       {/* Include the Sidebar component */}
       <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
 
+      {/* Header stats */}
+      <div className="header-stats">
+        <div className="stat-item">23 Orders Done</div>
+        <div className="stat-item">6 Preparing</div>
+        <div className="stat-item">8 Pending Orders</div>
+      </div>
+
       {/* Order Status Table */}
       <div className="order-status">
         <h2>Order Status</h2>
