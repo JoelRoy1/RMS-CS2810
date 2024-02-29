@@ -43,6 +43,7 @@ app.use('/help/resolve', helpRoute)
 
 //table endpoints
 app.use('/table', tableRoute)//see all tables
+app.use('/table/view-assigned', tableRoute)//see all tables assigned to a specific staff member
 app.use('/table/assign', tableRoute)//assigns staff and customer to a table
 
 /**
