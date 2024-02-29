@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import DishCard from './DishCard';
 import './MenuPage.css';
 import './styles.css';
@@ -120,7 +120,7 @@ const MenuPage = () => {
   const callWaiter = () => {
       alert("Waiter called for Table " + tableNumber);
       setTableNumber('');
-  };
+  }; 
 
   const dishes = [
       {
