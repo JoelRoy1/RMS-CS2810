@@ -35,6 +35,7 @@ app.use('/menu/delete-item', menuRoute)
 app.use('/order/cancel-order', orderRoute)
 app.use('/order', orderRoute)
 app.use('/order/mark-delivered', orderRoute)
+app.use('/get-delivered', orderRoute)
 
 //order endpoints
 app.use('/help', helpRoute)

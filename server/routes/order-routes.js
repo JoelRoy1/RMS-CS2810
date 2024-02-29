@@ -50,4 +50,17 @@ router.post('/mark-delivered', async (req, res) => {
   }
 });
 
+/**
+ * Retrieves the count of orders marked as delivered.
+ */
+router.get('/get-delivered', async (req, res) => {
+  try {
+    const deliveredOrderCount = await orderController.getDeliveredOrderCount();
+    res.status(200).json({ deliveredOrderCount });
+  } catch (error) {
+    console.error(`Error retrieving delivered order count: ${error.message}`);
+    res.status(500).json({ error: error.message });
+  }
+});
+
 module.exports = router;
