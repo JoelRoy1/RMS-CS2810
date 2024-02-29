@@ -17,6 +17,18 @@ router.get('/', async (req, res) => {
     }
 });
 
+//GET route to see all tables for a specific staff member
+router.get('/view-assigned', async (req, res) => {
+    try {
+        const { staffId } = req.body;
+        await tableController.showAssigned(staffId) //Call the seeAssigned function with staffId
+        res.status(200).json({ message: 'Tables retrieved successfully.' });
+    } catch (error) {
+        console.error('Error getting tables:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
 // POST route to assign a customer to a table and assign staff
 router.post('/assign', async (req, res) => {
     try {

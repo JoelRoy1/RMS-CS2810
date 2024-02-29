@@ -21,6 +21,21 @@ async function showTables() {
     }
 }
 
+//
+async function showAssigned(staffId) {
+    let client;
+    try {
+        client = await pool.connect();
+        const query = 'SELECT * FROM tables WHERE staff_id = $1';
+        const result = await client.query(query);
+        return result.rows;
+    } catch (error) {
+        if (client) {
+            client.release(); //Release the client back to the pool
+        }
+    }
+};
+
 //customer joins a table so assign staff memeber to the table
 async function assignToTable(customerId) {
     let client;
@@ -68,4 +83,4 @@ async function assignToTable(customerId) {
     }
 }
 
-module.exports = { showTables, assignToTable }
+module.exports = { showTables, showAssigned, assignToTable }
