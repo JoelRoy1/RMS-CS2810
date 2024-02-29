@@ -84,6 +84,17 @@ UPDATE needs_help SET resolved = 'invalid_value' WHERE help_id = 1;
 -- (Assuming order_status in orders must be one of the predefined values, this should result in an error)
 INSERT INTO orders (customer_id, staff_id, order_status, order_allergies) VALUES (2, 1, 'invalid_status', 'None');
 
+--Test Case 23: Attempt to Insert Staff Member with Empty Username:
+--(Assuming staff usernames cannot be empty, this should result in an error)
+INSERT INTO staff(staff_name, staff_pin, specialization) VALUES ('', 9999, 'manager');
+
+--Test Case 24: Attempt to Insert Staff Member with NULL PIN:
+--(Assuming staff PINs cannot be NULL, this should result in an error)
+INSERT INTO staff(staff_name, staff_pin, specialization) VALUES ('new_staff', NULL, 'chef');
+
+--Test Case 25: Attempt to Insert Staff Member with Special Characters:
+--(Assuming staff usernames must not contain special characters, this should result in an error)
+INSERT INTO staff(staff_name, staff_pin, specialization) VALUES ('staff@1', 9999, 'manager');
 
 
 
