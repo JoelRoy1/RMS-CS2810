@@ -5,7 +5,7 @@ import StaffLoginPage from './StaffLoginPage'
 import MenuPage from './MenuPage'
 import MenuManagement from './MenuManagement'
 import './App.css'
-import CustomerLoginPage from './CustomerLoginPage'
+import CustomerLoginPage from 'styles/CustomerLoginPage'
 
 function App() {
   const [showNav, setShowNav] = useState(false)

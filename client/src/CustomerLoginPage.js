@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./CustomerLoginPage.css";
+import "styles/CustomerLoginPage.css";
 function CustomerLoginPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");

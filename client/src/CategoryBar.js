@@ -1,5 +1,5 @@
 import React from 'react';
-import './CategoryBar.css';
+import 'styles/CategoryBar.css';
 
 const CategoryBar = ({ }) => {
   return (

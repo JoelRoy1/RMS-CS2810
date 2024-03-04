@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import DishCard from './DishCard';
-import './MenuPage.css';
-import './styles.css';
+import 'styles/MenuPage.css';
+import 'styles/styles.css';
 import vegPastaImage from './assets/veg-pasta.jpg';
 import chickenTacosImage from './assets/chicken-tacos.jpg';
 import MolePoblanoImage from './assets/MolePoblanoImage.jpeg';

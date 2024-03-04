@@ -1,5 +1,5 @@
 import React from 'react';
-import './DishCard.css';
+import 'styles/DishCard.css';
 
 const DishCard = ({ dish }) => {
   return (

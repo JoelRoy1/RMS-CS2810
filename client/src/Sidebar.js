@@ -1,5 +1,5 @@
 import React from 'react'
-import './Sidebar.css'
+import 'styles/Sidebar.css'
 import avatar from './assets/avatar.png'
 import iconHome from './assets/icon-home.svg'
 import iconSettings from './assets/icon-settings.svg'

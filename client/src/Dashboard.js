@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import './Dashboard.css';
+import 'styles/Dashboard.css';
 import Sidebar from './Sidebar';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
