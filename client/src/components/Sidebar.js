@@ -1,12 +1,12 @@
 import React from 'react'
-import './styles/Sidebar.css'
-import avatar from './assets/avatar.png'
-import iconHome from './assets/icon-home.svg'
-import iconSettings from './assets/icon-settings.svg'
-import iconAccounts from './assets/icon-accounts.svg'
-import iconLock from './assets/icon-lock.svg'
-import iconBurger from './assets/icon-burger.svg'
-import iconClose from './assets/icon-close.svg'
+import '../styles/Sidebar.css'
+import avatar from '../assets/avatar.png'
+import iconHome from '../assets/icon-home.svg'
+import iconSettings from '../assets/icon-settings.svg'
+import iconAccounts from '../assets/icon-accounts.svg'
+import iconLock from '../assets/icon-lock.svg'
+import iconBurger from '../assets/icon-burger.svg'
+import iconClose from '../assets/icon-close.svg'
 
 const Sidebar = ({ isOpen, toggleSidebar }) => {
   return (
