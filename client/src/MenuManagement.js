@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
+import { Helmet } from 'react-helmet';
 
 const MenuManagementPage = () => {
   const [dishes, setDishes] = useState([])
@@ -75,6 +76,11 @@ const MenuManagementPage = () => {
 
   return (
     <div>
+      <div>
+        <Helmet>
+          <title>Oaxaca | Manage Menu</title>
+        </Helmet>
+      </div>
       <h1>Menu Management</h1>
       <form onSubmit={handleSubmit}>
         <input

@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import "./styles/CustomerLoginPage.css";
+import { Helmet } from 'react-helmet';
+
 function CustomerLoginPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -76,6 +78,11 @@ function CustomerLoginPage() {
 
   return (
     <form className="login-form" onSubmit={handleSubmit}>
+      <div>
+      <Helmet>
+        <title>Oaxaca | Customer Login</title>
+      </Helmet>
+      </div>
       {!isForgotPassword && (
         <>
           {!isGuest && (

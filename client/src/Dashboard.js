@@ -3,6 +3,7 @@ import './styles/Dashboard.css';
 import Sidebar from './Sidebar';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { Helmet } from 'react-helmet';
 
 const Dashboard = () => {
   // State to control the sidebar's visibility
@@ -49,6 +50,12 @@ const Dashboard = () => {
         <div className="stat-item">6 Preparing</div>
         <div className="stat-item">8 Pending Orders</div>
       </div>
+
+    <div>
+      <Helmet>
+        <title>Oaxaca | Dashboard</title>
+      </Helmet>
+    </div>
 
       {/* Order Status Table */}
       <div className="order-status">

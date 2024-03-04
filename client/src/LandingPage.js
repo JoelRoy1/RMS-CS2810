@@ -2,6 +2,7 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import './styles/LandingPage.css' // CSS file
 import backgroundImage from './assets/restaurant_background.jpg'
+import { Helmet } from 'react-helmet';
 
 const LandingPage = () => {
   let navigate = useNavigate()
@@ -19,6 +20,11 @@ const LandingPage = () => {
       className="App-header"
       style={{ backgroundImage: `url(${backgroundImage})` }}
     >
+    <div>
+      <Helmet>
+        <title>Oaxaca | Home</title>
+      </Helmet>
+    </div>
       <h1>OAXACA</h1>
       <p>CHICKEN WINGS EXTRAORDINAIRE</p>
       <p>Est. 2005</p>

@@ -12,6 +12,8 @@ import ShrimpTacosImage from './assets/ShrimpTacosImage.jpg';
 import Navbar from './Navbar';
 import CategoryBar from './CategoryBar';
 import { useNavigate,NavLink } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
+
 const CartItem = ({ cartItem, removeFromCart, updateQuantity }) => {
   const handleRemoveFromCart = () => {
       removeFromCart(cartItem.id);
@@ -215,6 +217,11 @@ const MenuPage = () => {
   
   return (
       <>
+      <div>
+        <Helmet>
+          <title>Oaxaca | Menu</title>
+        </Helmet>
+      </div>
       <div className='container'>
           <div className='row' style={{display:'flex', flexWrap:'wrap', justifyContent:''}} >
 

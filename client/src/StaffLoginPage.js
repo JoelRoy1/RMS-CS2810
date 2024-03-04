@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import './styles/StaffLoginPage.css'
+import { Helmet } from 'react-helmet';
 
 function StaffLoginPage() {
   const [username, setUsername] = useState('')
@@ -31,6 +32,11 @@ function StaffLoginPage() {
 
   return (
     <div className="staff-login-page">
+      <div>
+      <Helmet>
+        <title>Oaxaca | Staff Login</title>
+      </Helmet>
+    </div>
       <div className="login-container">
         <form className="login-form" onSubmit={handleSubmit}>
           <label htmlFor="username" className="login-label">
