@@ -1,7 +1,7 @@
 /* LandingPage.css */
 .App-header {
   text-align: center; /* Center text horizontally */
-  background-image: url('./restaurant_background.jpg'); /* Assuming the path is correct */
+  background-image: url('../assets/restaurant_background.jpg'); /* Assuming the path is correct */
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;

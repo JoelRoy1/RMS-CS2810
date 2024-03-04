@@ -1,6 +1,6 @@
 .App {
   min-height: 100vh; /* to make sure that it covers at least the full viewport height */
-  background-image: url('./restaurant_background.jpg'); /* Path of the image */
+  background-image: url('../assets/restaurant_background.jpg'); /* Path of the image */
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
