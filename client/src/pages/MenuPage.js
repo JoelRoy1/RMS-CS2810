@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import DishCard from './DishCard';
-import './styles/MenuPage.css';
-import './styles/styles.css';
-import vegPastaImage from './assets/veg-pasta.jpg';
-import chickenTacosImage from './assets/chicken-tacos.jpg';
-import MolePoblanoImage from './assets/MolePoblanoImage.jpeg';
-import ChilesRellenosImage from './assets/ChilesRellenosImage.jpg';
-import EnchiladasSuizasImage from './assets/EnchiladasSuizasImage.jpg';
-import CarnitasImage from './assets/CarnitasImage.jpg';
-import ShrimpTacosImage from './assets/ShrimpTacosImage.jpg';
-import Navbar from './Navbar';
-import CategoryBar from './CategoryBar';
+import DishCard from '../components/DishCard';
+import '../styles/MenuPage.css';
+import '../styles/styles.css';
+import vegPastaImage from '../assets/veg-pasta.jpg';
+import chickenTacosImage from '../assets/chicken-tacos.jpg';
+import MolePoblanoImage from '../assets/MolePoblanoImage.jpeg';
+import ChilesRellenosImage from '../assets/ChilesRellenosImage.jpg';
+import EnchiladasSuizasImage from '../assets/EnchiladasSuizasImage.jpg';
+import CarnitasImage from '../assets/CarnitasImage.jpg';
+import ShrimpTacosImage from '../assets/ShrimpTacosImage.jpg';
+import Navbar from '../components/Navbar';
+import CategoryBar from '../components/CategoryBar';
 import { useNavigate,NavLink } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 

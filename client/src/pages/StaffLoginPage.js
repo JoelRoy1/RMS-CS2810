@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
-import './styles/StaffLoginPage.css'
+import '../styles/StaffLoginPage.css'
 import { Helmet } from 'react-helmet';
 
 function StaffLoginPage() {

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./styles/CustomerLoginPage.css";
+import "../styles/CustomerLoginPage.css";
 import { Helmet } from 'react-helmet';
 
 function CustomerLoginPage() {

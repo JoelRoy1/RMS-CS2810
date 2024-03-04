@@ -2,9 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './styles/index.css';
 import App from './App';
-import StaffLoginPage from './StaffLoginPage';
-import MenuPage from './MenuPage';
-import Dashboard from './Dashboard';
+import StaffLoginPage from './pages/StaffLoginPage';
+import MenuPage from './pages/MenuPage';
+import Dashboard from './pages/Dashboard';
 import reportWebVitals from './reportWebVitals';
 
 

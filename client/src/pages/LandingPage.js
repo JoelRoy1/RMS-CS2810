@@ -1,7 +1,7 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
-import './styles/LandingPage.css' // CSS file
-import backgroundImage from './assets/restaurant_background.jpg'
+import '../styles/LandingPage.css' // CSS file
+import backgroundImage from '../assets/restaurant_background.jpg'
 import { Helmet } from 'react-helmet';
 
 const LandingPage = () => {

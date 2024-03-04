@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
-import LandingPage from './LandingPage'
-import StaffLoginPage from './StaffLoginPage'
-import MenuPage from './MenuPage'
-import MenuManagement from './MenuManagement'
-import CustomerLoginPage from './CustomerLoginPage'
+import LandingPage from './pages/LandingPage'
+import StaffLoginPage from './pages/StaffLoginPage'
+import MenuPage from './pages/MenuPage'
+import MenuManagement from './pages/MenuManagement'
+import CustomerLoginPage from './pages/CustomerLoginPage'
 import './styles/App.css'
 
 
