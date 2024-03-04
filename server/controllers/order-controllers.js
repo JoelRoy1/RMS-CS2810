@@ -5,15 +5,15 @@
 
 /**
  * The cancelOrder function deletes the corresponding order when a csutomer wishes to cancel.
- * 
+ *
  * @param {int} orderId the orderId of the order to delete
  * @returns the matching data from the database
  */
-const db = require('../db');
-const pool = db.pool;
+const db = require('../db')
+const pool = db.pool
 
 async function cancelOrder(orderId) {
-  let client;
+  let client
   try {
     console.log('Attempting to cancel order...');
     const client = await pool.connect();
@@ -23,10 +23,10 @@ async function cancelOrder(orderId) {
     await client.query(query, value);
     console.log('Order ID: ',orderId, 'cancelled');
   } catch (error) {
-    console.error(`Error cancelling order: ${error.message}`);
+    console.error(`Error cancelling order: ${error.message}`)
   } finally {
     if (client) {
-      client.release();
+      client.release()
     }
   }
 }
@@ -73,17 +73,17 @@ async function placeOrder(customerId, staffId, orderStatus, orderAllergies, item
     throw error;
   } finally {
     if (client) {
-      client.release();
+      client.release()
     }
   }
 }
 
 
 async function orderDelivered(orderId, staffId) {
-  let client;
+  let client
   try {
-    console.log('Attempting to deliver order...');
-    const client = await pool.connect();
+    console.log('Attempting to deliver order...')
+    const client = await pool.connect()
     const query = `
       UPDATE orders
       SET order_status = 'delivered'
@@ -97,10 +97,10 @@ async function orderDelivered(orderId, staffId) {
     console.log('Order marked delivered successfully');
     console.log('Order:', result2.rows[0].order_id, 'marked as delivered by staff memeber:',  result2.rows[0].staff_id);
   } catch (error) {
-    console.error('Error confirming order as delivered', error);
+    console.error('Error confirming order as delivered', error)
   } finally {
     if (client) {
-      client.release();
+      client.release()
     }
   }
 }
