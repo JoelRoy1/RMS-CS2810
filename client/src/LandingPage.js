@@ -1,6 +1,6 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
-import 'styles/LandingPage.css' // CSS file
+import './styles/LandingPage.css' // CSS file
 import backgroundImage from './restaurant_background.jpg'
 
 const LandingPage = () => {
