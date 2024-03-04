@@ -90,7 +90,7 @@ async function createMenuItem(dishName, dishCalories, dishPrice) {
   let client;
   try {
     console.log('Attempting to create item...')
-    const client = await pool.connect(); // Establish connection to db
+    client = await pool.connect(); // Establish connection to db
     const query = `
       INSERT INTO menu (dish_name, dish_calories, dish_price)
       VALUES ($1, $2, $3)
@@ -100,7 +100,7 @@ async function createMenuItem(dishName, dishCalories, dishPrice) {
     const result = await client.query(query, values);
     console.log('New item added with ID:', result.rows[0].dish_id);
   } catch (error) {
-    console.error('Error adding new item:', $(error.message));
+    console.error('Error adding new item:', (error.message));
   } finally {
     client.release();
   }

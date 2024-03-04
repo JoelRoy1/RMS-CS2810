@@ -13,6 +13,7 @@ const staffRoute = require('./routes/staff-routes')
 const menuRoute = require('./routes/menu-routes')
 const orderRoute = require('./routes/order-routes')
 const helpRoute = require('./routes/help-routes')
+const tableRoute = require('./routes/table-routes')
 
 //middleware
 app.use(express.json())
@@ -34,13 +35,18 @@ app.use('/menu/delete-item', menuRoute)
 app.use('/order/cancel-order', orderRoute)
 app.use('/order', orderRoute)
 app.use('/order/mark-delivered', orderRoute)
-app.use('/order/place-order', orderRoute)
-app.use('/order/fetch-all', orderRoute)
+app.use('/order/get-delivered', orderRoute)
+app.use('/order/get-pending-orders', orderRoute)
 
 //order endpoints
 app.use('/help', helpRoute)
 app.use('/help/retrieve', helpRoute)
 app.use('/help/resolve', helpRoute)
+
+//table endpoints
+app.use('/table', tableRoute)//see all tables
+app.use('/table/view-assigned', tableRoute)//see all tables assigned to a specific staff member
+app.use('/table/assign', tableRoute)//assigns staff and customer to a table
 
 /**
  * Listens for connections on port 9000 and

@@ -36,6 +36,7 @@ router.get('/filter-allergens', async (req, res) => {
  */
 router.post(`/create-item`, async (req, res) => {
   const { dishName, dishCalories, dishPrice } = req.body
+
   try {
     const menu = await controller.createMenuItem(
       dishName,
@@ -44,7 +45,9 @@ router.post(`/create-item`, async (req, res) => {
     )
     res.status(200).json({ message: 'Dish created succesfully' })
   } catch (error) {
-    res.status(500).json({ error: `Error creating dish: ${error.message}` })
+    res
+      .status(500)
+      .json({ error: `Error creating dish: ${error.message} ${dishName}` })
   }
 })
 
