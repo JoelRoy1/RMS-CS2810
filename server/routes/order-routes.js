@@ -37,8 +37,8 @@ router.post('/', async (req, res) => {
 /**
  * delete order route
  */
-router.delete('/cancel-order/:orderId', async (req, res) => {
-  const orderId = req.params.orderId;
+router.delete('/cancel-order', async (req, res) => {
+  const orderId = req.body;
   try {
     await orderController.cancelOrder(orderId);
     res.status(200).json({ message: 'Order canceled successfully' });
@@ -46,6 +46,7 @@ router.delete('/cancel-order/:orderId', async (req, res) => {
     res.status(500).json({ error: `Error canceling order: ${error.message}`});
   }
 });
+
 
 /**
  * mark an order as delivered
