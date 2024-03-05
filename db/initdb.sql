@@ -109,7 +109,7 @@ CREATE TABLE tables (
     FOREIGN KEY (staff_id) REFERENCES staff(staff_id)
 );
 
--- create 20 empty tables for the resturant
+-- create 20 empty tables for the restuarant
 INSERT INTO tables (customer_id, staff_id)
 SELECT NULL, NULL
 FROM generate_series(1, 20);

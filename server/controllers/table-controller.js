@@ -52,8 +52,8 @@ async function assignToTable(customerId) {
         await client.query(assignCustomerQuery, [customerId, freeTableId]);
 
         // Fetch all waiter staff members
-        const waiterQuery = 'SELECT staff_id FROM staff WHERE specialization = $1';
-        const waiterResult = await client.query(waiterQuery, ['waiter']);
+        const waiterQuery = 'SELECT staff_id FROM staff WHERE staff_type = $1';
+        const waiterResult = await client.query(waiterQuery, 1); 
         const waiterStaffMembers = waiterResult.rows;
 
         // Find the waiter staff member with the least workload
