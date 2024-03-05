@@ -59,10 +59,10 @@ async function placeOrder(customerId, staffId, orderStatus, orderAllergies, item
     }
     
     // Check if the provided staffId corresponds to a waiter
-    const staffQuery = 'SELECT specialization FROM staff WHERE staff_id = $1';
+    const staffQuery = 'SELECT staff_type FROM staff WHERE staff_id = $1';
     const staffResult = await client.query(staffQuery, [staffId]);
-    const specialization = staffResult.rows[0].specialization;
-    if (specialization !== 'waiter') {
+    const staff_type = staffResult.rows[0].staff_type;
+    if (staff_type !== 1) {
       throw new Error('Staff ID must correspond to a waiter.');
     }
 

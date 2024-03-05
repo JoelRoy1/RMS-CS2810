@@ -9,18 +9,18 @@ CREATE TABLE staff(
   staff_id SERIAL PRIMARY KEY,
   staff_name VARCHAR(255) UNIQUE NOT NULL,
   staff_pin INT NOT NULL,
-  specialization VARCHAR(50) NOT NULL
+  staff_type INT NOT NULL
 );
 
 
 GRANT ALL ON staff TO root;
 
 -- Create Dummy admin user
-INSERT INTO staff(staff_name, staff_pin, specialization) 
-VALUES ('admin', 1234, 'boss');
+INSERT INTO staff(staff_name, staff_pin, staff_type) 
+VALUES ('admin', 1234, 0);
 
-INSERT INTO staff(staff_name, staff_pin, specialization) 
-VALUES ('Waiter1', 123, 'waiter');
+INSERT INTO staff(staff_name, staff_pin, staff_type) 
+VALUES ('Waiter1', 123, 1);
 
 
 -- Create customer table
