@@ -5,17 +5,18 @@ GRANT ALL PRIVILEGES ON DATABASE rms_db TO root;
 \c rms_db root
 
 -- Create staff table (insure all staff usernames are unique)
+-- Includes staff types. (0 = Admin/Manager, 1 = Waiter, 2 = Kitchen Staff)
 CREATE TABLE staff(
   staff_id SERIAL PRIMARY KEY,
   staff_name VARCHAR(255) UNIQUE NOT NULL,
-  staff_pin INT NOT NULL
+  staff_pin INT NOT NULL,
+  staff_type INT NOT NULL
 );
 
 GRANT ALL ON staff TO root;
 
 -- Create Dummy admin user
-INSERT INTO staff(staff_name, staff_pin) 
-VALUES ('admin', 1234);
+INSERT INTO staff(staff_name, staff_pin, staff_type) VALUES ('admin', 1234, 0);
 
 -- Create customer table
 CREATE TABLE customer(

@@ -63,7 +63,7 @@ async function createAccount(username, pin, specialization) {
       throw new Error('An account with this username already exists.');
     }
     const query = {
-      text: 'INSERT INTO staff (staff_name, staff_pin, specialization) VALUES ($1, $2, $3) RETURNING *',
+      text: 'INSERT INTO staff (staff_name, staff_pin, staff_type) VALUES ($1, $2, $3) RETURNING *',
       values: [username, pin, specialization],
     };
     const result = await client.query(query);
