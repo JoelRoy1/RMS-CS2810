@@ -82,12 +82,13 @@ CREATE TABLE orders(
 );
 
 -- Add a dummy order for the customer
+-- There are 4 types for order status
 INSERT INTO orders (customer_id, staff_id, order_status, order_allergies)
 VALUES
-  (1, 1, 'Pending', 'None'),
+  (1, 1, 'Preparing', 'None'),
   (3, 3, 'Completed', 'Dairy'),
   (1, 2, 'Pending', 'Gluten'),
-  (2, 3, 'Completed', 'None');
+  (2, 3, 'Confirmed', 'None');
 
 GRANT ALL ON orders TO root;
 
@@ -99,3 +100,29 @@ CREATE TABLE needs_help (
 );
 
 GRANT ALL ON needs_help TO root;
+
+CREATE TABLE tables (
+    table_number SERIAL PRIMARY KEY,
+    customer_id INT,
+    staff_id INT,
+    FOREIGN KEY (customer_id) REFERENCES customers(customer_id),
+    FOREIGN KEY (staff_id) REFERENCES staff(staff_id)
+);
+
+-- create 20 empty tables for the resturant
+INSERT INTO tables (customer_id, staff_id)
+SELECT NULL, NULL
+FROM generate_series(1, 20);
+
+GRANT ALL ON tables TO root;
+
+CREATE TABLE payments (
+  payment_id SERIAL PRIMARY KEY,
+  payment_time TIMESTAMP NOT NULL,
+  payment_amount NUMERIC(10,2) NOT NULL,
+  table_number SERIAL REFERENCES tables(table_number),
+  card_ending INT,
+  card_expiry VARCHAR(5)
+);
+
+GRANT ALL ON payments TO root;
