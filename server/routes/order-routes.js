@@ -7,16 +7,6 @@ const express = require('express');
 const router = express.Router();
 const orderController = require('../controllers/order-controllers');
 
-//fetch order
-router.get('/', async (req, res) => {
-  try {
-    const orders = await orderController.getAllOrders();
-    res.json(orders);
-  } catch (error) {
-    console.error(`Error fetching orders: ${error.message}`);
-    res.status(500).json({ error: error.message });
-  }
-});
 
 /**
  * place an order
@@ -37,8 +27,8 @@ router.post('/', async (req, res) => {
 /**
  * delete order route
  */
-router.delete('/cancel-order', async (req, res) => {
-  const orderId = req.body;
+router.delete('/cancel-order/:orderId', async (req, res) => {
+  const orderId = req.params.orderId;
   try {
     await orderController.cancelOrder(orderId);
     res.status(200).json({ message: 'Order canceled successfully' });
@@ -58,16 +48,6 @@ router.post('/mark-delivered', async (req, res) => {
     res.status(200).json({ message: 'Order marked devlivered successfully' });
   } catch (error) {
     console.error(`Error confirming delivery: ${error.message}`);
-    res.status(500).json({ error: error.message });
-  }
-});
-//fetch all orders
-router.get('/fetch-all',  async (req, res) => {
-  try {
-    const orders = await orderController.getAllOrders();
-    res.json(orders);
-  } catch (error) {
-    console.error(`Error fetching orders: ${error.message}`);
     res.status(500).json({ error: error.message });
   }
 });

@@ -5,18 +5,23 @@ GRANT ALL PRIVILEGES ON DATABASE rms_db TO root;
 \c rms_db root
 
 -- Create staff table (insure all staff usernames are unique)
--- Includes staff types. (0 = Admin/Manager, 1 = Waiter, 2 = Kitchen Staff)
 CREATE TABLE staff(
   staff_id SERIAL PRIMARY KEY,
   staff_name VARCHAR(255) UNIQUE NOT NULL,
   staff_pin INT NOT NULL,
-  staff_type INT NOT NULL
+  specialization VARCHAR(50) NOT NULL
 );
+
 
 GRANT ALL ON staff TO root;
 
 -- Create Dummy admin user
-INSERT INTO staff(staff_name, staff_pin, staff_type) VALUES ('admin', 1234, 0);
+INSERT INTO staff(staff_name, staff_pin, specialization) 
+VALUES ('admin', 1234, 'boss');
+
+INSERT INTO staff(staff_name, staff_pin, specialization) 
+VALUES ('Waiter1', 123, 'waiter');
+
 
 -- Create customer table
 CREATE TABLE customer(
@@ -75,20 +80,15 @@ INSERT INTO dish_allergens (dish_id, allergen_id) VALUES (3, 3); -- Salad contai
 -- Create orders table
 CREATE TABLE orders(
   order_id SERIAL PRIMARY KEY,
-  customer_id SERIAL REFERENCES customer(customer_id),
-  staff_id SERIAL REFERENCES staff(staff_id),
+  customer_id INT REFERENCES customer(customer_id),
+  staff_id INT REFERENCES staff(staff_id),
   order_status VARCHAR(255),
-  order_allergies VARCHAR(255)
+  order_allergies  VARCHAR(255),
+  order_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  quantity INT,
+  price DECIMAL(10,2)  -- Default to current timestamp when the order is placed
 );
 
--- Add a dummy order for the customer
--- There are 4 types for order status
-INSERT INTO orders (customer_id, staff_id, order_status, order_allergies)
-VALUES
-  (1, 1, 'Preparing', 'None'),
-  (3, 3, 'Completed', 'Dairy'),
-  (1, 2, 'Pending', 'Gluten'),
-  (2, 3, 'Confirmed', 'None');
 
 GRANT ALL ON orders TO root;
 
@@ -105,7 +105,7 @@ CREATE TABLE tables (
     table_number SERIAL PRIMARY KEY,
     customer_id INT,
     staff_id INT,
-    FOREIGN KEY (customer_id) REFERENCES customers(customer_id),
+    FOREIGN KEY (customer_id) REFERENCES customer(customer_id),
     FOREIGN KEY (staff_id) REFERENCES staff(staff_id)
 );
 
