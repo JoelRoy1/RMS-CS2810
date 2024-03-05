@@ -14,6 +14,7 @@ const menuRoute = require('./routes/menu-routes')
 const orderRoute = require('./routes/order-routes')
 const helpRoute = require('./routes/help-routes')
 const tableRoute = require('./routes/table-routes')
+const paymentRoute = require('./routes/payment-routes')
 
 //middleware
 app.use(express.json())
@@ -49,6 +50,8 @@ app.use('/table', tableRoute)//see all tables
 app.use('/table/view-assigned', tableRoute)//see all tables assigned to a specific staff member
 app.use('/table/assign', tableRoute)//assigns staff and customer to a table
 
+//payment endpoints
+app.use('/payment', paymentRoute)
 /**
  * Listens for connections on port 9000 and
  * initializes http server if found.

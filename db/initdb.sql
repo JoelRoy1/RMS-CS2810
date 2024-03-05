@@ -121,6 +121,7 @@ CREATE TABLE payments (
   payment_time TIMESTAMP NOT NULL,
   payment_amount NUMERIC(10,2) NOT NULL,
   table_number SERIAL REFERENCES tables(table_number),
+  card_holder VARCHAR(255),
   card_ending INT,
   card_expiry VARCHAR(5)
 );
