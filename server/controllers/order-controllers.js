@@ -100,7 +100,7 @@ async function orderDelivered(orderId, staffId) {
       WHERE order_id = $1
       AND staff_id = $2;
     `;
-    const query2 = 'SELECT * FROM orders WHERE order_id = $1 AND staff_id = $2;';
+    const query2 = 'SELECT order_id FROM orders WHERE order_id = $1 AND staff_id = $2;';
     const getWaiter = 'SELECT staff_name FROM staff WHERE staff_id = $1;';
     const values = [orderId, staffId];
     await client.query(query, values);
