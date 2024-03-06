@@ -2,9 +2,11 @@
  * @file Manages all payment functionality.
  * @version 1.0.0
  */
+require('dotenv').config();
+
 const db = require('../db');
 const pool = db.pool;
-const stripe = ('stripe')('sk_test_26PHem9AhJZvU623DfE1x4sd');
+const stripe = ('stripe')(process.env.STRIPE_PRIVATE_KEY);
 
 async function addPayment(amount, table_number, card_number, card_holder, card_expiry, card_cvc) {
     let client;
