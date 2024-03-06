@@ -166,5 +166,23 @@ async function getPendingOrderCount() {
   }
 }
 
+async function getAllOrders() {
+  let client
+  try {
+    client = await pool.connect()
+    const result = await client.query('SELECT * FROM orders')
+    const orders = result.rows
+    return orders
+  } catch (error) {
+    console.error('Error fetching orders:', error)
+  } finally {
+    if (client) {
+      client.release()
+    }
+  }
+}
 
-module.exports = { cancelOrder, placeOrder, orderDelivered, getDeliveredOrderCount, getPendingOrderCount};
+
+
+
+module.exports = { cancelOrder, placeOrder, orderDelivered, getDeliveredOrderCount, getPendingOrderCount, getAllOrders};
