@@ -9,7 +9,7 @@ const paymentController = require('../controllers/payment-controllers'); // Impo
 router.post('/', async (req, res) => {
     try {
         const { amount, table_number, card_number, card_holder, card_expiry, card_cvc } = req.body;
-        await tableController.assignToTable(amount, table_number, card_number, card_holder, card_expiry, card_cvc);
+        await paymentController.addPayment(amount, table_number, card_number, card_holder, card_expiry, card_cvc);
         res.status(200).json({ message: 'Transaction Successful.' });
     } catch (error) {
         console.error('Payment Failed', error);
