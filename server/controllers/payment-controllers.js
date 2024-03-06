@@ -4,7 +4,7 @@
  */
 const db = require('../db');
 const pool = db.pool;
-const stripe = ('stripe')('sk_test_51OrP3NFH91vMUm0iDEYKaWF0bnVLTYPXHF9rFSeHo8b9zGDgXc1ceXRBHpdKUg4CUjLAJvIDzIdCvSU9kEmtvdMX00kBFQLZmp');
+const stripe = require('stripe')('sk_test_51OrP3NFH91vMUm0iDEYKaWF0bnVLTYPXHF9rFSeHo8b9zGDgXc1ceXRBHpdKUg4CUjLAJvIDzIdCvSU9kEmtvdMX00kBFQLZmp');
 
 async function addPayment(amount, table_number, card_number, card_holder, card_expiry, card_cvc) {
     let client;
