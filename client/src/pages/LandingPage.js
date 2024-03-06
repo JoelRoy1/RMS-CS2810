@@ -5,8 +5,8 @@ import Button from '@mui/material/Button'
 import { Box, Typography } from '@mui/material'
 import Carousel from 'react-material-ui-carousel'
 import { Paper } from '@mui/material'
-import carousel from './assets/carousel.jpg'
-import carousel2 from './assets/carousel2.jpg'
+import carousel from '../assets/carousel.jpg'
+import carousel2 from '../assets/carousel2.jpg'
 
 
 const LandingPage = () => {

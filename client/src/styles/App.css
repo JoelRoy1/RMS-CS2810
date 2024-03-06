@@ -1,6 +1,6 @@
 .App {
   min-height: 100vh; /* to make sure that it covers at least the full viewport height */
-  background-image: url('../assets/restaurant_background.jpg'); /* Path of the image */
+  /*background-image: url('../assets/restaurant_background.jpg'); /* Path of the image */
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
@@ -61,7 +61,7 @@
 
 .App-header {
  text-align: center; /* Center text horizontally */
-  padding: 20px 0; /* for adding padding at the top and bottom *
+  padding: 20px 0; /* for adding padding at the top and bottom */
 }
 
 .App-header h1,
