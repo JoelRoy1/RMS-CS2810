@@ -63,8 +63,8 @@ INSERT INTO allergens (allergen_name) VALUES ('Nuts');
 CREATE TABLE dish_allergens (
     dish_id INT,
     allergen_id INT,
-    FOREIGN KEY (dish_id) REFERENCES menu(dish_id),
-    FOREIGN KEY (allergen_id) REFERENCES allergens(allergen_id)
+    FOREIGN KEY (dish_id) REFERENCES menu(dish_id) ON DELETE CASCADE,
+    FOREIGN KEY (allergen_id) REFERENCES allergens(allergen_id) ON DELETE CASCADE
 );
 
 GRANT ALL ON dish_allergens TO root;
