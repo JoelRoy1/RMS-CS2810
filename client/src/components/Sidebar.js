@@ -1,54 +1,94 @@
 import React from 'react'
-import '../styles/Sidebar.css'
+import Drawer from '@mui/material/Drawer'
+import List from '@mui/material/List'
+import ListItem from '@mui/material/ListItem'
+import ListItemIcon from '@mui/material/ListItemIcon'
+import ListItemText from '@mui/material/ListItemText'
+import IconButton from '@mui/material/IconButton'
+import Avatar from '@mui/material/Avatar'
+import HomeIcon from '@mui/icons-material/Home'
+import SettingsIcon from '@mui/icons-material/Settings'
+import AccountCircleIcon from '@mui/icons-material/AccountCircle'
+import LockIcon from '@mui/icons-material/Lock'
+import MenuIcon from '@mui/icons-material/Menu'
+import CloseIcon from '@mui/icons-material/Close'
+import { useTheme } from '@mui/material/styles'
+import Box from '@mui/material/Box'
 import avatar from '../assets/avatar.png'
-import iconHome from '../assets/icon-home.svg'
-import iconSettings from '../assets/icon-settings.svg'
-import iconAccounts from '../assets/icon-accounts.svg'
-import iconLock from '../assets/icon-lock.svg'
-import iconBurger from '../assets/icon-burger.svg'
-import iconClose from '../assets/icon-close.svg'
 
 const Sidebar = ({ isOpen, toggleSidebar }) => {
+  const theme = useTheme()
+
   return (
     <>
-      <div
-        className={`overlay ${isOpen ? 'show' : ''}`}
+      <IconButton
+        color="inherit"
+        aria-label="open drawer"
+        edge="start"
         onClick={toggleSidebar}
-      ></div>
-      <button
-        type="button"
-        className={`burger ${isOpen ? 'close' : 'show'}`}
-        onClick={toggleSidebar}
+        sx={{
+          position: 'fixed',
+          zIndex: theme.zIndex.drawer + 2,
+          top: theme.spacing(2),
+          left: isOpen ? null : theme.spacing(2),
+          ...(isOpen && { display: 'none' }),
+        }}
       >
-        {isOpen ? (
-          <img src={iconClose} className="close-icon" alt="Close" />
-        ) : (
-          <img src={iconBurger} className="burger-icon" alt="Menu" />
-        )}
-      </button>
-      <aside className={`sidebar ${isOpen ? 'show' : 'hide'}`}>
-        <img className="sidebar-avatar" src={avatar} alt="Avatar" />
-        <div className="sidebar-username">User</div>
-        <div className="sidebar-role">Admin</div>
-        <nav className="sidebar-menu">
-          <button type="button">
-            <img src={iconHome} alt="Home" />
-            <span>Home</span>
-          </button>
-          <button type="button">
-            <img src={iconSettings} alt="Settings" />
-            <span>Settings</span>
-          </button>
-          <button type="button">
-            <img src={iconAccounts} alt="Profile" />
-            <span>Profile</span>
-          </button>
-          <button type="button">
-            <img src={iconLock} alt="Sign Out" />
-            <span>Sign Out</span>
-          </button>
-        </nav>
-      </aside>
+        <MenuIcon />
+      </IconButton>
+      <Drawer
+        anchor="left"
+        open={isOpen}
+        onClose={toggleSidebar}
+        sx={{
+          '& .MuiDrawer-paper': {
+            backgroundColor: 'rgba(55, 55, 55, 0.9)', // Dark gray with opacity for blur effect
+            backdropFilter: 'blur(4px)',
+            width: 280, // Increased width
+            boxSizing: 'border-box',
+            display: 'flex',
+            flexDirection: 'column',
+          },
+        }}
+      >
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'flex-end',
+            p: 1,
+          }}
+        >
+          <IconButton onClick={toggleSidebar}>
+            <CloseIcon />
+          </IconButton>
+        </Box>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            p: 2,
+          }}
+        >
+          <Avatar src={avatar} sx={{ width: 56, height: 56, mb: 2 }} />
+          <div className="sidebar-username">Subaru</div>
+          <div className="sidebar-role">Delulu</div>
+        </Box>
+        <List>
+          {[
+            { icon: <HomeIcon />, text: 'Home' },
+            { icon: <SettingsIcon />, text: 'Settings' },
+            { icon: <AccountCircleIcon />, text: 'Profile' },
+            { icon: <LockIcon />, text: 'Sign Out' },
+          ].map((item, index) => (
+            <ListItem button key={index}>
+              <ListItemIcon>{item.icon}</ListItemIcon>
+              <ListItemText primary={item.text} />
+            </ListItem>
+          ))}
+        </List>
+      </Drawer>
     </>
   )
 }
