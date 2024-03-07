@@ -5,6 +5,7 @@ import StaffLoginPage from './pages/StaffLoginPage'
 import MenuPage from './pages/MenuPage'
 import MenuManagement from './pages/MenuManagement'
 import CustomerLoginPage from './pages/CustomerLoginPage'
+import Dashboard from './pages/Dashboard'
 import './styles/App.css'
 
 
@@ -26,6 +27,7 @@ function App() {
             <Link to="/menu">Menu</Link>
             <Link to="/about">About Us</Link>
             <Link to="/menu-management">Menu Management</Link>
+            <Link to="/dashboard">Dashboard</Link>
           </nav>
         </div>
 
@@ -36,6 +38,7 @@ function App() {
           <Route path="/staff-login" element={<StaffLoginPage />} />
           <Route path="/customer-login" element={<CustomerLoginPage />} />
           <Route path="/menu-management" element={<MenuManagement />} />
+          <Route path="/dashboard" element={<Dashboard />} />
           {/* Other routes here */}
         </Routes>
 
