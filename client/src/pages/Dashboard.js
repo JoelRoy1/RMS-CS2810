@@ -19,6 +19,9 @@ const Dashboard = () => {
       console.log("fetching orders")
       const response = await axios.get('http://localhost:9000/order/fetch-all');
       console.log(response)
+      const resp2 = await axios.get('http://localhost:9000/order/get-pending-orders');
+      console.log(resp2)
+      console.log(resp2.data.pendingOrderCount)
       setOrders(response.data);
       if (response.data.length === 0) console.log('No orders found');
       else{

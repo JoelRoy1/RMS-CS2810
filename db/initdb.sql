@@ -92,7 +92,8 @@ GRANT ALL ON orders TO root;
 -- Test data
 INSERT INTO orders(customer_id, staff_id, order_status, order_allergies, order_time, quantity, price)
 VALUES (1, 1, 'test_order1', 'none', CURRENT_TIMESTAMP, 1, 10.99),
-(1, 1, 'test_order2', 'none', CURRENT_TIMESTAMP, 2, 12.99);
+(1, 1, 'test_order2', 'none', CURRENT_TIMESTAMP, 2, 12.99),
+(1, 1, 'delivered', 'none', CURRENT_TIMESTAMP, 3, 15.99);
 
 -- Create needs_help table
 CREATE TABLE needs_help (

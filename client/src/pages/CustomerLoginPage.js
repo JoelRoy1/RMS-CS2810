@@ -114,24 +114,7 @@ function CustomerLoginPage() {
                   onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
-              <div className="form-group">
-                <input
-                  type="checkbox"
-                  id="receiveMenuUpdate"
-                  checked={receiveMenuUpdate}
-                  onChange={() => setReceiveMenuUpdate(!receiveMenuUpdate)}
-                />
-                <label htmlFor="receiveMenuUpdate">Receive Menu Update Notifications</label>
-              </div>
-              <div className="form-group">
-                <input
-                  type="checkbox"
-                  id="reserveTable"
-                  checked={reserveTable}
-                  onChange={() => setReserveTable(!reserveTable)}
-                />
-                <label htmlFor="reserveTable">Reserve a Table</label>
-              </div>
+
             </>
           )}
           <div className="text-right">

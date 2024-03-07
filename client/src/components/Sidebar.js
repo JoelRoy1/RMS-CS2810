@@ -28,8 +28,8 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
       </button>
       <aside className={`sidebar ${isOpen ? 'show' : 'hide'}`}>
         <img className="sidebar-avatar" src={avatar} alt="Avatar" />
-        <div className="sidebar-username">Subaru</div>
-        <div className="sidebar-role">Delulu</div>
+        <div className="sidebar-username">User</div>
+        <div className="sidebar-role">Admin</div>
         <nav className="sidebar-menu">
           <button type="button">
             <img src={iconHome} alt="Home" />
