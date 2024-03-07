@@ -122,7 +122,9 @@ async function deleteMenuItem(dishID) {
   } catch (error) {
     console.error(`Error deleting item: ${error.message}`);
   } finally {
-    client.release();
+    if(client){
+      client.release();
+    }
   }
 }
 
