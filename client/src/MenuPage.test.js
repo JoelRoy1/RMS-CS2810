@@ -42,3 +42,47 @@ test("Remove from Cart Functionality", () => {
   expect(removeButton).not.toBeInTheDocument();
 });
 
+test("Update Quantity Functionality", () => {
+  render(
+    <BrowserRouter>
+      <MenuPage />
+    </BrowserRouter>
+  );
+
+  const addToCartButton = screen.getByTestId("add-to-cart-0");
+  fireEvent.click(addToCartButton);
+
+  const plusBtn = screen.getByTestId("plus-btn");
+  fireEvent.click(plusBtn);
+
+  const value = screen.getByTestId("qty-value").value;
+  expect(value).toBe("2");
+});
+
+test("Total price Functionality", () => {
+  render(
+    <BrowserRouter>
+      <MenuPage />
+    </BrowserRouter>
+  );
+
+  const addToCartButton = screen.getByTestId("add-to-cart-0");
+  fireEvent.click(addToCartButton);
+
+  const plusBtn = screen.getByTestId("plus-btn");
+  fireEvent.click(plusBtn);
+
+  const total = screen.getByTestId("total-val").textContent;
+  expect(total).toBe("25.98");
+});
+
+test("Edge case: Empty Cart", () => {
+  render(
+    <BrowserRouter>
+      <MenuPage />
+    </BrowserRouter>
+  );
+
+  const total = screen.getByTestId("total-val").textContent;
+  expect(total).toBe("0.00");
+});
