@@ -1,6 +1,6 @@
 /**
  * @file Manges all payment routes.
- * @version 1.0.0
+ * @version 1.1.0
  */
 const express = require('express');
 const router = express.Router();
@@ -11,6 +11,17 @@ router.post('/', async (req, res) => {
         const { amount, table_number, card_number, card_holder, card_expiry, card_cvc } = req.body;
         await paymentController.addPayment(amount, table_number, card_number, card_holder, card_expiry, card_cvc);
         res.status(200).json({ message: 'Transaction Successful.' });
+    } catch (error) {
+        console.error('Payment Failed', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
+router.post('/refund', async (req, res) => {
+    try {
+        const { chargeId } = req.body;
+        await paymentController.refundPayment(chargeId);
+        res.status(200).json({ message: 'Refund Successful.' });
     } catch (error) {
         console.error('Payment Failed', error);
         res.status(500).json({ error: 'Internal server error' });

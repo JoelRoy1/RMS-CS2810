@@ -1,6 +1,6 @@
 /**
  * @file Manages all payment functionality.
- * @version 1.0.0
+ * @version 1.2.2
  */
 const db = require('../db');
 const pool = db.pool;
@@ -39,6 +39,26 @@ async function addPayment(amount, table_number, card_number, card_holder, card_e
             client.release();
         }
     }
-}
+};
 
-module.exports = { addPayment };
+async function refundPayment(paymentId) {
+    try {
+        const paymentIntent = await stripe.paymentIntents.retrieve(paymentId);
+
+        if (paymentIntent.status === 'succeeded') {
+            const refund = await stripe.refunds.create({
+                payment_intent: paymentId,
+            });
+
+            console.log('Refund requested:', refund);
+            return refund;
+        } else {
+            throw new Error('Payment intent is not in a succeeded state');
+        }
+    } catch (error) {
+        console.error('Error requesting refund:', error);
+        throw error;
+    }
+};
+
+module.exports = { addPayment, refundPayment };

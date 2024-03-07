@@ -52,6 +52,7 @@ app.use('/table/assign', tableRoute)//assigns staff and customer to a table
 
 //payment endpoints
 app.use('/payment', paymentRoute)
+app.use('/payment/refund', paymentRoute)
 /**
  * Listens for connections on port 9000 and
  * initializes http server if found.
