@@ -48,6 +48,11 @@
   position: relative;
   margin-top: 60px; 
   margin-right: 20px; 
+  color: #000; 
+}
+
+.cart-item {
+  color: #000;
 }
 
 /*.container {
