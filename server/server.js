@@ -38,7 +38,7 @@ app.use('/order', orderRoute)
 app.use('/order/mark-delivered', orderRoute)
 app.use('/order/get-delivered', orderRoute)
 app.use('/order/get-pending-orders', orderRoute)
-app.use('/order/fetch-orders', orderRoute)
+app.use('/order/fetch-all', orderRoute)
 
 //order endpoints
 app.use('/help', helpRoute)

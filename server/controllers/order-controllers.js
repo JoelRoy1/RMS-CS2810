@@ -16,14 +16,24 @@ async function cancelOrder(orderId) {
   let client;
   try {
     console.log('Attempting to cancel order...');
-    const client = await pool.connect();
-    const query = 'DELETE FROM orders WHERE order_id = $1;';
-    const value = [orderId];
-    console.log('Connected to the database');
-    await client.query(query, value);
-    console.log('Order ID: ',orderId, 'cancelled');
+    client = await pool.connect();
+    await client.query('BEGIN');
+    
+    // Delete order details first
+    const deleteOrderDetailsQuery = 'DELETE FROM order_details WHERE order_id = $1';
+    await client.query(deleteOrderDetailsQuery, [orderId]);
+    
+    // Then delete the order
+    const deleteOrderQuery = 'DELETE FROM orders WHERE order_id = $1';
+    await client.query(deleteOrderQuery, [orderId]);
+    
+    await client.query('COMMIT');
+    
+    console.log('Order ID:', orderId, 'cancelled');
   } catch (error) {
+    await client.query('ROLLBACK');
     console.error(`Error cancelling order: ${error.message}`);
+    throw error;
   } finally {
     if (client) {
       client.release();
@@ -39,6 +49,16 @@ async function placeOrder(customerId, staffId, orderStatus, orderAllergies, item
     let totalPrice = 0;
     const values = [];
     const orderSummary = [];
+    const orderDetails = []; // to keep track of order details for orderSummary
+
+    const orderQuery = `
+      INSERT INTO orders (customer_id, staff_id, order_status, order_allergies)
+      VALUES ($1, $2, $3, $4)
+      RETURNING order_id;
+    `;
+    const orderResult = await client.query(orderQuery, [customerId, staffId, orderStatus, orderAllergies]);
+    const orderId = orderResult.rows[0].order_id;
+    
     for (const item of items) {
       const menuQuery = 'SELECT dish_name, dish_price FROM menu WHERE dish_id = $1';
       const menuResult = await client.query(menuQuery, [item.dishId]);
@@ -46,7 +66,13 @@ async function placeOrder(customerId, staffId, orderStatus, orderAllergies, item
       const dishPrice = menuResult.rows[0].dish_price;
       const itemTotalPrice = dishPrice * item.quantity;
       totalPrice += itemTotalPrice;
-      values.push([customerId, staffId, orderStatus, orderAllergies, item.dishId, item.quantity, dishPrice]);
+
+      const orderDetailQuery = `
+        INSERT INTO order_details (order_id, dish_id, quantity)
+        VALUES ($1, $2, $3);
+      `;
+      await client.query(orderDetailQuery, [orderId, item.dishId, item.quantity]);
+      
       // Log the item and its total price
       console.log(`Item ${item.dishId}: Dish Name: ${dishName}, Quantity: ${item.quantity}, Price per item: ${dishPrice}, Total Price: ${itemTotalPrice}`);
       orderSummary.push({
@@ -56,6 +82,7 @@ async function placeOrder(customerId, staffId, orderStatus, orderAllergies, item
         pricePerItem: dishPrice,
         totalPrice: itemTotalPrice
       });
+      orderDetails.push({ dishName, quantity: item.quantity }); // Adding order details to track in orderSummary
     }
     
     // Check if the provided staffId corresponds to a waiter
@@ -66,16 +93,11 @@ async function placeOrder(customerId, staffId, orderStatus, orderAllergies, item
       throw new Error('Staff ID must correspond to a waiter.');
     }
 
-    const orderQuery = `
-      INSERT INTO orders (customer_id, staff_id, order_status, order_allergies, quantity, price)
-      VALUES ($1, $2, $3, $4, $5, $6)
-      RETURNING *;
-    `;
-    const orderResult = await client.query(orderQuery, [customerId, staffId, orderStatus, orderAllergies, items.length, totalPrice]);
     await client.query('COMMIT');
-    orderSummary.push({ totalPrice: totalPrice });
-    console.log('New order:', orderResult.rows[0], 'Total Price:', totalPrice);
-    return orderSummary;
+    orderSummary.push({totalOrderPrice:totalPrice});
+    console.log('New order placed successfully');
+    console.log(orderSummary);
+    return { orderId, orderSummary}; // Returning order ID, summary, and details for reference
   } catch (error) {
     await client.query('ROLLBACK');
     console.error('Error adding new order:', error);
@@ -86,7 +108,6 @@ async function placeOrder(customerId, staffId, orderStatus, orderAllergies, item
     }
   }
 }
-
 
 
 async function orderDelivered(orderId, staffId) {
@@ -167,17 +188,51 @@ async function getPendingOrderCount() {
 }
 
 async function getAllOrders() {
-  let client
+  let client;
   try {
-    client = await pool.connect()
-    const result = await client.query('SELECT * FROM orders')
-    const orders = result.rows
-    return orders
+    client = await pool.connect();
+    const query = `
+      SELECT o.order_id, o.customer_id, o.staff_id, o.order_status, o.order_allergies, o.order_time,
+             od.dish_id, od.quantity,
+             m.dish_name, m.dish_price
+      FROM orders o
+      INNER JOIN order_details od ON o.order_id = od.order_id
+      INNER JOIN menu m ON od.dish_id = m.dish_id
+    `;
+    const result = await client.query(query);
+    const orders = result.rows;
+
+    // Grouping orders by order_id
+    const groupedOrders = {};
+    orders.forEach(order => {
+      if (!groupedOrders[order.order_id]) {
+        groupedOrders[order.order_id] = {
+          order_id: order.order_id,
+          customer_id: order.customer_id,
+          staff_id: order.staff_id,
+          order_status: order.order_status,
+          order_allergies: order.order_allergies,
+          order_time: order.order_time,
+          items: []
+        };
+      }
+      groupedOrders[order.order_id].items.push({
+        dish_id: order.dish_id,
+        dish_name: order.dish_name,
+        quantity: order.quantity,
+        dish_price: order.dish_price
+      });
+    });
+
+    // Converting object to array of orders
+    const processedOrders = Object.values(groupedOrders);
+    return processedOrders;
   } catch (error) {
-    console.error('Error fetching orders:', error)
+    console.error('Error fetching orders:', error);
+    throw error;
   } finally {
     if (client) {
-      client.release()
+      client.release();
     }
   }
 }
