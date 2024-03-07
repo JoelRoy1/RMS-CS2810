@@ -96,6 +96,36 @@ INSERT INTO staff(staff_name, staff_pin, specialization) VALUES ('new_staff', NU
 --(Assuming staff usernames must not contain special characters, this should result in an error)
 INSERT INTO staff(staff_name, staff_pin, specialization) VALUES ('staff@1', 9999, 'manager');
 
+-- Test cases for payment table
+-- Test Case 26: Insert Test Payment
+INSERT INTO payments (payment_time, payment_amount, table_number, card_holder, card_ending, card_expiry)
+VALUES ('2024-03-07 12:30:00', 50.00, 1, 'John Doe', 1234, '12/25');
+
+-- Test Case 27: Select Test Payment
+-- Expected Result: One row with the details of the test payment.
+SELECT * FROM payments WHERE payment_id = 1;
+
+-- Test Case 28: Update Test Payment
+UPDATE payments SET payment_amount = 60.00 WHERE payment_id = 1;
+
+-- Test Case 29: Delete Test Payment
+DELETE FROM payments WHERE payment_id = 1;
+
+-- Test Case 30: Check Foreign Key Constraint
+-- Expected Result: An error indicating a foreign key violation.
+INSERT INTO payments (payment_time, payment_amount, table_number, card_holder, card_ending, card_expiry)
+VALUES ('2024-03-07 14:00:00', 45.00, 999, 'Jane Smith', 5678, '09/26');
+
+-- Test Case 31: Check Constraints on Payment Amount
+-- Expected Result: An error indicating a violation of the NOT NULL constraint on payment_amount.
+INSERT INTO payments (payment_time, payment_amount, table_number, card_holder, card_ending, card_expiry)
+VALUES ('2024-03-07 15:30:00', NULL, 2, 'Bob Johnson', 4321, '06/23');
+
+-- Test Case 32: Check Constraints on Card Expiry
+-- Expected Result: An error indicating a violation of the VARCHAR length constraint on card_expiry.
+INSERT INTO payments (payment_time, payment_amount, table_number, card_holder, card_ending, card_expiry)
+VALUES ('2024-03-07 16:45:00', 70.50, 3, 'Alice Green', 7890, '2023-12');
+
 
 
 
