@@ -12,7 +12,6 @@ CREATE TABLE staff(
   staff_type INT NOT NULL
 );
 
-
 GRANT ALL ON staff TO root;
 
 -- Create Dummy admin user
@@ -21,7 +20,6 @@ VALUES ('admin', 1234, 0);
 
 INSERT INTO staff(staff_name, staff_pin, staff_type) 
 VALUES ('Waiter1', 123, 1);
-
 
 -- Create customer table
 CREATE TABLE customer(
@@ -89,8 +87,12 @@ CREATE TABLE orders(
   price DECIMAL(10,2)  -- Default to current timestamp when the order is placed
 );
 
-
 GRANT ALL ON orders TO root;
+
+-- Test data
+INSERT INTO orders(customer_id, staff_id, order_status, order_allergies, order_time, quantity, price)
+VALUES (1, 1, 'test_order1', 'none', CURRENT_TIMESTAMP, 1, 10.99),
+(1, 1, 'test_order2', 'none', CURRENT_TIMESTAMP, 2, 12.99);
 
 -- Create needs_help table
 CREATE TABLE needs_help (
