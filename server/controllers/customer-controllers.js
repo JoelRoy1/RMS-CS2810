@@ -4,7 +4,7 @@
  */
 const db = require('../db');
 const pool = db.pool;
-const tableController = require('../controllers/table-controllers');
+const tableController = require('../controllers/table-controller');
 
 async function addCustomer(customerName, customerAllergies) {
     let client;

@@ -4,7 +4,7 @@
  */
 const express = require('express');
 const router = express.Router();
-const tableController = require('../controllers/table-controllers'); // Import the module containing table functionality
+const tableController = require('../controllers/table-controller'); // Import the module containing table functionality
 
 //GET route to see all tables
 router.get('/', async (req, res) => {
