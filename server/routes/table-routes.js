@@ -4,13 +4,13 @@
  */
 const express = require('express');
 const router = express.Router();
-const tableController = require('../controllers/table-controller'); // Import the module containing table functionality
+const tableController = require('../controllers/table-controllers'); // Import the module containing table functionality
 
 //GET route to see all tables
 router.get('/', async (req, res) => {
     try {
-        await tableController.showTables(); // Call the seeTables
-        res.status(200).json({ message: 'Tables retrieved successfully.' });
+        const tables = await tableController.showTables(); // Call the seeTables
+        res.status(200).json({tables});
     } catch (error) {
         console.error('Error getting tables:', error);
         res.status(500).json({ error: 'Internal server error' });
@@ -33,8 +33,8 @@ router.get('/view-assigned', async (req, res) => {
 router.post('/assign', async (req, res) => {
     try {
         const { customerId } = req.body;
-        await tableController.assignToTable(customerId); // Call the assignToTable function with customerId
-        res.status(200).json({ message: 'Customer assigned to a table successfully.' });
+        const tables = await tableController.assignToTable(customerId); // Call the assignToTable function with customerId
+        res.status(200).json({tables});
     } catch (error) {
         console.error('Error assigning customer and staff:', error);
         res.status(500).json({ error: 'Internal server error' });

@@ -89,20 +89,11 @@ CREATE TABLE orders(
 
 GRANT ALL ON orders TO root;
 
-INSERT INTO orders (customer_id, staff_id, order_status, order_allergies)
-VALUES (1, 2, 'pending', 'No allergies')
-RETURNING order_id;
-
-CREATE TABLE order_details (
-  order_detail_id SERIAL PRIMARY KEY,
-  order_id INT REFERENCES orders(order_id),
-  dish_id INT REFERENCES menu(dish_id),
-  quantity INT
-);
-GRANT ALL ON order_details TO root;
-
-INSERT INTO order_details (order_id, dish_id, quantity)
-VALUES (1, 2, 3);
+-- Test data
+INSERT INTO orders(customer_id, staff_id, order_status, order_allergies, order_time, quantity, price)
+VALUES (1, 1, 'test_order1', 'none', CURRENT_TIMESTAMP, 1, 10.99),
+(1, 1, 'test_order2', 'none', CURRENT_TIMESTAMP, 2, 12.99),
+(1, 1, 'delivered', 'none', CURRENT_TIMESTAMP, 3, 15.99);
 
 -- Create needs_help table
 CREATE TABLE needs_help (
@@ -115,10 +106,8 @@ GRANT ALL ON needs_help TO root;
 
 CREATE TABLE tables (
     table_number SERIAL PRIMARY KEY,
-    customer_id INT,
-    staff_id INT,
-    FOREIGN KEY (customer_id) REFERENCES customer(customer_id),
-    FOREIGN KEY (staff_id) REFERENCES staff(staff_id)
+    customer_id INT REFERENCES customer(customer_id),
+    staff_id INT REFERENCES staff(staff_id)
 );
 
 -- create 20 empty tables for the restuarant
