@@ -192,12 +192,13 @@ async function getAllOrders() {
   try {
     client = await pool.connect();
     const query = `
-      SELECT o.order_id, o.customer_id, o.staff_id, o.order_status, o.order_allergies, o.order_time,
+      SELECT o.order_id, o.customer_id, o.staff_id, s.staff_name, o.order_status, o.order_allergies, o.order_time,
              od.dish_id, od.quantity,
              m.dish_name, m.dish_price
       FROM orders o
       INNER JOIN order_details od ON o.order_id = od.order_id
       INNER JOIN menu m ON od.dish_id = m.dish_id
+      INNER JOIN staff s ON o.staff_id = s.staff_id
     `;
     const result = await client.query(query);
     const orders = result.rows;
@@ -210,11 +211,12 @@ async function getAllOrders() {
           order_id: order.order_id,
           customer_id: order.customer_id,
           staff_id: order.staff_id,
+          staff_name: order.staff_name, // Include staff_name in the grouped order
           order_status: order.order_status,
           order_allergies: order.order_allergies,
           order_time: order.order_time,
           items: [],
-          totalOrderPrice: 0  // Initialize totalOrderPrice for each order
+          totalOrderPrice: 0
         };
       }
       const itemTotalPrice = order.dish_price * order.quantity;
@@ -224,7 +226,7 @@ async function getAllOrders() {
         quantity: order.quantity,
         dish_price: order.dish_price
       });
-      groupedOrders[order.order_id].totalOrderPrice += itemTotalPrice; // Add itemTotalPrice to totalOrderPrice
+      groupedOrders[order.order_id].totalOrderPrice += itemTotalPrice;
     });
 
     // Converting object to array of orders
@@ -239,6 +241,7 @@ async function getAllOrders() {
     }
   }
 }
+
 
 
 

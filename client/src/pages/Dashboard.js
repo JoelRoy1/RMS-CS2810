@@ -58,7 +58,7 @@ const Dashboard = () => {
           {orders.map(order => (
             <div key={order.order_id} className="order-status-row">
               <div>{order.order_id}</div>
-              <div>{order.staff_id}</div>
+              <div>{order.staff_name}</div>
               <div>{formatDateTime(order.order_time)}</div> {/* Format date and time here */}
               <div>{order.totalOrderPrice}</div> {/* Display totalOrderPrice */}
               <div>{order.order_status}</div>
