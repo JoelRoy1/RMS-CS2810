@@ -92,6 +92,12 @@ GRANT ALL ON orders TO root;
 INSERT INTO orders (customer_id, staff_id, order_status, order_allergies)
 VALUES (1, 2, 'pending', 'No allergies')
 RETURNING order_id;
+INSERT INTO orders (customer_id, staff_id, order_status, order_allergies)
+VALUES (1, 2, 'pending', 'No allergies')
+RETURNING order_id;
+INSERT INTO orders (customer_id, staff_id, order_status, order_allergies)
+VALUES (1, 2, 'pending', 'No allergies')
+RETURNING order_id;
 
 CREATE TABLE order_details (
   order_detail_id SERIAL PRIMARY KEY,
@@ -101,8 +107,12 @@ CREATE TABLE order_details (
 );
 GRANT ALL ON order_details TO root;
 
-INSERT INTO order_details (order_id, dish_id, quantity)
+INSERT INTO order_details (order_id, dish_id, quantity)--Details for dummey order1
 VALUES (1, 2, 3);
+INSERT INTO order_details (order_id, dish_id, quantity)--Details for dummy order2
+VALUES (2, 3, 2);
+INSERT INTO order_details (order_id, dish_id, quantity)--Details for dummy order3
+VALUES (3, 1, 5);
 
 -- Create needs_help table
 CREATE TABLE needs_help (

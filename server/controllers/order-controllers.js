@@ -213,15 +213,18 @@ async function getAllOrders() {
           order_status: order.order_status,
           order_allergies: order.order_allergies,
           order_time: order.order_time,
-          items: []
+          items: [],
+          totalOrderPrice: 0  // Initialize totalOrderPrice for each order
         };
       }
+      const itemTotalPrice = order.dish_price * order.quantity;
       groupedOrders[order.order_id].items.push({
         dish_id: order.dish_id,
         dish_name: order.dish_name,
         quantity: order.quantity,
         dish_price: order.dish_price
       });
+      groupedOrders[order.order_id].totalOrderPrice += itemTotalPrice; // Add itemTotalPrice to totalOrderPrice
     });
 
     // Converting object to array of orders
@@ -236,6 +239,7 @@ async function getAllOrders() {
     }
   }
 }
+
 
 
 
