@@ -25,6 +25,12 @@ const Dashboard = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
 
+   // Function to format date and time
+   const formatDateTime = (dateTimeString) => {
+    const dateTime = new Date(dateTimeString);
+    return dateTime.toLocaleString(); // Adjust toLocaleString parameters for custom formatting
+  };
+
   return (
     <div className="dashboard-container">
       <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
@@ -53,7 +59,7 @@ const Dashboard = () => {
             <div key={order.order_id} className="order-status-row">
               <div>{order.order_id}</div>
               <div>{order.staff_id}</div>
-              <div>{order.order_time}</div>
+              <div>{formatDateTime(order.order_time)}</div> {/* Format date and time here */}
               <div>{order.totalOrderPrice}</div> {/* Display totalOrderPrice */}
               <div>{order.order_status}</div>
             </div>
