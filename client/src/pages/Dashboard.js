@@ -40,7 +40,7 @@ const Dashboard = () => {
       </div>
 
       <div className="order-status">
-        <h2>Order Status</h2>
+        <h2>Order Information</h2>
         <div className="order-status-table">
           <div className="order-status-header-item">Order ID</div>
           <div className="order-status-header-item">Waiter</div>
