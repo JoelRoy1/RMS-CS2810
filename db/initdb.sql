@@ -21,6 +21,12 @@ VALUES ('admin', 1234, 0);
 INSERT INTO staff(staff_name, staff_pin, staff_type) 
 VALUES ('Waiter1', 123, 1);
 
+INSERT INTO staff(staff_name, staff_pin, staff_type) 
+VALUES ('Waiter2', 1234, 1);
+
+INSERT INTO staff(staff_name, staff_pin, staff_type) 
+VALUES ('Waiter3', 12345, 1);
+
 -- Create customer table
 CREATE TABLE customer(
   customer_id SERIAL PRIMARY KEY,
@@ -96,7 +102,10 @@ INSERT INTO orders (customer_id, staff_id, order_status, order_allergies)
 VALUES (1, 2, 'pending', 'No allergies')
 RETURNING order_id;
 INSERT INTO orders (customer_id, staff_id, order_status, order_allergies)
-VALUES (1, 2, 'pending', 'No allergies')
+VALUES (1, 3, 'pending', 'No allergies')
+RETURNING order_id;
+INSERT INTO orders (customer_id, staff_id, order_status, order_allergies)
+VALUES (1, 4, 'pending', 'No allergies')
 RETURNING order_id;
 
 CREATE TABLE order_details (
@@ -113,6 +122,9 @@ INSERT INTO order_details (order_id, dish_id, quantity)--Details for dummy order
 VALUES (2, 3, 2);
 INSERT INTO order_details (order_id, dish_id, quantity)--Details for dummy order3
 VALUES (3, 1, 5);
+INSERT INTO order_details (order_id, dish_id, quantity)--Details for dummy order4
+VALUES (4, 1, 2);
+
 
 -- Create needs_help table
 CREATE TABLE needs_help (
