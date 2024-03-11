@@ -1,81 +1,34 @@
 import React, { useState } from "react";
 import "../styles/CustomerLoginPage.css";
 import { Helmet } from 'react-helmet';
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function CustomerLoginPage() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [email, setEmail] = useState("");
-  const [tableNumber, setTableNumber] = useState("");
   const [error, setError] = useState(null);
-  const [isGuest, setIsGuest] = useState(false);
-  const [isForgotPassword, setIsForgotPassword] = useState(false);
-  const [receiveMenuUpdate, setReceiveMenuUpdate] = useState(false);
-  const [reserveTable, setReserveTable] = useState(false);
+  const navigate = useNavigate();
+  const [customerName, setCustomerName] = useState("");
+  const [customerAllergies, setCustomerAllergies] = useState("");
 
-  const handleSubmit = (event) => {
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
-
-    if (isForgotPassword) {
-      // Simulate sending reset password link to the provided email
-      console.log(`Reset password link sent to ${email}`);
-      // Reset the form after sending the link
-      setEmail("");
-      setIsForgotPassword(false);
-      return;
+    try {
+      //await axios.post("http://localhost:9000/table/assign", {tableNumber});
+      navigate.push("/menu");
     }
-
-    if (isGuest) {
-      if (!tableNumber.trim()) {
-        setError("Please enter the table number.");
-        return;
-      }
-      // Handle guest login
-      console.log(`Guest login successful for table ${tableNumber}!`);
-      setError(null);
+    
+    catch (err) {
+      console.log(err);
+    }
+  };
+  const handleAllergyChange = (allergy) => {
+    if (customerAllergies.includes(allergy)) {
+      setCustomerAllergies(customerAllergies.filter((a) => a !== allergy));
     } else {
-      // Simulate backend authentication (replace with your actual logic)
-      const isAuthenticated = username === "test" && password === "password123";
-
-      if (isAuthenticated) {
-        // Handle successful login
-        console.log("Login successful!");
-
-        if (receiveMenuUpdate) {
-          // Simulate sending menu update notification
-          sendMenuUpdateNotification();
-        }
-
-        if (reserveTable) {
-          // Simulate table reservation
-          reserveTableForUser();
-        }
-
-        setError(null); // Clear any previous errors
-      } else {
-        setError("Invalid username or password. Please try again.");
-      }
+      setCustomerAllergies([...customerAllergies, allergy]);
     }
   };
-
-  const sendNotificationEmail = () => {
-    // Simulate sending email notification with offer details
-    const offerMessage = "£10 off your next 5 orders* till [Offer End Date].";
-    const loyaltyPointsMessage = "You have earned 100 loyalty points.";
-    const emailMessage = `${offerMessage}\n${loyaltyPointsMessage}`;
-    console.log("Notification email sent to", email, ":", emailMessage);
-  };
-
-  const sendMenuUpdateNotification = () => {
-    // Simulate sending menu update notification
-    console.log("Menu update notification sent.");
-  };
-
-  const reserveTableForUser = () => {
-    // Simulate table reservation
-    console.log(`Table reserved for user ${username}.`);
-  };
-
   return (
     <form className="login-form" onSubmit={handleSubmit}>
       <div>
@@ -83,100 +36,64 @@ function CustomerLoginPage() {
         <title>Oaxaca | Customer Login</title>
       </Helmet>
       </div>
-      {!isForgotPassword && (
-        <>
-          {!isGuest && (
-            <>
-              <div className="form-group">
-                <label htmlFor="username">Username:</label>
-                <input
-                  type="text"
-                  id="username"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                />
-              </div>
-              <div className="form-group">
-                <label htmlFor="password">Password:</label>
-                <input
-                  type="password"
-                  id="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-              </div>
-              <div className="form-group">
-                <label htmlFor="email">Email:</label>
-                <input
-                  type="email"
-                  id="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-              </div>
-
-            </>
-          )}
-          <div className="text-right">
-            {!isGuest && (
-              <button className="forgot-password" onClick={() => setIsForgotPassword(true)}>
-                Forgot Password?
-              </button>
-            )}
-            <button className="login-button" type="submit">
-              {isGuest ? "Guest Login" : "Login"}
-            </button>
-            {!isGuest && (
-              <input
-                type="checkbox"
-                id="isGuest"
-                checked={isGuest}
-                onChange={() => setIsGuest(!isGuest)}
-              />
-            )}
-            <label htmlFor="isGuest">Login as Guest</label>
-          </div>
-        </>
-      )}
-      {isForgotPassword && (
         <div className="form-group">
-          <label htmlFor="email">Email:</label>
-          <input
-            type="email"
-            id="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <div className="text-right">
-            <button className="reset-password-button" type="submit">
-              Send Reset Password Link
-            </button>
-            <button className="cancel-button" onClick={() => setIsForgotPassword(false)}>
-              Cancel
-            </button>
-          </div>
-        </div>
-      )}
-      {isGuest && (
-        <div className="form-group">
-          <label htmlFor="tableNumber">Table Number:</label>
+          <label>Name:</label>
           <input
             type="text"
-            id="tableNumber"
-            value={tableNumber}
-            onChange={(e) => setTableNumber(e.target.value)}
+            id="name"
+            value={customerName}
+            onChange={(e) => setCustomerName(e.target.value)}
           />
+        <label> Allergies:</label>
+        <div>
+          <input
+            type="checkbox"
+            id="allergy1"
+            value="Dairy"
+            checked={customerAllergies.includes("Dairy")}
+            onChange={() => handleAllergyChange("Dairy")}
+          />
+          <label htmlFor="allergy1">Dairy</label>
+        </div>
+        <div>
+          <input
+            type="checkbox"
+            id="allergy2"
+            value="Gluten"
+            checked={customerAllergies.includes("Gluten")}
+            onChange={() => handleAllergyChange("Gluten")}
+          />
+          <label htmlFor="allergy2">Gluten</label>
+          <div>
+          <input
+            type="checkbox"
+            id="allergy1"
+            value="Nuts"
+            checked={customerAllergies.includes("Nuts")}
+            onChange={() => handleAllergyChange("Nuts")}
+          />
+          <label htmlFor="allergy1">Nuts</label>
+        </div>
+        <div>
+          <input
+            type="checkbox"
+            id="allergy2"
+            value="Shellfish"
+            checked={customerAllergies.includes("Shellfish")}
+            onChange={() => handleAllergyChange("Shellfish")}
+          />
+          <label htmlFor="allergy2">Shellfish</label>
+        </div>
           <div className="text-right">
             <button className="login-button" type="submit">
               Guest Login
             </button>
           </div>
         </div>
-      )}
+      </div>
       {error && <div className="error">{error}</div>}
     </form>
   );
 }
 
 export default CustomerLoginPage;
-
