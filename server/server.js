@@ -51,6 +51,7 @@ app.use('/table', tableRoute)//see all tables
 app.use('/table/view-assigned', tableRoute)//see all tables assigned to a specific staff member
 app.use('/table/assign', tableRoute)//assigns staff and customer to a table
 app.use('/table/assign-waiter', tableRoute)//assign a waiter to a table that is occupied but has no waiter yet
+app.use('/table/clear', tableRoute)//clear a table once done to let new customers to be assigned
 
 //payment endpoints
 app.use('/payment', paymentRoute)

@@ -50,6 +50,17 @@ router.post('/assign-waiter', async (req, res) => {
         console.error('Error assigning a waiter to tables', error);
         res.status(500).json({ error: 'Internal server error' });
     }
+});
+
+router.post('/clear', async (req, res) => {
+    try {
+        const { tableNumber } = req.body;
+        const tables = await tableController.clearTable(tableNumber); // Call the assignToTable function with customerId
+        res.status(200).json({tables});
+    } catch (error) {
+        console.error('Error clearing table:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
 })
 
 module.exports = router

@@ -94,4 +94,20 @@ async function assignWaiterToTable() {
     }
 };
 
-module.exports = { showTables, showAssigned, assignToTable, assignWaiterToTable }
+async function clearTable(tableNumber) {
+    let client;
+    try {
+        client = await pool.connect(); // Establish Connection
+        // Clear staff and customer IDs for the specified table
+        const clearTableQuery = 'UPDATE tables SET staff_id = NULL, customer_id = NULL WHERE table_number = $1';
+        await client.query(clearTableQuery, [tableNumber]);
+        console.log(`Table ${tableNumber} has been cleared.`);
+        return showTables();
+    } catch (error) {
+        console.error('Error clearing table:', error);
+    } finally {
+        client.release(); // Release the client back to the pool
+    }
+};
+
+module.exports = { showTables, showAssigned, assignToTable, assignWaiterToTable, clearTable }
