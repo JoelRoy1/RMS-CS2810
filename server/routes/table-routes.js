@@ -36,9 +36,20 @@ router.post('/assign', async (req, res) => {
         const tables = await tableController.assignToTable(customerId); // Call the assignToTable function with customerId
         res.status(200).json({tables});
     } catch (error) {
-        console.error('Error assigning customer and staff:', error);
+        console.error('Error assigning customer to a table:', error);
         res.status(500).json({ error: 'Internal server error' });
     }
 });
+
+// Post route to assign a waiter to a table that has a customer on it but no waiter
+router.post('/assign-waiter', async (req, res) => {
+    try {
+        const tables = await tableController.assignWaiterToTable();
+        res.status(200).json({tables});
+    } catch (error) {
+        console.error('Error assigning a waiter to tables', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+})
 
 module.exports = router
