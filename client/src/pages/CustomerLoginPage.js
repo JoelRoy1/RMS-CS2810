@@ -14,10 +14,9 @@ function CustomerLoginPage() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      //await axios.post("http://localhost:9000/table/assign", {tableNumber});
+      await axios.post("http://localhost:9000/customer/", {customerName}, {customerAllergies});
       navigate("/menu");
       console.log(customerAllergies.toString());
-      
     }
     
     catch (err) {
