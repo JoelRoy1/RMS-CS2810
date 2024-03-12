@@ -33,7 +33,9 @@
 
 /* Login Form */
 .login-form {
-  top:30%;
+  position: absolute;
+  top: 30%;
+  left: 30%;
   max-width: 400px;
   margin: auto;
   padding: 30px;

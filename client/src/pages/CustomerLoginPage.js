@@ -15,7 +15,9 @@ function CustomerLoginPage() {
     event.preventDefault();
     try {
       //await axios.post("http://localhost:9000/table/assign", {tableNumber});
-      navigate.push("/menu");
+      navigate("/menu");
+      console.log(customerAllergies.toString());
+      
     }
     
     catch (err) {
@@ -28,6 +30,7 @@ function CustomerLoginPage() {
     } else {
       setCustomerAllergies([...customerAllergies, allergy]);
     }
+    console.log(customerAllergies);
   };
   return (
     <form className="login-form" onSubmit={handleSubmit}>
