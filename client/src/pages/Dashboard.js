@@ -3,7 +3,7 @@ import '../styles/Dashboard.css';
 import Sidebar from '../components/Sidebar';
 import axios from 'axios';
 import { Helmet } from 'react-helmet';
-import {Button} from "@mui/matrial"
+import {Button} from "@mui/material"
 
 const Dashboard = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
