@@ -162,7 +162,7 @@ const MenuPage = () => {
       <Container maxWidth="lg">
         <Grid container spacing={2}>
           <Grid item xs={12} md={8}>
-            <Typography  style={{ color: '#000' } variant="h4" gutterBottom align="center">
+            <Typography  style={{ color: '#000' }} variant="h4" gutterBottom align="center">
               Menu
             </Typography>
             <Grid container spacing={2}>
