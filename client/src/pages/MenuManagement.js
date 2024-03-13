@@ -12,6 +12,7 @@ import {
   DialogActions,
   Snackbar,
   IconButton,
+  Container,
 } from '@mui/material'
 import Alert from '@mui/material/Alert'
 import DeleteIcon from '@mui/icons-material/Delete'
@@ -123,6 +124,7 @@ const MenuManagementPage = () => {
   }
 
   return (
+  <Container style={{ paddingTop: '100px' }}> {/* Padding applied here */}
     <div>
       <h1 style={{ color: 'black' }}>Menu Management</h1>
       <Button
@@ -218,7 +220,7 @@ const MenuManagementPage = () => {
         </Alert>
       </Snackbar>
     </div>
-  )
-}
-
-export default MenuManagementPage
+  </Container>
+);
+          };
+export default MenuManagementPage;
