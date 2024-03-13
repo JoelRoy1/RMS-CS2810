@@ -55,7 +55,7 @@ INSERT INTO menu (dish_name, dish_calories, dish_price) VALUES ('Burger', 700, 8
 INSERT INTO menu (dish_name, dish_calories, dish_price) VALUES ('Salad', 300, 6.99);
 INSERT INTO menu (dish_name, dish_calories, dish_price) VALUES ('Chicken Feet', 1200, 12.00);
 INSERT INTO menu (dish_name, dish_calories, dish_price) VALUES ('Chocolate Cake', 3500, 16.60);
-INSERT INTO menu (dish_name, dish_calories, dish_price) VALUES ('SProtein Bar', 3000, 1.99);
+INSERT INTO menu (dish_name, dish_calories, dish_price) VALUES ('Protein Bar', 3000, 1.99);
 
 CREATE TABLE allergens(
   allergen_id SERIAL PRIMARY KEY,
@@ -127,7 +127,7 @@ VALUES (1, 2, 3);
 INSERT INTO order_details (order_id, dish_id, quantity)--Details for dummy order2
 VALUES (2, 3, 2);
 INSERT INTO order_details (order_id, dish_id, quantity)--Details for dummy order3
-VALUES (3, 1, 5);
+VALUES (3, 1, 2);
 INSERT INTO order_details (order_id, dish_id, quantity)--Details for dummy order4
 VALUES (4, 1, 2);
 INSERT INTO order_details (order_id, dish_id, quantity)--Details for dummy order5
