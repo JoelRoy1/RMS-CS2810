@@ -8,6 +8,7 @@ const Dashboard = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [orders, setOrders] = useState([]);
 
+
   useEffect(() => {
     fetchOrders();
   }, []);
@@ -51,6 +52,7 @@ const Dashboard = () => {
           <div className="order-status-header-item">Order ID</div>
           <div className="order-status-header-item">Waiter</div>
           <div className="order-status-header-item">Time</div>
+          <div className="order-status-header-item">Items</div>
           <div className="order-status-header-item">Price</div>
           <div className="order-status-header-item">Order Status</div>
         </div>
@@ -60,6 +62,14 @@ const Dashboard = () => {
               <div>{order.order_id}</div>
               <div>{order.staff_name}</div>
               <div>{formatDateTime(order.order_time)}</div> {/* Format date and time here */}
+              {/*convert array of items to string*/}
+              <div>
+                {order.items.map(item => (
+                  <div key={item.dish_id}>
+                    {item.dish_name} x {item.quantity}
+                  </div>
+                ))}
+              </div>
               <div>{order.totalOrderPrice}</div> {/* Display totalOrderPrice */}
               <div>{order.order_status}</div>
             </div>

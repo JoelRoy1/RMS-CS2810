@@ -107,6 +107,9 @@ RETURNING order_id;
 INSERT INTO orders (customer_id, staff_id, order_status, order_allergies)
 VALUES (1, 4, 'pending', 'No allergies')
 RETURNING order_id;
+INSERT INTO orders (customer_id, staff_id, order_status, order_allergies)
+VALUES (1, 3, 'pending', 'No allergies')
+RETURNING order_id;
 
 CREATE TABLE order_details (
   order_detail_id SERIAL PRIMARY KEY,
@@ -124,6 +127,12 @@ INSERT INTO order_details (order_id, dish_id, quantity)--Details for dummy order
 VALUES (3, 1, 5);
 INSERT INTO order_details (order_id, dish_id, quantity)--Details for dummy order4
 VALUES (4, 1, 2);
+INSERT INTO order_details (order_id, dish_id, quantity)--Details for dummy order5
+VALUES (5, 1, 2);
+INSERT INTO order_details (order_id, dish_id, quantity)--Details for dummy order3
+VALUES (2, 1, 1);
+INSERT INTO order_details (order_id, dish_id, quantity)--Details for dummy order3
+VALUES (1, 3, 1);
 
 
 -- Create needs_help table
