@@ -28,6 +28,10 @@ const Dashboard = () => {
   const handleCancel=()=>{
     console.log("Cancelled");
   };
+  const handleDelivered = () => {
+    console.log("Delivered");
+  };
+
    // Function to format date and time
    const formatDateTime = (dateTimeString) => {
     const dateTime = new Date(dateTimeString);
@@ -56,8 +60,10 @@ const Dashboard = () => {
           <div className="order-status-header-item">Time</div>
           <div className="order-status-header-item">Price</div>
           <div className="order-status-header-item">Order Status</div>
-        </div>
+          <div className="order-status-header-item">Set delivery</div>
           <div className="order-status-header-item"> Cancel</div>
+        </div>
+          
         <div className="order-status-content">
           {orders.map(order => (
             <><div key={order.order_id} className="order-status-row">
@@ -73,6 +79,14 @@ const Dashboard = () => {
                   color="error"
                 >
                   Cancel
+                </Button>
+
+                <Button
+                  onClick={handleDelivered}
+                  variant="contained"
+                  color="success"
+                >
+                  Mark as delivered
                 </Button>
               </div></>
           ))}
