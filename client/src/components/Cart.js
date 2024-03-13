@@ -1,4 +1,5 @@
-import React from 'react'
+// Cart.js
+import React from 'react';
 import {
   Button,
   List,
@@ -6,10 +7,14 @@ import {
   ListItemText,
   IconButton,
   Typography,
-} from '@mui/material'
-import DeleteIcon from '@mui/icons-material/Delete'
+} from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
 
-const Cart = ({ cartItems, removeFromCart, calculateTotal }) => {
+const Cart = ({ cartItems, removeFromCart, calculateTotal}) => {
+  
+  
+  
+  
   return (
     <div>
       <Typography variant="h2" component="h2" style={{ color: '#000' }}>
@@ -17,39 +22,32 @@ const Cart = ({ cartItems, removeFromCart, calculateTotal }) => {
       </Typography>
       <List dense>
         {cartItems.map((item, index) => (
-          <ListItem
-            key={index}
-            secondaryAction={
-              <IconButton
-                edge="end"
-                aria-label="delete"
-                onClick={() => removeFromCart(item.id)}
-              >
-                <DeleteIcon />
-              </IconButton>
-            }
-          >
+          <ListItem key={index}>
             <ListItemText
               primary={
-                <Typography style={{ color: '#000' }}>{item.name}</Typography>
+                <Typography style={{ color: '#000' }}>{item.dish_name}</Typography>
               }
               secondary={
                 <Typography style={{ color: '#000' }}>
-                  Price: £{item.price.toFixed(2)} Qty: {item.quantity}
+                  {item.dish_price ? `Price: £${parseFloat(item.dish_price).toFixed(2)}` : 'Price: N/A'} Qty: {item.quantity}
                 </Typography>
               }
             />
+            <IconButton
+              edge="end"
+              aria-label="delete"
+              onClick={() => removeFromCart(item.dish_id)}
+            >
+              <DeleteIcon />
+            </IconButton>
           </ListItem>
         ))}
       </List>
       <Typography variant="h3" component="h3" style={{ color: '#000' }}>
-        Total: £{calculateTotal()}
+        Total: £{calculateTotal().toFixed(2)}
       </Typography>
-      <Button variant="contained" color="primary">
-        Checkout
-      </Button>
     </div>
-  )
-}
+  );
+};
 
-export default Cart
+export default Cart;
