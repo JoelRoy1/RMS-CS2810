@@ -53,6 +53,9 @@ GRANT ALL ON menu TO root;
 INSERT INTO menu (dish_name, dish_calories, dish_price) VALUES ('Pizza', 800, 10.99);
 INSERT INTO menu (dish_name, dish_calories, dish_price) VALUES ('Burger', 700, 8.99);
 INSERT INTO menu (dish_name, dish_calories, dish_price) VALUES ('Salad', 300, 6.99);
+INSERT INTO menu (dish_name, dish_calories, dish_price) VALUES ('Chicken Feet', 1200, 12.00);
+INSERT INTO menu (dish_name, dish_calories, dish_price) VALUES ('Chocolate Cake', 3500, 16.60);
+INSERT INTO menu (dish_name, dish_calories, dish_price) VALUES ('SProtein Bar', 3000, 1.99);
 
 CREATE TABLE allergens(
   allergen_id SERIAL PRIMARY KEY,
@@ -130,9 +133,9 @@ VALUES (4, 1, 2);
 INSERT INTO order_details (order_id, dish_id, quantity)--Details for dummy order5
 VALUES (5, 1, 2);
 INSERT INTO order_details (order_id, dish_id, quantity)--Details for dummy order3
-VALUES (2, 1, 1);
+VALUES (3, 1, 1);
 INSERT INTO order_details (order_id, dish_id, quantity)--Details for dummy order3
-VALUES (1, 3, 1);
+VALUES (3, 3, 1);
 
 
 -- Create needs_help table
