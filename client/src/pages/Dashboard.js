@@ -3,6 +3,7 @@ import '../styles/Dashboard.css';
 import Sidebar from '../components/Sidebar';
 import axios from 'axios';
 import { Helmet } from 'react-helmet';
+import {Button} from "@mui/matrial"
 
 const Dashboard = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -24,7 +25,9 @@ const Dashboard = () => {
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
-
+  const handleCancel=()=>{
+    console.log("Cancelled");
+  };
    // Function to format date and time
    const formatDateTime = (dateTimeString) => {
     const dateTime = new Date(dateTimeString);
@@ -54,15 +57,24 @@ const Dashboard = () => {
           <div className="order-status-header-item">Price</div>
           <div className="order-status-header-item">Order Status</div>
         </div>
+          <div className="order-status-header-item"> Cancel</div>
         <div className="order-status-content">
           {orders.map(order => (
-            <div key={order.order_id} className="order-status-row">
+            <><div key={order.order_id} className="order-status-row">
               <div>{order.order_id}</div>
               <div>{order.staff_name}</div>
               <div>{formatDateTime(order.order_time)}</div> {/* Format date and time here */}
               <div>{order.totalOrderPrice}</div> {/* Display totalOrderPrice */}
               <div>{order.order_status}</div>
-            </div>
+            </div><div>
+                <Button
+                  onClick={handleCancel}
+                  variant="contained"
+                  color="error"
+                >
+                  Cancel
+                </Button>
+              </div></>
           ))}
         </div>
       </div>
