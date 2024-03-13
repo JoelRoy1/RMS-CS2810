@@ -153,10 +153,13 @@ CREATE TABLE tables (
     staff_id INT REFERENCES staff(staff_id)
 );
 
--- create 20 empty tables for the restuarant
+--create table with customer
+INSERT INTO tables (customer_id, staff_id)
+VALUES (1, NULL);
+-- create 19 empty tables for the restuarant
 INSERT INTO tables (customer_id, staff_id)
 SELECT NULL, NULL
-FROM generate_series(1, 20);
+FROM generate_series(2, 20);
 
 GRANT ALL ON tables TO root;
 

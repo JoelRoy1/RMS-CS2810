@@ -72,6 +72,8 @@ const Dashboard = () => {
         <div className="order-status-table">
           <div className="order-status-header-item">Order ID</div>
           <div className="order-status-header-item">Waiter</div>
+          <div className="order-status-header-item">Customer</div>
+          <div className="order-status-header-item">Table Number</div>
           <div className="order-status-header-item">Time</div>
           <div className="order-status-header-item">Items</div>
           <div className="order-status-header-item">Price</div>
@@ -83,6 +85,8 @@ const Dashboard = () => {
             <div key={order.order_id} className="order-status-row">
               <div>{order.order_id}</div>
               <div>{order.staff_name}</div>
+              <div>{order.customer_name}</div>
+              <div>{order.table_number}</div>
               <div>{formatDateTime(order.order_time)}</div>
               <div>
                 {order.items.map(item => (
