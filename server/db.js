@@ -10,7 +10,10 @@ const pool = new Pool({
   port: 5432,
   user: 'root',
   password: 'pass',
-  database: "rms_db"
+  database: "rms_db",
+  max: 20,
+  idleTimeoutMillis: 30000,
+  connectionTimeoutMillis: 2000,
 })
 
 module.exports = { pool };
