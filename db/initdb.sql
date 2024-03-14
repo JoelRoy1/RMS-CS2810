@@ -35,7 +35,11 @@ CREATE TABLE customer(
 );
 
 -- Add a dummy customer to test cancellation of orders
-INSERT INTO customer (customer_name, customer_allergies) VALUES ('John Doe', 'None');
+INSERT INTO customer (customer_name, customer_allergies) VALUES ('Angelo Gomez', 'Gluten, Dairy');
+INSERT INTO customer (customer_name, customer_allergies) VALUES ('Irina Orlov', 'Gluten');
+INSERT INTO customer (customer_name, customer_allergies) VALUES ('Jean Richarde', 'None');
+INSERT INTO customer (customer_name, customer_allergies) VALUES ('Erika Herman', 'Nuts');
+INSERT INTO customer (customer_name, customer_allergies) VALUES ('Joanne Ndiaaye', 'None');
 
 GRANT ALL ON customer TO root;
 
@@ -100,19 +104,19 @@ CREATE TABLE orders(
 GRANT ALL ON orders TO root;
 
 INSERT INTO orders (customer_id, staff_id, order_status, order_allergies)
-VALUES (1, 2, 'pending', 'No allergies')
+VALUES (2, 2, 'pending', 'No allergies')
 RETURNING order_id;
 INSERT INTO orders (customer_id, staff_id, order_status, order_allergies)
-VALUES (1, 2, 'pending', 'No allergies')
-RETURNING order_id;
-INSERT INTO orders (customer_id, staff_id, order_status, order_allergies)
-VALUES (1, 3, 'pending', 'No allergies')
-RETURNING order_id;
-INSERT INTO orders (customer_id, staff_id, order_status, order_allergies)
-VALUES (1, 4, 'pending', 'No allergies')
+VALUES (3, 2, 'pending', 'No allergies')
 RETURNING order_id;
 INSERT INTO orders (customer_id, staff_id, order_status, order_allergies)
 VALUES (1, 3, 'pending', 'No allergies')
+RETURNING order_id;
+INSERT INTO orders (customer_id, staff_id, order_status, order_allergies)
+VALUES (5, 4, 'pending', 'No allergies')
+RETURNING order_id;
+INSERT INTO orders (customer_id, staff_id, order_status, order_allergies)
+VALUES (4, 3, 'pending', 'No allergies')
 RETURNING order_id;
 
 CREATE TABLE order_details (
@@ -155,12 +159,15 @@ CREATE TABLE tables (
 );
 
 --create table with customer
-INSERT INTO tables (customer_id, staff_id)
-VALUES (1, NULL);
--- create 19 empty tables for the restuarant
+INSERT INTO tables (customer_id, staff_id) VALUES (1, NULL);
+INSERT INTO tables (customer_id, staff_id) VALUES (2, NULL);
+INSERT INTO tables (customer_id, staff_id) VALUES (3, NULL);
+INSERT INTO tables (customer_id, staff_id) VALUES (4, NULL);
+INSERT INTO tables (customer_id, staff_id) VALUES (5, NULL);
+-- create 15 empty tables for the restuarant
 INSERT INTO tables (customer_id, staff_id)
 SELECT NULL, NULL
-FROM generate_series(2, 20);
+FROM generate_series(6, 20);
 
 GRANT ALL ON tables TO root;
 
