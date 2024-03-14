@@ -6,14 +6,9 @@ import {
   Typography,
   Button,
 } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
 
 const Cart = ({ cartItems, removeFromCart, calculateTotal }) => {
-  const navigate = useNavigate();
-
-  const handleCheckout = () => {
-    navigate('/payment'); 
-  };
+  
 
   return (
     <div>
@@ -40,13 +35,6 @@ const Cart = ({ cartItems, removeFromCart, calculateTotal }) => {
       <Typography variant="h3" component="h3" style={{ color: '#000' }}>
         Total: £{calculateTotal().toFixed(2)}
       </Typography>
-      <Button
-        variant="contained"
-        color="primary"
-        onClick={handleCheckout}
-      >
-        Pay Now
-      </Button>
     </div>
   );
 };

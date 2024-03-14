@@ -12,6 +12,7 @@ import {
 import DishCard from '../components/DishCard';
 import { Helmet } from 'react-helmet';
 import Cart from '../components/Cart';
+import { useNavigate } from 'react-router-dom';
 
 const theme = createTheme({
   typography: {
@@ -23,6 +24,7 @@ const theme = createTheme({
 const MenuPage = () => {
   const [dishes, setDishes] = useState([])
   const [cartItems, setCartItems] = useState([])
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchMenuItems()
@@ -69,6 +71,7 @@ const MenuPage = () => {
   }
 
   const handleCheckout = async () => {
+    navigate('/payment');
     const customerID = 1 // Assigning customer ID manually
     const staffID = 2 // Assigning staff ID manually
     const orderStatus = 'pending'
@@ -136,7 +139,7 @@ const MenuPage = () => {
               fullWidth
               onClick={handleCheckout}
             >
-              Checkout
+              Pay Now
             </Button>
           </Grid>
         </Grid>
