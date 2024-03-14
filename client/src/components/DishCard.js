@@ -48,7 +48,7 @@ const DishCard = ({ dish, onAddToCart }) => {
         </CardActions>
         <Collapse in={expanded} timeout="auto" unmountOnExit>
           <Typography variant="body2" color="text.secondary">
-            {dish.description}
+            {dish.dish_description}
           </Typography>
         </Collapse>
       </CardContent>

@@ -92,17 +92,17 @@ async function filterCalories(calories) {
  * @param {int} dishCalories the number of calories in the dish
  * @param {float} dishPrice the price of the dish
  */
-async function createMenuItem(dishName, dishCalories, dishPrice) { 
+async function createMenuItem(dishName, dishCalories, dishPrice, dishDescription) { 
   let client;
   try {
     console.log('Attempting to create item...')
     client = await pool.connect(); // Establish connection to db
     const query = `
-      INSERT INTO menu (dish_name, dish_calories, dish_price)
-      VALUES ($1, $2, $3)
+      INSERT INTO menu (dish_name, dish_calories, dish_price, dish_description)
+      VALUES ($1, $2, $3, $4)
       RETURNING dish_id;
     `;
-    const values = [dishName, dishCalories, dishPrice];
+    const values = [dishName, dishCalories, dishPrice, dishDescription];
     const result = await client.query(query, values);
     console.log('New item added with ID:', result.rows[0].dish_id);
   } catch (error) {
@@ -138,10 +138,43 @@ async function deleteMenuItem(dishID) {
   }
 }
 
+
+/**
+ * function to update menu items in the db.
+ * @param {int} dishID the ID of the dish to update
+ * @param {string} dishName the new name of the dish
+ * @param {int} dishCalories the new number of calories in the dish
+ * @param {float} dishPrice the new price of the dish
+ * @param {string} dishDescription the new description of the dish
+ */
+async function updateMenuItem(dishID, dishName, dishCalories, dishPrice, dishDescription) {
+  let client;
+  try {
+    console.log('Attempting to update item...');
+    client = await pool.connect(); // Establish connection to db
+    const query = `
+      UPDATE menu 
+      SET dish_name = $1, dish_calories = $2, dish_price = $3, dish_description = $4 
+      WHERE dish_id = $5;
+    `;
+    const values = [dishName, dishCalories, dishPrice, dishDescription, dishID];
+    await client.query(query, values);
+    console.log('Item updated successfully');
+  } catch (error) {
+    console.error(`Error updating item: ${error.message}`);
+  } finally {
+    if(client){
+      console.log('client released');
+      client.release();
+    }
+  }
+}
+
 module.exports = { 
   getAllMenuItems, 
   filterOutAllergens, 
   filterCalories,
   createMenuItem, 
-  deleteMenuItem 
+  deleteMenuItem,
+  updateMenuItem
 }; //Export controller for use in router
