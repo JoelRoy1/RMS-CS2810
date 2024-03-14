@@ -87,8 +87,8 @@ INSERT INTO dish_allergens (dish_id, allergen_id) VALUES (3, 3); -- Salad contai
 -- Create orders table
 CREATE TABLE orders(
   order_id SERIAL PRIMARY KEY,
-  customer_id INT REFERENCES customer(customer_id),
-  staff_id INT REFERENCES staff(staff_id),
+  customer_id INT REFERENCES customer(customer_id) ON DELETE CASCADE,
+  staff_id INT REFERENCES staff(staff_id) ON DELETE CASCADE,
   order_status VARCHAR(255),
   order_allergies  VARCHAR(255),
   order_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -116,8 +116,8 @@ RETURNING order_id;
 
 CREATE TABLE order_details (
   order_detail_id SERIAL PRIMARY KEY,
-  order_id INT REFERENCES orders(order_id),
-  dish_id INT REFERENCES menu(dish_id),
+  order_id INT REFERENCES orders(order_id) ON DELETE CASCADE,
+  dish_id INT REFERENCES menu(dish_id) ON DELETE CASCADE,
   quantity INT
 );
 GRANT ALL ON order_details TO root;
@@ -141,7 +141,7 @@ VALUES (3, 3, 1);
 -- Create needs_help table
 CREATE TABLE needs_help (
   help_id SERIAL PRIMARY KEY,
-  customer_id SERIAL REFERENCES customer(customer_id),
+  customer_id SERIAL REFERENCES customer(customer_id) ON DELETE CASCADE,
   resolved BOOLEAN DEFAULT FALSE
 );
 
@@ -149,8 +149,8 @@ GRANT ALL ON needs_help TO root;
 
 CREATE TABLE tables (
     table_number SERIAL PRIMARY KEY,
-    customer_id INT REFERENCES customer(customer_id),
-    staff_id INT REFERENCES staff(staff_id)
+    customer_id INT REFERENCES customer(customer_id) ON DELETE CASCADE,
+    staff_id INT REFERENCES staff(staff_id) ON DELETE CASCADE
 );
 
 --create table with customer
@@ -167,7 +167,7 @@ CREATE TABLE payments (
   payment_id SERIAL PRIMARY KEY,
   payment_time TIMESTAMP NOT NULL,
   payment_amount NUMERIC(10,2) NOT NULL,
-  table_number SERIAL REFERENCES tables(table_number),
+  table_number SERIAL REFERENCES tables(table_number) ON DELETE CASCADE,
   card_holder VARCHAR(255),
   card_ending INT,
   card_expiry VARCHAR(5)
