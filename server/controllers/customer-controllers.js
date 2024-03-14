@@ -16,7 +16,8 @@ async function addCustomer(customerName, customerAllergies) {
         const customerId = result.rows[0].customer_id;
         console.log(customerId);
         console.log('Customer added to table');
-        return tableController.assignToTable(customerId);
+        tableNumber = await tableController.assignToTable(customerId);
+        return {customerId, tableNumber};
       } catch (error) {
         throw new Error(`Error submitting help request: ${error.message}`);
       } finally {

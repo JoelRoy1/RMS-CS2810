@@ -14,7 +14,10 @@ function CustomerLoginPage() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      await axios.post("http://localhost:9000/customer/", {customerName}, {customerAllergies});
+      const response = await axios.post("http://localhost:9000/customer/", { customerName, customerAllergies });
+      const { customerId, tableNumber } = response.data;
+      sessionStorage.setItem('id', customerId);
+      sessionStorage.setItem('table', tableNumber);
       navigate("/menu");
       console.log(customerAllergies.toString());
     }

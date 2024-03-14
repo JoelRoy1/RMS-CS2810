@@ -72,7 +72,7 @@ const MenuPage = () => {
 
   const handleCheckout = async () => {
     navigate('/payment');
-    const customerID = 1 // Assigning customer ID manually
+    const customerID = sessionStorage.getItem('id');//Assigning customer ID from session storage after customer login
     const staffID = 2 // Assigning staff ID manually
     const orderStatus = 'pending'
     const orderAllergies = 'No allergies'
