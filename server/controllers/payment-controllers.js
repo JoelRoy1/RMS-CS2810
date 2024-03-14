@@ -22,7 +22,7 @@ async function addPayment(amount, table_number, card_number, card_holder, card_e
             return_url: 'http://localhost:9000'
         })
         if (stripePaymentIntent.status === 'succeeded') {
-            const client = await pool.connect();
+            client = await pool.connect();
             const card_ending = card_number.substring(card_number.length - 4); //store only last 4 digits of card number
             const timestamp = new Date();
             const query = `INSERT INTO payments (payment_time, payment_amount, table_number, card_holder, card_ending, card_expiry)

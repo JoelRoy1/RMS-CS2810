@@ -14,7 +14,7 @@ async function getAllMenuItems() {
   let client;
   try {
     console.log('Attempting to connect to database...');
-    const client = await pool.connect(); //Establish connection to db
+    client = await pool.connect(); //Establish connection to db
     console.log('Connection successful');
     const query = 'SELECT * FROM menu';
     const result = await client.query(query);
@@ -37,7 +37,7 @@ async function getAllMenuItems() {
  */
 async function filterOutAllergens(allergens) {
   console.log('Attempting to connect to database...');
-  const client = await pool.connect(); //Establish connection to db
+  client = await pool.connect(); //Establish connection to db
   try {
     console.log('Connection successful');
     const query = `
@@ -68,8 +68,9 @@ async function filterOutAllergens(allergens) {
  * @returns menu items below the calorie limit
  */
 async function filterCalories(calories) {
-  const client = await pool.connect(); //Establish connection to db
+  let client;
   try {
+    client = await pool.connect(); //Establish connection to db
     console.log('connection successful');
     const query = `SELECT * FROM menu WHERE dish_calories <= $1`;
     const result = await client.query(query, calories);
@@ -78,8 +79,10 @@ async function filterCalories(calories) {
   } catch (error) {
     console.error('error filtering calories: ', $(error.message));
   } finally {
-    console.log('client released');
-    client.release();
+    if(client){
+      console.log('client released');
+      client.release();
+    }
   }
 };
 
@@ -105,8 +108,10 @@ async function createMenuItem(dishName, dishCalories, dishPrice) {
   } catch (error) {
     console.error('Error adding new item:', (error.message));
   } finally {
-    console.log('client released');
-    client.release();
+    if(client){
+      console.log('client released');
+      client.release();
+    }
   }
 };
 
@@ -118,7 +123,7 @@ async function deleteMenuItem(dishID) {
   let client;
   try {
     console.log('Attempting to delete item...');
-    const client = await pool.connect();  // Establish connection to db
+    client = await pool.connect();  // Establish connection to db
     const query = 'DELETE FROM menu WHERE dish_id = $1 RETURNING *;';
     const values = [dishID];
     const result = await client.query(query, values);

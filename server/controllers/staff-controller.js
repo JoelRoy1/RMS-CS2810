@@ -18,7 +18,7 @@ async function signIn(username, pin) {
   let client;
   try {
     console.log('Attempting to sign in...');
-    const client = await pool.connect();//Establish Connection
+    client = await pool.connect();//Establish Connection
     console.log('Connected to the database');
     const query = {
       text: 'SELECT * FROM staff WHERE staff_name = $1 AND staff_pin = $2',

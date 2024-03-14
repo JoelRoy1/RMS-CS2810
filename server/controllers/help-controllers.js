@@ -16,7 +16,7 @@ async function requestHelp(customerId) {
   let client;
   try {
     console.log('Submitting help request...');
-    const client = await pool.connect();
+    client = await pool.connect();
     console.log('Connected to the database');
     await client.query('INSERT INTO needs_help (customer_id) VALUES ($1)', [customerId]);
     client.release();
@@ -41,7 +41,7 @@ async function getCustomersNeedingHelp() {
   let client;
   try {
     console.log('Retrieving customers needing help...');
-    const client = await pool.connect();
+    client = await pool.connect();
     console.log('Connected to the database');
     const result = await client.query('SELECT * FROM needs_help');
     client.release();
@@ -68,7 +68,7 @@ async function resolveHelpRequest(helpId) {
   let client;
   try {
     console.log('Attempting to resolve the help request');
-    const client = await pool.connect();
+    client = await pool.connect();
     console.log('Connected to the database');
     const query = 'UPDATE needs_help SET resolved = true WHERE help_id = $1 RETURNING *';
     const result = await client.query(query, [helpId]);
