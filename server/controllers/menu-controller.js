@@ -24,6 +24,7 @@ async function getAllMenuItems() {
     throw new Error(`Error fetching menu items: ${error.message}`);
   } finally {
     if (client) {
+      console.log('client released');
       client.release(); //Release client back into pool
     }
   }
@@ -54,6 +55,7 @@ async function filterOutAllergens(allergens) {
     throw new Error(`Error filtering out allergens: ${error.message}`);
   } finally {
     if (client) {
+      console.log('client released');
       client.release(); //Release client back into pool
     }
   }
@@ -76,6 +78,7 @@ async function filterCalories(calories) {
   } catch (error) {
     console.error('error filtering calories: ', $(error.message));
   } finally {
+    console.log('client released');
     client.release();
   }
 };
@@ -102,6 +105,7 @@ async function createMenuItem(dishName, dishCalories, dishPrice) {
   } catch (error) {
     console.error('Error adding new item:', (error.message));
   } finally {
+    console.log('client released');
     client.release();
   }
 };
@@ -123,6 +127,7 @@ async function deleteMenuItem(dishID) {
     console.error(`Error deleting item: ${error.message}`);
   } finally {
     if(client){
+      console.log('client released');
       client.release();
     }
   }

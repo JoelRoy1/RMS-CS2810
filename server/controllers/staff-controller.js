@@ -36,6 +36,7 @@ async function signIn(username, pin) {
     throw new Error(`Unable to sign in: ${error.message}`);
   } finally {
     if (client) {
+      console.log('client released');
       client.release(); // Release the client back to the pool
     }
   }
@@ -73,6 +74,7 @@ async function createAccount(username, pin, specialization) {
     throw new Error(`Unable to create account: ${error.message}`);
   } finally {
     if (client) {
+      console.log('client released');
       client.release(); // Release the client back to the pool
     }
   }

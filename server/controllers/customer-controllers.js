@@ -21,6 +21,7 @@ async function addCustomer(customerName, customerAllergies) {
         throw new Error(`Error submitting help request: ${error.message}`);
       } finally {
         if (client) {
+          console.log('client released');
           client.release();
         }
       }

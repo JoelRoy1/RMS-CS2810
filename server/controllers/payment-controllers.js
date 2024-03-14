@@ -36,6 +36,7 @@ async function addPayment(amount, table_number, card_number, card_holder, card_e
         res.status(500).send('Internal Server Error');
     } finally {
         if (client) {
+            console.log('client released');
             client.release();
         }
     }

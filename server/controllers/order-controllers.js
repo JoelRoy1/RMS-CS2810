@@ -36,6 +36,7 @@ async function cancelOrder(orderId) {
     throw error;
   } finally {
     if (client) {
+      console.log('client released');
       client.release();
     }
   }
@@ -104,6 +105,7 @@ async function placeOrder(customerId, staffId, orderStatus, orderAllergies, item
     throw error;
   } finally {
     if (client) {
+      console.log('client released');
       client.release();
     }
   }
@@ -134,6 +136,7 @@ async function orderDelivered(orderId, staffId) {
     console.error('Error confirming order as delivered', error);
   } finally {
     if (client) {
+      console.log('client released');
       client.release();
     }
   }
@@ -158,6 +161,7 @@ async function getDeliveredOrderCount() {
     throw error;
   } finally {
     if (client) {
+      console.log('client released');
       client.release();
     }
   }
@@ -182,6 +186,7 @@ async function getPendingOrderCount() {
     throw error;
   } finally {
     if (client) {
+      console.log('client released');
       client.release();
     }
   }
@@ -242,6 +247,7 @@ async function getAllOrders() {
     throw error;
   } finally {
     if (client) {
+      console.log('client released');
       client.release();
     }
   }

@@ -16,6 +16,7 @@ async function showTables() {
         console.error('Error getting tables from database:', error);
     } finally {
         if (client) {
+            console.log('client released');
             client.release(); // Release the client back to the pool
         }
     }
@@ -32,6 +33,7 @@ async function showAssigned(staffId) {
         return result.rows;
     } catch (error) {
         if (client) {
+            console.log('client released');
             client.release(); //Release the client back to the pool
         }
     }
@@ -56,6 +58,7 @@ async function assignToTable(customerId) {
     } catch (error) {
         console.error('Error assigning customer:', error);
     } finally {
+        console.log('client released');
         client.release(); // Release the client back to the pool
     }
 };
@@ -90,6 +93,7 @@ async function assignWaiterToTable() {
     } catch (error) {
         console.error('Error assigning waiter to table:', error);
     } finally {
+        console.log('client released');
         client.release(); // Release the client back to the pool
     }
 };
@@ -106,6 +110,7 @@ async function clearTable(tableNumber) {
     } catch (error) {
         console.error('Error clearing table:', error);
     } finally {
+        console.log('client released');
         client.release(); // Release the client back to the pool
     }
 };

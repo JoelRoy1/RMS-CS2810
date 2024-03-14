@@ -25,6 +25,7 @@ async function requestHelp(customerId) {
     throw new Error(`Error submitting help request: ${error.message}`);
   } finally {
     if (client) {
+      console.log('client released');
       client.release();
     }
   }
@@ -50,6 +51,7 @@ async function getCustomersNeedingHelp() {
     throw new Error(`Error retrieving customers needing help: ${error.message}`);
   } finally {
     if (client) {
+      console.log('client released');
       client.release();
     }
   }
@@ -76,6 +78,7 @@ async function resolveHelpRequest(helpId) {
     throw new Error(`Error resolving customer needing help: ${error.message}`);
   } finally {
     if (client) {
+      console.log('client released');
       client.release();
     }
   }
