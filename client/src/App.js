@@ -8,13 +8,13 @@ import CustomerLoginPage from './pages/CustomerLoginPage'
 import StaffLoginPage from './pages/StaffLoginPage'
 import Dashboard from './pages/Dashboard'
 import './styles/App.css'
+import PaymentPage from './pages/PaymentPage';
 
 function App() {
   return (
     <Router>
       <div className="App">
-        <OmniNavbar /> {/* Use your dedicated Navbar component here */}
-        {/* Main content */}
+        <OmniNavbar />
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/menu" element={<MenuPage />} />
@@ -22,9 +22,8 @@ function App() {
           <Route path="/customer-login" element={<CustomerLoginPage />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/staff-login" element={<StaffLoginPage/>} />
-          {/* Add more routes as needed */}
+          <Route path="/payment" element={<PaymentPage />} />
         </Routes>
-        {/* Footer */}
         <footer className="App-footer">
           <p>The Exquisite Oaxaca</p>
         </footer>
@@ -33,4 +32,5 @@ function App() {
   )
 }
 
-export default App
+export default App;
+
