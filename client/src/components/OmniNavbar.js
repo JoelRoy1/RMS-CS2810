@@ -7,7 +7,7 @@ function OmniNavbar() {
 
   const menuItems = [
     { path: '/', label: 'Home' },
-    { path: '/menu', label: 'Menu' },
+    //{ path: '/menu', label: 'Menu' },
     { path: '/menu-management', label: 'Menu Management' },
     { path: '/about-us', label: 'About Us' },
   ]
