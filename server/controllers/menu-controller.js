@@ -16,7 +16,15 @@ async function getAllMenuItems() {
     console.log('Attempting to connect to database...');
     client = await pool.connect(); //Establish connection to db
     console.log('Connection successful');
-    const query = 'SELECT * FROM menu';
+    
+    const query = `
+      SELECT m.*, array_agg(a.allergen_name) AS allergens
+      FROM menu m
+      LEFT JOIN dish_allergens da ON m.dish_id = da.dish_id
+      LEFT JOIN allergens a ON da.allergen_id = a.allergen_id
+      GROUP BY m.dish_id;
+    `;
+    
     const result = await client.query(query);
     console.log('Menu item retrieval successful');
     return result.rows;

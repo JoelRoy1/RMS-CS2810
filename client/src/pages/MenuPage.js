@@ -1,7 +1,7 @@
+// MenuPage.js
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import {
-  Button,
   Typography,
   Container,
   Grid,
@@ -22,92 +22,65 @@ const theme = createTheme({
 });
 
 const MenuPage = () => {
-  const [dishes, setDishes] = useState([])
-  const [cartItems, setCartItems] = useState([])
+  const [dishes, setDishes] = useState([]);
+  const [cartItems, setCartItems] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetchMenuItems()
-  }, [])
+    fetchMenuItems();
+  }, []);
 
   const fetchMenuItems = async () => {
     try {
-      const response = await axios.get('http://localhost:9000/menu')
-      setDishes(response.data)
+      const response = await axios.get('http://localhost:9000/menu');
+      setDishes(response.data);
     } catch (error) {
-      console.error('Error fetching menu items:', error)
+      console.error('Error fetching menu items:', error);
     }
-  }
+  };
 
   const addToCart = (dishToAdd) => {
     const existingItem = cartItems.find(
       (item) => item.dish_id === dishToAdd.dish_id
-    )
+    );
     if (existingItem) {
       const updatedCartItems = cartItems.map((item) =>
         item.dish_id === dishToAdd.dish_id
           ? { ...item, quantity: item.quantity + 1 }
           : item
-      )
-      setCartItems(updatedCartItems)
+      );
+      setCartItems(updatedCartItems);
     } else {
-      setCartItems([...cartItems, { ...dishToAdd, quantity: 1 }])
+      setCartItems([...cartItems, { ...dishToAdd, quantity: 1 }]);
     }
-  }
+  };
 
   const removeFromCart = (id) => {
-    const updatedCartItems = cartItems.filter((item) => item.dish_id !== id) // Fixed filter condition
-    setCartItems(updatedCartItems)
-  }
+    const updatedCartItems = cartItems.filter((item) => item.dish_id !== id);
+    setCartItems(updatedCartItems);
+  };
 
   const calculateTotal = () => {
     if (cartItems.length === 0) {
-      return 0 // Return 0 if the cart is empty
+      return 0;
     }
     return cartItems.reduce(
       (total, item) => total + item.dish_price * item.quantity,
       0
-    )
-  }
+    );
+  };
 
   const handleCheckout = async () => {
     navigate('/payment');
-    const customerID = sessionStorage.getItem('id');//Assigning customer ID from session storage after customer login
-    const staffID = 2 // Assigning staff ID manually
-    const orderStatus = 'pending'
-    const orderAllergies = 'No allergies'
-    const items = cartItems.map((item) => ({
-      dishId: item.dish_id,
-      dishName: item.dish_name,
-      quantity: item.quantity, // Use the actual quantity from the cart
-      dishPrice: item.dish_price,
-    }))
+    // Add your checkout logic here
+  };
 
-    try {
-      const response = await axios.post('http://localhost:9000/order', {
-        customerId: customerID,
-        staffId: staffID,
-        orderStatus: orderStatus,
-        orderAllergies: orderAllergies,
-        items: items,
-      })
-      console.log('Order placed successfully:', response.data)
-      // Optionally, you can clear the cart after placing the order
-      setCartItems([])
-    } catch (error) {
-      console.error('Error placing order:', error)
-    }
-  }
-
-  console.log('cartItems:', cartItems)
-  console.log('cartItems:', cartItems)
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Helmet>
-        <title>Your Restaurant Name | Menu</title>
+        <title>Oaxaca Menu</title>
       </Helmet>
-      {/* Adjusted Container to include top margin */}
       <Container maxWidth="lg" style={{ marginTop: '100px' }}>
         <Grid container spacing={2}>
           <Grid item xs={12} md={8}>
@@ -132,20 +105,13 @@ const MenuPage = () => {
               cartItems={cartItems}
               removeFromCart={removeFromCart}
               calculateTotal={calculateTotal}
+              handleCheckout={handleCheckout}
             />
-            <Button
-              variant="contained"
-              color="primary"
-              fullWidth
-              onClick={handleCheckout}
-            >
-              Pay Now
-            </Button>
           </Grid>
         </Grid>
       </Container>
     </ThemeProvider>
-  )
-}
+  );
+};
 
-export default MenuPage
+export default MenuPage;
