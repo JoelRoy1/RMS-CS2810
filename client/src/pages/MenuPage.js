@@ -1,4 +1,3 @@
-// MenuPage.js
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import {
@@ -72,9 +71,35 @@ const MenuPage = () => {
 
   const handleCheckout = async () => {
     navigate('/payment');
-    // Add your checkout logic here
-  };
+    const customerID = sessionStorage.getItem('id');//Assigning customer ID from session storage after customer login
+    const staffID = 2 // Assigning staff ID manually
+    const orderStatus = 'pending'
+    const orderAllergies = 'No allergies'
+    const items = cartItems.map((item) => ({
+      dishId: item.dish_id,
+      dishName: item.dish_name,
+      quantity: item.quantity, // Use the actual quantity from the cart
+      dishPrice: item.dish_price,
+    }))
+    try {
+      const response = await axios.post('http://localhost:9000/order', {
+        customerId: customerID,
+        staffId: staffID,
+        orderStatus: orderStatus,
+        orderAllergies: orderAllergies,
+        items: items,
+      })
+      console.log('Order placed successfully:', response.data)
+      // Optionally, you can clear the cart after placing the order
+      setCartItems([])
+    } catch (error) {
+      console.error('Error placing order:', error)
+    }
+  }
 
+  console.log('cartItems:', cartItems)
+  console.log('cartItems:', cartItems)
+  
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
