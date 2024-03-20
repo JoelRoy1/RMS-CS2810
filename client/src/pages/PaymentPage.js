@@ -45,7 +45,7 @@ const PaymentPage = () => {
     <Container component="main" maxWidth="xs">
       <div style={{ marginTop: '4rem', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         <Typography component="h1" variant="h5" style={{ color: '#333', marginBottom: '2rem' }}>
-          Payment Details
+          Order Payment
         </Typography>
         {paymentStatus === 'success' && (
           <Typography style={{ color: 'green', marginBottom: '1rem' }}>

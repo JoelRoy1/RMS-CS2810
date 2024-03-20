@@ -12,6 +12,7 @@ import {
   FormGroup,
   FormControlLabel,
   Checkbox,
+  Paper,
 } from '@mui/material';
 import DishCard from '../components/DishCard';
 import { Helmet } from 'react-helmet';
@@ -22,6 +23,14 @@ const theme = createTheme({
   typography: {
     fontFamily: 'Roboto, sans-serif',
     color: '#333',
+  },
+  palette: {
+    primary: {
+      main: '#333',
+    },
+    text: {
+      primary: '#333',
+    },
   },
 });
 
@@ -69,8 +78,12 @@ const MenuPage = () => {
     return cartItems.reduce((total, item) => total + item.dish_price * item.quantity, 0);
   };
 
+  const storeOrderTotal = () => {
+    const total = calculateTotal().toFixed(2);
+    sessionStorage.setItem('amount', total);
+  };
+
   const handleCheckout = async () => {
-    navigate('/payment');
     const customerID = sessionStorage.getItem('id');
     const staffID = 2; // Assigning staff ID manually
     const orderStatus = 'pending';
@@ -91,8 +104,9 @@ const MenuPage = () => {
         items: items,
       });
       console.log('Order placed successfully:', response.data);
-      sessionStorage.setItem('amount', calculateTotal());
       setCartItems([]);
+      storeOrderTotal();
+      navigate('/payment');
     } catch (error) {
       console.error('Error placing order:', error);
     }
@@ -124,34 +138,38 @@ const MenuPage = () => {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Helmet>
-        <title>Your Restaurant Name | Menu</title>
+        <title>Oaxaca Menu</title>
       </Helmet>
       <Container maxWidth="lg" style={{ marginTop: '100px' }}>
+        <Paper style={{ marginBottom: '20px', padding: '20px', background: '#fff', boxShadow: '0 2px 4px rgba(0,0,0,0.1)', zIndex: '100' }}>
+          <Typography variant="h6" gutterBottom align="left">
+            Allergen Filters
+          </Typography>
+          <FormControl component="fieldset">
+            <FormGroup row>
+              <FormControlLabel
+                control={<Checkbox checked={allergens.includes('Gluten')} onChange={handleAllergenChange} value="Gluten" />}
+                label="Gluten"
+              />
+              <FormControlLabel
+                control={<Checkbox checked={allergens.includes('Dairy')} onChange={handleAllergenChange} value="Dairy" />}
+                label="Dairy"
+              />
+              <FormControlLabel
+                control={<Checkbox checked={allergens.includes('Nuts')} onChange={handleAllergenChange} value="Nuts" />}
+                label="Nuts"
+              />
+            </FormGroup>
+          </FormControl>
+          <Button variant="contained" color="primary" onClick={filterMenuItems} style={{ marginTop: '10px' }}>
+            Apply Filters
+          </Button>
+        </Paper>
         <Grid container spacing={2}>
           <Grid item xs={12} md={8}>
             <Typography variant="h4" gutterBottom align="center">
               Menu
             </Typography>
-            {/* Allergen filter */}
-            <FormControl component="fieldset">
-              <FormGroup>
-                <FormControlLabel
-                  control={<Checkbox checked={allergens.includes('Gluten')} onChange={handleAllergenChange} value="Gluten" />}
-                  label={<Typography color="textPrimary">Gluten</Typography>}
-                />
-                <FormControlLabel
-                  control={<Checkbox checked={allergens.includes('Dairy')} onChange={handleAllergenChange} value="Dairy" />}
-                  label={<Typography color="textPrimary">Dairy</Typography>}
-                />
-                <FormControlLabel
-                  control={<Checkbox checked={allergens.includes('Nuts')} onChange={handleAllergenChange} value="Nuts" />}
-                  label={<Typography color="textPrimary">Nuts</Typography>}
-                />
-              </FormGroup>
-            </FormControl>
-            <Button variant="contained" color="primary" onClick={filterMenuItems}>
-              Apply Filters
-            </Button>
             <Grid container spacing={2}>
               {(filteredDishes.length > 0 ? filteredDishes : dishes).map((dish) => (
                 <Grid item key={dish.dish_id} xs={12} sm={6} md={4}>
@@ -160,17 +178,13 @@ const MenuPage = () => {
               ))}
             </Grid>
           </Grid>
-          <Grid item xs={12} md={4} style={{position: 'sticky', top:'100px', height: 'fit-content'}}>
+          <Grid item xs={12} md={4} style={{ position: 'sticky', top: '100px', height: 'fit-content' }}>
             <Cart
               cartItems={cartItems}
               removeFromCart={removeFromCart}
               calculateTotal={calculateTotal}
+              handleCheckout={handleCheckout}
             />
-            <div style={{marginTop: '20px'}}>
-            <Button variant="contained" color="primary" fullWidth onClick={handleCheckout} style={{marginTop: '20px'}}>
-              Pay Now
-            </Button>
-            </div>
           </Grid>
         </Grid>
       </Container>
