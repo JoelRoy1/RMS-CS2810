@@ -91,6 +91,7 @@ const MenuPage = () => {
         items: items,
       });
       console.log('Order placed successfully:', response.data);
+      sessionStorage.setItem('amount', calculateTotal());
       setCartItems([]);
     } catch (error) {
       console.error('Error placing order:', error);
