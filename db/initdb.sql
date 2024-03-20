@@ -88,7 +88,9 @@ INSERT INTO dish_allergens (dish_id, allergen_id) VALUES (1, 1); -- Pizza contai
 INSERT INTO dish_allergens (dish_id, allergen_id) VALUES (1, 2); -- Pizza contains Dairy
 INSERT INTO dish_allergens (dish_id, allergen_id) VALUES (2, 1); -- Burger contains Gluten
 INSERT INTO dish_allergens (dish_id, allergen_id) VALUES (3, 3); -- Salad contains Nuts
-
+INSERT INTO dish_allergens (dish_id, allergen_id) VALUES (4, 1);-- Chicken Feet contain Gluten
+INSERT INTO dish_allergens (dish_id, allergen_id) VALUES (5, 2);-- Chocolate Cake contains Dairy
+INSERT INTO dish_allergens (dish_id, allergen_id) VALUES (6, 3);-- Protein Bar contains Nuts
 -- Create orders table
 CREATE TABLE orders(
   order_id SERIAL PRIMARY KEY,

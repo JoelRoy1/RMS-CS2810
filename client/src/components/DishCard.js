@@ -35,10 +35,6 @@ const DishCard = ({ dish, onAddToCart }) => {
         <Typography variant="body1" component="p" style={{ color: '#666', marginBottom: '8px', fontSize: '1rem' }}>
           Calories: {dish.dish_calories} {/* Displaying the dish calories */}
         </Typography>
-        {/* Display allergens or "No allergens" if allergens are null */}
-        <Typography variant="body1" component="p" style={{ color: '#666', marginBottom: '10px', fontSize: '1rem' }}>
-          Allergy info: {dish.allergens && dish.allergens.length > 0 ? dish.allergens.join(', ') : 'No allergens'}
-        </Typography>
         <Collapse in={expanded} timeout="auto" unmountOnExit>
           <Typography variant="body2" color="text.secondary" style={{ color: '#666', marginBottom: '10px', fontSize: '0.9rem' }}>
             {dish.dish_description}
