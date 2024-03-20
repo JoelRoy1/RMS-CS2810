@@ -22,7 +22,7 @@ router.get('/', async (req, res) => {
  * filter menu items based on allergen route
  */
 router.get('/filter-allergens', async (req, res) => {
-  const { allergens } = req.body
+  const { allergens } = req.query
   try {
     const menu = await controller.filterOutAllergens(allergens)
     res.json(menu)

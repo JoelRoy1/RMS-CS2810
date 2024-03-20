@@ -48,7 +48,7 @@ function CustomerLoginPage() {
               <title>Oaxaca | Customer Login</title>
             </Helmet>
             <Typography variant="h5" align="center" gutterBottom>Welcome to Oaxaca</Typography>
-            <Typography variant="body1" align="center" gutterBottom>Please enter your name and allergy preferences</Typography>
+            <Typography variant="body1" align="center" gutterBottom>Please enter your name</Typography>
             <form onSubmit={handleSubmit}>
               <Grid container spacing={2}>
                 <Grid item xs={12}>
@@ -60,39 +60,6 @@ function CustomerLoginPage() {
                     onChange={(e) => setCustomerName(e.target.value)}
                     required
                   />
-                </Grid>
-                <Grid item xs={12}>
-                  <Typography variant="subtitle1">Allergies:</Typography>
-                  <div style={{ display: "flex", alignItems: "center" }}>
-                    <FormControlLabel
-                      control={<Checkbox
-                        checked={customerAllergies.includes("Dairy")}
-                        onChange={() => handleAllergyChange("Dairy")}
-                      />}
-                      label="Dairy"
-                    />
-                    <FormControlLabel
-                      control={<Checkbox
-                        checked={customerAllergies.includes("Gluten")}
-                        onChange={() => handleAllergyChange("Gluten")}
-                      />}
-                      label="Gluten"
-                    />
-                    <FormControlLabel
-                      control={<Checkbox
-                        checked={customerAllergies.includes("Nuts")}
-                        onChange={() => handleAllergyChange("Nuts")}
-                      />}
-                      label="Nuts"
-                    />
-                    <FormControlLabel
-                      control={<Checkbox
-                        checked={customerAllergies.includes("Shellfish")}
-                        onChange={() => handleAllergyChange("Shellfish")}
-                      />}
-                      label="Shellfish"
-                    />
-                  </div>
                 </Grid>
                 <Grid item xs={12}>
                   <Button variant="contained" color="primary" type="submit" fullWidth>

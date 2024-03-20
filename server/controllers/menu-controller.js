@@ -54,7 +54,7 @@ async function filterOutAllergens(allergens) {
         SELECT da.dish_id 
         FROM dish_allergens da 
         JOIN allergens a ON da.allergen_id = a.allergen_id 
-        WHERE a.allergen_name = ANY($1)
+        WHERE a.allergen_name = ANY($1::text[])
       )`;
     const result = await client.query(query, [allergens.split(',').map(allergen => allergen.trim())]);
     console.log('Menu item filtering successful');
