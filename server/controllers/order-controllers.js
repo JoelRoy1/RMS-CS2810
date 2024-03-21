@@ -253,4 +253,28 @@ async function getAllOrders() {
   }
 };
 
-module.exports = { cancelOrder, placeOrder, orderDelivered, getDeliveredOrderCount, getPendingOrderCount, getAllOrders};
+async function getCustomerOrder(customerId) {
+  let client;
+  try {
+      client = await pool.connect();
+      const query = `
+          SELECT m.dish_name, m.dish_price, od.quantity, (m.dish_price * od.quantity) as price
+          FROM order_details od
+          INNER JOIN orders o ON od.order_id = o.order_id
+          INNER JOIN menu m ON od.dish_id = m.dish_id
+          WHERE o.customer_id = $1`;
+      const values = [customerId];
+      const result = await client.query(query, values);
+      return result.rows;
+  } catch (error) {
+      console.error('Error retrieving order details by customer ID', error);
+      throw error; // Re-throw the error to handle it outside of this function
+  } finally {
+      if (client) {
+          console.log('Client released');
+          client.release();
+      }
+  }
+}
+
+module.exports = { cancelOrder, placeOrder, orderDelivered, getDeliveredOrderCount, getPendingOrderCount, getAllOrders, getCustomerOrder };

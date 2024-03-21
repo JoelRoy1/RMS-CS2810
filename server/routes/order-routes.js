@@ -90,6 +90,16 @@ router.get('/fetch-all',  async (req, res) => {
   }
 });
 
+router.get('/customer-order', async (req, res) => {
+  try {
+      const customerId = req.body.customerId;
+      const orderDetails = await orderController.getCustomerOrder(customerId);
+      res.json(orderDetails);
+  } catch (error) {
+      console.error('Error retrieving order details by customer ID:', error);
+      res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
 
 
 module.exports = router;
