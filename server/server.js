@@ -55,7 +55,7 @@ app.use('/table/clear', tableRoute)//clear a table once done to let new customer
 
 //payment endpoints
 app.use('/payment', paymentRoute)
-app.use('/payment/refund', paymentRoute)
+app.use('/payment/get-info', paymentRoute)
 
 //customer endpoints
 app.use('/customer', customerRoute)

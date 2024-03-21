@@ -17,14 +17,14 @@ router.post('/', async (req, res) => {
     }
 });
 
-router.post('/refund', async (req, res) => {
+router.get('/get-info', async (req, res) => {
     try {
-        const { chargeId } = req.body;
-        await paymentController.refundPayment(chargeId);
-        res.status(200).json({ message: 'Refund Successful.' });
+        const {table_number} = req.body;
+        const payments = await paymentController.getPayment(table_number);
+        res.json(payments);
     } catch (error) {
-        console.error('Payment Failed', error);
-        res.status(500).json({ error: 'Internal server error' });
+        console.error('Error getting payments by customer ID:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
     }
 });
 
