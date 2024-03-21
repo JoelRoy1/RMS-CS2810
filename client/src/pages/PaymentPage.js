@@ -32,7 +32,7 @@ const PaymentPage = () => {
     try {
       await axios.post('http://localhost:9000/payment', formData);
       setPaymentStatus('success');
-      setTimeout(() => navigate('/menu'), 1000); // Navigate to menu after 2 seconds
+      setTimeout(() => navigate('/payment-info'), 700); // Navigate to menu after 2 seconds
     } catch (error) {
       console.error('Payment Failed', error);
       setPaymentStatus('failed');

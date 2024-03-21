@@ -9,6 +9,7 @@ import StaffLoginPage from './pages/StaffLoginPage'
 import Dashboard from './pages/Dashboard'
 import './styles/App.css'
 import PaymentPage from './pages/PaymentPage';
+import PaymentInfoPage from './pages/PaymentInfoPage'
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/staff-login" element={<StaffLoginPage/>} />
           <Route path="/payment" element={<PaymentPage />} />
+          <Route path="/payment-info" element={<PaymentInfoPage />} />
         </Routes>
         <footer className="App-footer">
           <p>The Exquisite Oaxaca</p>

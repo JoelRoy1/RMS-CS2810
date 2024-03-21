@@ -1,6 +1,6 @@
 /**
  * @file Manges all payment routes.
- * @version 1.1.0
+ * @version 1.4.0
  */
 const express = require('express');
 const router = express.Router();
@@ -19,11 +19,11 @@ router.post('/', async (req, res) => {
 
 router.get('/get-info', async (req, res) => {
     try {
-        const {table_number} = req.body;
+        const { table_number } = req.query; // Access from query parameters
         const payments = await paymentController.getPayment(table_number);
         res.json(payments);
     } catch (error) {
-        console.error('Error getting payments by customer ID:', error);
+        console.error('Error getting payments by table number:', error);
         res.status(500).json({ error: 'Internal Server Error' });
     }
 });

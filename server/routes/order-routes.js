@@ -92,8 +92,8 @@ router.get('/fetch-all',  async (req, res) => {
 
 router.get('/customer-order', async (req, res) => {
   try {
-      const customerId = req.body.customerId;
-      const orderDetails = await orderController.getCustomerOrder(customerId);
+      const { customer_id } = req.query;
+      const orderDetails = await orderController.getCustomerOrder(customer_id);
       res.json(orderDetails);
   } catch (error) {
       console.error('Error retrieving order details by customer ID:', error);
