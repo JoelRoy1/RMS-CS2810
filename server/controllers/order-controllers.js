@@ -335,4 +335,43 @@ async function getCustomerOrder(customerId) {
   }
 }
 
-module.exports = { cancelOrder, placeOrder, orderDelivered, getDeliveredOrderCount, getPendingOrderCount, getAllOrders, getCustomerOrder };
+async function getOrderStatus(customerId) {
+  let client;
+  try {
+    console.log('Retrieving order status by customer ID...');
+    client = await pool.connect();
+    const query = `
+      SELECT order_status
+      FROM orders
+      WHERE customer_id = $1;
+    `;
+    const result = await client.query(query, [customerId]);
+    const orderStatus = result.rows[0].order_status;
+    switch (orderStatus) {
+      case 'pending':
+        return 'Your order is pending';
+      case 'delivered':
+        return 'Your order has been delivered. Bon Apetite!';
+      case 'confirmed':
+        return 'Our kitchen staff have confirmed your order and are preparing it.';
+      case 'ready to deliver':
+        return 'Your order has been prepared. Awaiting delivery.';
+      default:
+        return 'Your order status is unkwown. Please try again.';
+    }
+  } catch (error) {
+    console.error('Error retrieving order status by customer ID:', error);
+    throw error;
+  } finally {
+    if (client) {
+      console.log('client released');
+      client.release();
+    }
+  }
+};
+
+module.exports = { 
+  cancelOrder, placeOrder, orderDelivered, 
+  orderConfirmed, orderReadyForDelivery, getDeliveredOrderCount, 
+  getPendingOrderCount, getAllOrders, getCustomerOrder, getOrderStatus 
+};
