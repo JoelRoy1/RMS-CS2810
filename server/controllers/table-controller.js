@@ -115,4 +115,30 @@ async function clearTable(tableNumber) {
     }
 };
 
-module.exports = { showTables, showAssigned, assignToTable, assignWaiterToTable, clearTable }
+async function displayTableStatus() {
+    let client;
+    try {
+      client = await pool.connect();
+      const query = 
+      `SELECT t.table_number, c.customer_name, o.order_status,
+               CASE
+                   WHEN p.payment_id IS NOT NULL THEN TRUE
+                   ELSE FALSE
+               END AS paid
+        FROM tables t
+        INNER JOIN customer c ON t.customer_id = c.customer_id
+        LEFT JOIN orders o ON c.customer_id = o.customer_id
+        LEFT JOIN payments p ON t.table_number = p.table_number
+        WHERE o.order_id IS NOT NULL;`;
+      const result = await client.query(query);
+      return result.rows
+    } catch (error) {
+      console.error('Error executing query', error);
+    } finally {
+        if (client) {
+            client.release;
+        };
+    }
+  }
+
+module.exports = { showTables, showAssigned, assignToTable, assignWaiterToTable, clearTable, displayTableStatus };

@@ -63,4 +63,14 @@ router.post('/clear', async (req, res) => {
     }
 })
 
+router.get('/status', async (req, res) => {
+    try {
+        const tables = await tableController.displayTableStatus();
+        res.status(200).json({tables});
+    } catch (error) {
+        console.error('Error retrieving all table information:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
 module.exports = router
