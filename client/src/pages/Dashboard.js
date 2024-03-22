@@ -45,6 +45,25 @@ const Dashboard = () => {
       console.error('Error marking order as delivered:', error);
     }
   };
+  const handleConfirmed = async (orderId, staffId) => {
+    try {
+      await axios.post('http://localhost:9000/order/mark-confirmed', { orderId, staffId });
+      console.log(`Order ${orderId} marked as confirmed successfully`);
+      fetchOrders(); // Refresh orders after marking as confirmed
+    } catch (error) {
+      console.error('Error marking order as confirmed:', error);
+    }
+  };
+
+  const handleReadyToDeliver = async (orderId, staffId) => {
+    try {
+      await axios.post('http://localhost:9000/order/mark-ready', { orderId, staffId });
+      console.log(`Order ${orderId} marked as ready successfully`);
+      fetchOrders(); // Refresh orders after marking as ready
+    } catch (error) {
+      console.error('Error marking order as ready:', error);
+    }
+  };
   
 
   // Function to format date and time
@@ -111,6 +130,20 @@ const Dashboard = () => {
                   color="success"
                 >
                   Mark as delivered
+                </Button>
+                <Button
+                  onClick={() => handleConfirmed(order.order_id, order.staff_id)}
+                  variant="contained"
+                  color="error"
+                >
+                  Confirm
+                </Button>
+                <Button
+                  onClick={() => handleReadyToDeliver(order.order_id, order.staff_id)}
+                  variant="contained"
+                  color="success"
+                >
+                  Call Waiter
                 </Button>
               </div>
             </div>
