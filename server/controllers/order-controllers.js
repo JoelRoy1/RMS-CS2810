@@ -139,6 +139,35 @@ async function orderDelivered(orderId, staffId) {
   }
 }
 
+async function orderConfirmed(orderId, staffId) {
+  let client;
+  try {
+    console.log('Attempting to confirm order...');
+    client = await pool.connect();
+    const query = `
+      UPDATE orders
+      SET order_status = 'confirmed'
+      WHERE order_id = $1
+      AND staff_id = $2;
+    `;
+    const query2 = 'SELECT order_id FROM orders WHERE order_id = $1 AND staff_id = $2;';
+    const getWaiter = 'SELECT staff_name FROM staff WHERE staff_id = $1;';
+    const values = [orderId, staffId];
+    await client.query(query, values);
+    const values2 = [staffId];
+    const result = await client.query(query2, values);
+    const result2 = await client.query(getWaiter, values2);
+    console.log('Order marked confirmed successfully');
+    console.log('Order:', result.rows[0].order_id, 'marked as confirmed by :',  result2.rows[0].staff_name);
+  } catch (error) {
+    console.error('Error confirming order as confirmed', error);
+  } finally {
+    if (client) {
+      client.release();
+    }
+  }
+}
+
 async function getDeliveredOrderCount() {
   let client;
   try {
