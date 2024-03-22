@@ -18,7 +18,7 @@ async function signIn(username, pin) {
   let client;
   try {
     console.log('Attempting to sign in...');
-    const client = await pool.connect();//Establish Connection
+    client = await pool.connect();//Establish Connection
     console.log('Connected to the database');
     const query = {
       text: 'SELECT * FROM staff WHERE staff_name = $1 AND staff_pin = $2',
@@ -36,6 +36,7 @@ async function signIn(username, pin) {
     throw new Error(`Unable to sign in: ${error.message}`);
   } finally {
     if (client) {
+      console.log('client released');
       client.release(); // Release the client back to the pool
     }
   }
@@ -73,6 +74,7 @@ async function createAccount(username, pin, specialization) {
     throw new Error(`Unable to create account: ${error.message}`);
   } finally {
     if (client) {
+      console.log('client released');
       client.release(); // Release the client back to the pool
     }
   }

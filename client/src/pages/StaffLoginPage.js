@@ -1,8 +1,19 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
-import '../styles/StaffLoginPage.css'
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet'
+import {
+  Paper,
+  TextField,
+  Button,
+  Typography,
+  Alert,
+  Container,
+  Box,
+} from '@mui/material'
+import { createTheme, ThemeProvider } from '@mui/material/styles'
+
+const theme = createTheme()
 
 function StaffLoginPage() {
   const [username, setUsername] = useState('')
@@ -31,44 +42,78 @@ function StaffLoginPage() {
   }
 
   return (
-    <div className="staff-login-page">
-      <div>
-      <Helmet>
-        <title>Oaxaca | Staff Login</title>
-      </Helmet>
-    </div>
-      <div className="login-container">
-        <form className="login-form" onSubmit={handleSubmit}>
-          <label htmlFor="username" className="login-label">
-            Staff ID
-          </label>
-          <input
-            type="text"
-            id="username"
-            className="login-input"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
+    <ThemeProvider theme={theme}>
+      <Container component="main" maxWidth="xs">
+        <Helmet>
+          <title>Oaxaca | Staff Login</title>
+        </Helmet>
+        <Box
+          sx={{
+            marginTop: 8,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}
+        >
+          <Typography component="h1" variant="h5">
+            Staff Login
+          </Typography>
+          <Paper
+            sx={{
+              marginTop: 1,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              padding: 2,
+            }}
+            elevation={2}
+          >
+            <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="username"
+                label="Staff ID"
+                name="username"
+                autoComplete="username"
+                autoFocus
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+              />
 
-          <label htmlFor="pin" className="login-label">
-            Pincode
-          </label>
-          <input
-            type="password"
-            id="pin"
-            className="login-input"
-            value={pin}
-            onChange={(e) => setPin(e.target.value)}
-          />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                name="pin"
+                label="Pincode"
+                type="password"
+                id="pin"
+                autoComplete="current-pin"
+                value={pin}
+                onChange={(e) => setPin(e.target.value)}
+              />
 
-          {error && <div className="error-message">{error}</div>}
+              {error && (
+                <Alert severity="error" sx={{ width: '100%', mt: 2 }}>
+                  {error}
+                </Alert>
+              )}
 
-          <button type="submit" className="login-button">
-            Submit
-          </button>
-        </form>
-      </div>
-    </div>
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+              >
+                Submit
+              </Button>
+            </Box>
+          </Paper>
+        </Box>
+      </Container>
+    </ThemeProvider>
   )
 }
 

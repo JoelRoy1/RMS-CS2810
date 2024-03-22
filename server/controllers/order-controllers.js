@@ -36,6 +36,7 @@ async function cancelOrder(orderId) {
     throw error;
   } finally {
     if (client) {
+      console.log('client released');
       client.release();
     }
   }
@@ -104,6 +105,7 @@ async function placeOrder(customerId, staffId, orderStatus, orderAllergies, item
     throw error;
   } finally {
     if (client) {
+      console.log('client released');
       client.release();
     }
   }
@@ -134,6 +136,7 @@ async function orderDelivered(orderId, staffId) {
     console.error('Error confirming order as delivered', error);
   } finally {
     if (client) {
+      console.log('client released');
       client.release();
     }
   }
@@ -187,6 +190,7 @@ async function getDeliveredOrderCount() {
     throw error;
   } finally {
     if (client) {
+      console.log('client released');
       client.release();
     }
   }
@@ -211,6 +215,7 @@ async function getPendingOrderCount() {
     throw error;
   } finally {
     if (client) {
+      console.log('client released');
       client.release();
     }
   }
@@ -221,13 +226,16 @@ async function getAllOrders() {
   try {
     client = await pool.connect();
     const query = `
-      SELECT o.order_id, o.customer_id, o.staff_id, s.staff_name, o.order_status, o.order_allergies, o.order_time,
+      SELECT o.order_id, o.customer_id, c.customer_name, o.staff_id, s.staff_name, o.order_status, o.order_allergies, o.order_time,
              od.dish_id, od.quantity,
-             m.dish_name, m.dish_price
+             m.dish_name, m.dish_price,
+             t.table_number
       FROM orders o
       INNER JOIN order_details od ON o.order_id = od.order_id
       INNER JOIN menu m ON od.dish_id = m.dish_id
       INNER JOIN staff s ON o.staff_id = s.staff_id
+      INNER JOIN tables t ON o.customer_id = t.customer_id
+      INNER JOIN customer c ON o.customer_id = c.customer_id
     `;
     const result = await client.query(query);
     const orders = result.rows;
@@ -239,13 +247,15 @@ async function getAllOrders() {
         groupedOrders[order.order_id] = {
           order_id: order.order_id,
           customer_id: order.customer_id,
+          customer_name: order.customer_name, // Include customer_name in the grouped order
           staff_id: order.staff_id,
-          staff_name: order.staff_name, // Include staff_name in the grouped order
+          staff_name: order.staff_name,
           order_status: order.order_status,
           order_allergies: order.order_allergies,
           order_time: order.order_time,
           items: [],
-          totalOrderPrice: 0
+          totalOrderPrice: 0,
+          table_number: order.table_number
         };
       }
       const itemTotalPrice = order.dish_price * order.quantity;
@@ -266,14 +276,34 @@ async function getAllOrders() {
     throw error;
   } finally {
     if (client) {
+      console.log('client released');
       client.release();
     }
   }
+};
+
+async function getCustomerOrder(customerId) {
+  let client;
+  try {
+      client = await pool.connect();
+      const query = `
+          SELECT m.dish_name, m.dish_price, od.quantity, (m.dish_price * od.quantity) as price
+          FROM order_details od
+          INNER JOIN orders o ON od.order_id = o.order_id
+          INNER JOIN menu m ON od.dish_id = m.dish_id
+          WHERE o.customer_id = $1`;
+      const values = [customerId];
+      const result = await client.query(query, values);
+      return result.rows;
+  } catch (error) {
+      console.error('Error retrieving order details by customer ID', error);
+      throw error; // Re-throw the error to handle it outside of this function
+  } finally {
+      if (client) {
+          console.log('Client released');
+          client.release();
+      }
+  }
 }
 
-
-
-
-
-
-module.exports = { cancelOrder, placeOrder, orderDelivered, getDeliveredOrderCount, getPendingOrderCount, getAllOrders};
+module.exports = { cancelOrder, placeOrder, orderDelivered, getDeliveredOrderCount, getPendingOrderCount, getAllOrders, getCustomerOrder };

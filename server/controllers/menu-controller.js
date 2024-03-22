@@ -14,9 +14,17 @@ async function getAllMenuItems() {
   let client;
   try {
     console.log('Attempting to connect to database...');
-    const client = await pool.connect(); //Establish connection to db
+    client = await pool.connect(); //Establish connection to db
     console.log('Connection successful');
-    const query = 'SELECT * FROM menu';
+    
+    const query = `
+      SELECT m.*, array_agg(a.allergen_name) AS allergens
+      FROM menu m
+      LEFT JOIN dish_allergens da ON m.dish_id = da.dish_id
+      LEFT JOIN allergens a ON da.allergen_id = a.allergen_id
+      GROUP BY m.dish_id;
+    `;
+    
     const result = await client.query(query);
     console.log('Menu item retrieval successful');
     return result.rows;
@@ -24,6 +32,7 @@ async function getAllMenuItems() {
     throw new Error(`Error fetching menu items: ${error.message}`);
   } finally {
     if (client) {
+      console.log('client released');
       client.release(); //Release client back into pool
     }
   }
@@ -36,7 +45,7 @@ async function getAllMenuItems() {
  */
 async function filterOutAllergens(allergens) {
   console.log('Attempting to connect to database...');
-  const client = await pool.connect(); //Establish connection to db
+  client = await pool.connect(); //Establish connection to db
   try {
     console.log('Connection successful');
     const query = `
@@ -45,7 +54,7 @@ async function filterOutAllergens(allergens) {
         SELECT da.dish_id 
         FROM dish_allergens da 
         JOIN allergens a ON da.allergen_id = a.allergen_id 
-        WHERE a.allergen_name = ANY($1)
+        WHERE a.allergen_name = ANY($1::text[])
       )`;
     const result = await client.query(query, [allergens.split(',').map(allergen => allergen.trim())]);
     console.log('Menu item filtering successful');
@@ -54,6 +63,7 @@ async function filterOutAllergens(allergens) {
     throw new Error(`Error filtering out allergens: ${error.message}`);
   } finally {
     if (client) {
+      console.log('client released');
       client.release(); //Release client back into pool
     }
   }
@@ -66,8 +76,9 @@ async function filterOutAllergens(allergens) {
  * @returns menu items below the calorie limit
  */
 async function filterCalories(calories) {
-  const client = await pool.connect(); //Establish connection to db
+  let client;
   try {
+    client = await pool.connect(); //Establish connection to db
     console.log('connection successful');
     const query = `SELECT * FROM menu WHERE dish_calories <= $1`;
     const result = await client.query(query, calories);
@@ -76,7 +87,10 @@ async function filterCalories(calories) {
   } catch (error) {
     console.error('error filtering calories: ', $(error.message));
   } finally {
-    client.release();
+    if(client){
+      console.log('client released');
+      client.release();
+    }
   }
 };
 
@@ -86,23 +100,26 @@ async function filterCalories(calories) {
  * @param {int} dishCalories the number of calories in the dish
  * @param {float} dishPrice the price of the dish
  */
-async function createMenuItem(dishName, dishCalories, dishPrice) { 
+async function createMenuItem(dishName, dishCalories, dishPrice, dishDescription) { 
   let client;
   try {
     console.log('Attempting to create item...')
     client = await pool.connect(); // Establish connection to db
     const query = `
-      INSERT INTO menu (dish_name, dish_calories, dish_price)
-      VALUES ($1, $2, $3)
+      INSERT INTO menu (dish_name, dish_calories, dish_price, dish_description)
+      VALUES ($1, $2, $3, $4)
       RETURNING dish_id;
     `;
-    const values = [dishName, dishCalories, dishPrice];
+    const values = [dishName, dishCalories, dishPrice, dishDescription];
     const result = await client.query(query, values);
     console.log('New item added with ID:', result.rows[0].dish_id);
   } catch (error) {
     console.error('Error adding new item:', (error.message));
   } finally {
-    client.release();
+    if(client){
+      console.log('client released');
+      client.release();
+    }
   }
 };
 
@@ -114,7 +131,7 @@ async function deleteMenuItem(dishID) {
   let client;
   try {
     console.log('Attempting to delete item...');
-    const client = await pool.connect();  // Establish connection to db
+    client = await pool.connect();  // Establish connection to db
     const query = 'DELETE FROM menu WHERE dish_id = $1 RETURNING *;';
     const values = [dishID];
     const result = await client.query(query, values);
@@ -123,6 +140,39 @@ async function deleteMenuItem(dishID) {
     console.error(`Error deleting item: ${error.message}`);
   } finally {
     if(client){
+      console.log('client released');
+      client.release();
+    }
+  }
+}
+
+
+/**
+ * function to update menu items in the db.
+ * @param {int} dishID the ID of the dish to update
+ * @param {string} dishName the new name of the dish
+ * @param {int} dishCalories the new number of calories in the dish
+ * @param {float} dishPrice the new price of the dish
+ * @param {string} dishDescription the new description of the dish
+ */
+async function updateMenuItem(dishID, dishName, dishCalories, dishPrice, dishDescription) {
+  let client;
+  try {
+    console.log('Attempting to update item...');
+    client = await pool.connect(); // Establish connection to db
+    const query = `
+      UPDATE menu 
+      SET dish_name = $1, dish_calories = $2, dish_price = $3, dish_description = $4 
+      WHERE dish_id = $5;
+    `;
+    const values = [dishName, dishCalories, dishPrice, dishDescription, dishID];
+    await client.query(query, values);
+    console.log('Item updated successfully');
+  } catch (error) {
+    console.error(`Error updating item: ${error.message}`);
+  } finally {
+    if(client){
+      console.log('client released');
       client.release();
     }
   }
@@ -133,5 +183,6 @@ module.exports = {
   filterOutAllergens, 
   filterCalories,
   createMenuItem, 
-  deleteMenuItem 
+  deleteMenuItem,
+  updateMenuItem
 }; //Export controller for use in router

@@ -22,7 +22,7 @@ router.get('/', async (req, res) => {
  * filter menu items based on allergen route
  */
 router.get('/filter-allergens', async (req, res) => {
-  const { allergens } = req.body
+  const { allergens } = req.query
   try {
     const menu = await controller.filterOutAllergens(allergens)
     res.json(menu)
@@ -35,13 +35,14 @@ router.get('/filter-allergens', async (req, res) => {
  * create menu items
  */
 router.post(`/create-item`, async (req, res) => {
-  const { dishName, dishCalories, dishPrice } = req.body
+  const { dishName, dishCalories, dishPrice, dishDescription } = req.body
 
   try {
     const menu = await controller.createMenuItem(
       dishName,
       dishCalories,
-      dishPrice
+      dishPrice,
+      dishDescription
     )
     res.status(200).json({ message: 'Dish created succesfully' })
   } catch (error) {
@@ -74,6 +75,26 @@ router.get('/filter-calories', async (req, res) => {
     res.json(menu)
   } catch (error) {
     res.status(500).json({ error: `Error: ${error.message}` })
+  }
+})
+
+/**
+ * Update menu item route
+ */
+router.put('/:itemID', async (req, res) => {
+  const dishID = req.params.itemID
+  const { dishName, dishCalories, dishPrice, dishDescription } = req.body
+  try {
+    await controller.updateMenuItem(
+      dishID,
+      dishName,
+      dishCalories,
+      dishPrice,
+      dishDescription
+    )
+    res.status(200).json({ message: 'Dish updated successfully' })
+  } catch (error) {
+    res.status(500).json({ error: `Error updating dish: ${error.message}` })
   }
 })
 

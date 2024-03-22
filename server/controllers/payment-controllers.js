@@ -22,7 +22,7 @@ async function addPayment(amount, table_number, card_number, card_holder, card_e
             return_url: 'http://localhost:9000'
         })
         if (stripePaymentIntent.status === 'succeeded') {
-            const client = await pool.connect();
+            client = await pool.connect();
             const card_ending = card_number.substring(card_number.length - 4); //store only last 4 digits of card number
             const timestamp = new Date();
             const query = `INSERT INTO payments (payment_time, payment_amount, table_number, card_holder, card_ending, card_expiry)
@@ -36,29 +36,30 @@ async function addPayment(amount, table_number, card_number, card_holder, card_e
         res.status(500).send('Internal Server Error');
     } finally {
         if (client) {
+            console.log('client released');
             client.release();
         }
     }
 };
 
-async function refundPayment(paymentId) {
+async function getPayment(table_number) {
+    let client;
     try {
-        const paymentIntent = await stripe.paymentIntents.retrieve(paymentId);
-
-        if (paymentIntent.status === 'succeeded') {
-            const refund = await stripe.refunds.create({
-                payment_intent: paymentId,
-            });
-
-            console.log('Refund requested:', refund);
-            return refund;
-        } else {
-            throw new Error('Payment intent is not in a succeeded state');
-        }
+        client = await pool.connect();
+        const query = `SELECT payment_id, payment_time, payment_amount, table_number, card_holder, card_ending, '***' as card_cvc, card_expiry 
+                      FROM payments WHERE table_number = $1`;
+        const values = [table_number];
+        const result = await client.query(query, values);
+        return result.rows;
     } catch (error) {
-        console.error('Error requesting refund:', error);
-        throw error;
+        console.error('Error retrieving payment by table ID', error);
+        throw error; // Re-throw the error to handle it outside of this function
+    } finally {
+        if (client) {
+            console.log('client released');
+            client.release();
+        }
     }
-};
+}
 
-module.exports = { addPayment, refundPayment };
+module.exports = { addPayment, getPayment };

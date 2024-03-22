@@ -12,6 +12,7 @@ import {
   DialogActions,
   Snackbar,
   IconButton,
+  Container,
 } from '@mui/material'
 import Alert from '@mui/material/Alert'
 import DeleteIcon from '@mui/icons-material/Delete'
@@ -23,6 +24,7 @@ const MenuManagementPage = () => {
     dishName: '',
     dishCalories: '',
     dishPrice: '',
+    dishDescription: ''
   })
   const [editingID, setEditingId] = useState(null)
   const [openDialog, setOpenDialog] = useState(false)
@@ -54,6 +56,7 @@ const MenuManagementPage = () => {
       dishName: form.dishName,
       dishCalories: form.dishCalories,
       dishPrice: form.dishPrice,
+      dishDescription: form.dishDescription
     }
 
     try {
@@ -81,6 +84,7 @@ const MenuManagementPage = () => {
       dishName: dish.dish_name,
       dishCalories: dish.dish_calories.toString(),
       dishPrice: dish.dish_price.toString(),
+      dishDescription: dish.dish_description
     })
     setEditingId(dish.dish_id)
     setOpenDialog(true)
@@ -112,7 +116,7 @@ const MenuManagementPage = () => {
   const handleCloseDialog = () => {
     setOpenDialog(false)
     setEditingId(null)
-    setForm({ dishName: '', dishCalories: '', dishPrice: '' })
+    setForm({ dishName: '', dishCalories: '', dishPrice: '', dishDescription: '' })
   }
 
   const handleCloseSnackbar = (event, reason) => {
@@ -123,102 +127,113 @@ const MenuManagementPage = () => {
   }
 
   return (
-    <div>
-      <h1 style={{ color: 'black' }}>Menu Management</h1>
-      <Button
-        variant="outlined"
-        color="primary"
-        onClick={() => setOpenDialog(true)}
-      >
-        Add New Dish
-      </Button>
-      <List>
-        {dishes.map((dish) => (
-          <ListItem
-            key={dish.dish_id}
-            secondaryAction={
-              <>
-                <IconButton
-                  edge="end"
-                  aria-label="edit"
-                  onClick={() => handleEditClick(dish)}
-                >
-                  <EditIcon />
-                </IconButton>
-                <IconButton
-                  edge="end"
-                  aria-label="delete"
-                  onClick={() => handleDeleteClick(dish.dish_id)}
-                >
-                  <DeleteIcon />
-                </IconButton>
-              </>
-            }
-          >
-            <ListItemText
-              primary={<span style={{ color: 'black' }}>{dish.dish_name}</span>}
-              secondary={`Calories: ${dish.dish_calories}, Price: ${dish.dish_price}`}
-            />
-          </ListItem>
-        ))}
-      </List>
-
-      <Dialog open={openDialog} onClose={handleCloseDialog}>
-        <DialogTitle>{editingID ? 'Edit Dish' : 'Add New Dish'}</DialogTitle>
-        <DialogContent>
-          <form onSubmit={handleFormSubmit}>
-            <TextField
-              name="dishName"
-              value={form.dishName}
-              onChange={handleInputChange}
-              label="Dish Name"
-              fullWidth
-              variant="outlined"
-              required
-            />
-            <TextField
-              name="dishCalories"
-              value={form.dishCalories}
-              onChange={handleInputChange}
-              label="Calories"
-              fullWidth
-              variant="outlined"
-              required
-              type="number"
-            />
-            <TextField
-              name="dishPrice"
-              value={form.dishPrice}
-              onChange={handleInputChange}
-              label="Price"
-              fullWidth
-              variant="outlined"
-              required
-            />
-            <DialogActions>
-              <Button onClick={handleCloseDialog}>Cancel</Button>
-              <Button type="submit" color="primary">
-                {editingID ? 'Update' : 'Add'} Dish
-              </Button>
-            </DialogActions>
-          </form>
-        </DialogContent>
-      </Dialog>
-      <Snackbar
-        open={snackbar.open}
-        autoHideDuration={6000}
-        onClose={handleCloseSnackbar}
-      >
-        <Alert
-          onClose={handleCloseSnackbar}
-          severity={snackbar.severity}
-          sx={{ width: '100%' }}
+    <Container style={{ paddingTop: '100px' }}>
+      <div>
+        <h1 style={{ color: 'black' }}>Menu Management</h1>
+        <Button
+          variant="outlined"
+          color="primary"
+          onClick={() => setOpenDialog(true)}
         >
-          {snackbar.message}
-        </Alert>
-      </Snackbar>
-    </div>
-  )
-}
+          Add New Dish
+        </Button>
+        <List>
+          {dishes.map((dish) => (
+            <ListItem
+              key={dish.dish_id}
+              secondaryAction={
+                <>
+                  <IconButton
+                    edge="end"
+                    aria-label="edit"
+                    onClick={() => handleEditClick(dish)}
+                  >
+                    <EditIcon />
+                  </IconButton>
+                  <IconButton
+                    edge="end"
+                    aria-label="delete"
+                    onClick={() => handleDeleteClick(dish.dish_id)}
+                  >
+                    <DeleteIcon />
+                  </IconButton>
+                </>
+              }
+            >
+              <ListItemText
+                primary={<span style={{ color: 'black' }}>{dish.dish_name}</span>}
+                secondary={`Calories: ${dish.dish_calories}, Price: ${dish.dish_price}, Description: ${dish.dish_description} `}
+              />
+            </ListItem>
+          ))}
+        </List>
 
-export default MenuManagementPage
+        <Dialog open={openDialog} onClose={handleCloseDialog}>
+          <DialogTitle>{editingID ? 'Edit Dish' : 'Add New Dish'}</DialogTitle>
+          <DialogContent>
+            <form onSubmit={handleFormSubmit}>
+              <TextField
+                name="dishName"
+                value={form.dishName}
+                onChange={handleInputChange}
+                label="Dish Name"
+                fullWidth
+                variant="outlined"
+                required
+              />
+              <TextField
+                name="dishCalories"
+                value={form.dishCalories}
+                onChange={handleInputChange}
+                label="Calories"
+                fullWidth
+                variant="outlined"
+                required
+                type="number"
+              />
+              <TextField
+                name="dishPrice"
+                value={form.dishPrice}
+                onChange={handleInputChange}
+                label="Price"
+                fullWidth
+                variant="outlined"
+                required
+              />
+              <TextField
+                name="dishDescription"
+                value={form.dishDescription}
+                onChange={handleInputChange}
+                label="Description"
+                fullWidth
+                variant="outlined"
+                required
+              />
+              <DialogActions>
+                <Button onClick={handleCloseDialog}>Cancel</Button>
+                <Button type="submit" color="primary">
+                  {editingID ? 'Update' : 'Add'} Dish
+                </Button>
+              </DialogActions>
+            </form>
+          </DialogContent>
+        </Dialog>
+        <Snackbar
+          open={snackbar.open}
+          autoHideDuration={6000}
+          onClose={handleCloseSnackbar}
+        >
+          <Alert
+            onClose={handleCloseSnackbar}
+            severity={snackbar.severity}
+            sx={{ width: '100%' }}
+          >
+            {snackbar.message}
+          </Alert>
+        </Snackbar>
+      </div>
+    </Container>
+  );
+};
+
+export default MenuManagementPage;

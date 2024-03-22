@@ -1,100 +1,85 @@
 import React, { useState } from "react";
-import "../styles/CustomerLoginPage.css";
 import { Helmet } from 'react-helmet';
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { TextField, Checkbox, Button, FormControlLabel, Grid, Typography, Paper } from "@mui/material";
 
 function CustomerLoginPage() {
   const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(false);
+  const [tableNumber, setTableNumber] = useState(null);
   const navigate = useNavigate();
   const [customerName, setCustomerName] = useState("");
-  const [customerAllergies, setCustomerAllergies] = useState("");
-
+  const [customerAllergies, setCustomerAllergies] = useState([]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      await axios.post("http://localhost:9000/customer/", {customerName}, {customerAllergies});
-      navigate("/menu");
-      console.log(customerAllergies.toString());
-    }
-    
-    catch (err) {
+      const response = await axios.post("http://localhost:9000/customer/", { customerName, customerAllergies });
+      const { customerId, tableNumber } = response.data;
+      sessionStorage.setItem('id', customerId);
+      sessionStorage.setItem('table', tableNumber);
+      setTableNumber(tableNumber);
+      setSuccess(true);
+      setTimeout(() => {
+        setSuccess(false);
+        navigate("/menu");
+      }, 1000); // Hide table number after 1 second
+    } catch (err) {
       console.log(err);
+      setError("An error occurred. Please try again later.");
     }
   };
+
   const handleAllergyChange = (allergy) => {
     if (customerAllergies.includes(allergy)) {
       setCustomerAllergies(customerAllergies.filter((a) => a !== allergy));
     } else {
       setCustomerAllergies([...customerAllergies, allergy]);
     }
-    console.log(customerAllergies);
   };
+
   return (
-    <form className="login-form" onSubmit={handleSubmit}>
-      <div>
-      <Helmet>
-        <title>Oaxaca | Customer Login</title>
-      </Helmet>
-      </div>
-        <div className="form-group">
-          <label>Name:</label>
-          <input
-            type="text"
-            id="name"
-            value={customerName}
-            onChange={(e) => setCustomerName(e.target.value)}
-          />
-        <label> Allergies:</label>
-        <div>
-          <input
-            type="checkbox"
-            id="allergy1"
-            value="Dairy"
-            checked={customerAllergies.includes("Dairy")}
-            onChange={() => handleAllergyChange("Dairy")}
-          />
-          <label htmlFor="allergy1">Dairy</label>
-        </div>
-        <div>
-          <input
-            type="checkbox"
-            id="allergy2"
-            value="Gluten"
-            checked={customerAllergies.includes("Gluten")}
-            onChange={() => handleAllergyChange("Gluten")}
-          />
-          <label htmlFor="allergy2">Gluten</label>
-          <div>
-          <input
-            type="checkbox"
-            id="allergy1"
-            value="Nuts"
-            checked={customerAllergies.includes("Nuts")}
-            onChange={() => handleAllergyChange("Nuts")}
-          />
-          <label htmlFor="allergy1">Nuts</label>
-        </div>
-        <div>
-          <input
-            type="checkbox"
-            id="allergy2"
-            value="Shellfish"
-            checked={customerAllergies.includes("Shellfish")}
-            onChange={() => handleAllergyChange("Shellfish")}
-          />
-          <label htmlFor="allergy2">Shellfish</label>
-        </div>
-          <div className="text-right">
-            <button className="login-button" type="submit">
-              Guest Login
-            </button>
-          </div>
-        </div>
-      </div>
-      {error && <div className="error">{error}</div>}
-    </form>
+    <div style={{ display: "flex", justifyContent: "center", alignItems: "center", minHeight: "100vh" }}>
+      <Grid container justify="center" alignItems="center" style={{ maxWidth: "500px" }}>
+        <Grid item xs={12}>
+          <Paper elevation={3} style={{ padding: 20 }}>
+            <Helmet>
+              <title>Oaxaca | Customer Login</title>
+            </Helmet>
+            <Typography variant="h5" align="center" gutterBottom>Welcome to Oaxaca</Typography>
+            <Typography variant="body1" align="center" gutterBottom>Please enter your name</Typography>
+            <form onSubmit={handleSubmit}>
+              <Grid container spacing={2}>
+                <Grid item xs={12}>
+                  <TextField
+                    label="Name"
+                    variant="outlined"
+                    fullWidth
+                    value={customerName}
+                    onChange={(e) => setCustomerName(e.target.value)}
+                    required
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <Button variant="contained" color="primary" type="submit" fullWidth>
+                    Guest Login
+                  </Button>
+                </Grid>
+                {success && tableNumber && (
+                  <Grid item xs={12}>
+                    <Typography variant="body1" align="center" style={{ backgroundColor: "#f0f0f0", padding: "10px", borderRadius: "5px" }}>
+                      Your table number is: {tableNumber}
+                    </Typography>
+                  </Grid>
+                )}
+                {error && <Grid item xs={12}><Typography variant="subtitle2" color="error">{error}</Typography></Grid>}
+              </Grid>
+            </form>
+          </Paper>
+        </Grid>
+      </Grid>
+    </div>
   );
 }
 

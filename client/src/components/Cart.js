@@ -1,52 +1,60 @@
-// Cart.js
 import React from 'react';
 import {
-  Button,
+  Typography,
   List,
   ListItem,
   ListItemText,
-  IconButton,
-  Typography,
+  Divider,
+  Button,
+  Paper,
+  Box,
 } from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete';
 
-const Cart = ({ cartItems, removeFromCart, calculateTotal}) => {
-  
-  
-  
-  
+const Cart = ({ cartItems, removeFromCart, calculateTotal, handleCheckout }) => {
   return (
-    <div>
-      <Typography variant="h2" component="h2" style={{ color: '#000' }}>
-        Your Cart
+    <Paper elevation={3} style={{ position: 'sticky', top: '100px', maxHeight: 'calc(100vh - 120px)', overflowY: 'auto', padding: '20px', borderRadius: '10px', background: '#f9f9f9' }}>
+      <Typography variant="h6" gutterBottom style={{ color: '#333', textAlign: 'center', marginBottom: '20px' }}>
+        Order Cart
       </Typography>
-      <List dense>
-        {cartItems.map((item, index) => (
-          <ListItem key={index}>
-            <ListItemText
-              primary={
-                <Typography style={{ color: '#000' }}>{item.dish_name}</Typography>
-              }
-              secondary={
-                <Typography style={{ color: '#000' }}>
-                  {item.dish_price ? `Price: £${parseFloat(item.dish_price).toFixed(2)}` : 'Price: N/A'} Qty: {item.quantity}
-                </Typography>
-              }
-            />
-            <IconButton
-              edge="end"
-              aria-label="delete"
-              onClick={() => removeFromCart(item.dish_id)}
-            >
-              <DeleteIcon />
-            </IconButton>
-          </ListItem>
-        ))}
-      </List>
-      <Typography variant="h3" component="h3" style={{ color: '#000' }}>
-        Total: £{calculateTotal().toFixed(2)}
-      </Typography>
-    </div>
+      {cartItems.length === 0 ? (
+        <>
+          <Typography variant="body1" style={{ color: '#555', textAlign: 'center' }}>Your cart is empty.</Typography>
+        </>
+      ) : (
+        <>
+          <List>
+            {cartItems.map((item) => (
+              <React.Fragment key={item.dish_id}>
+                <ListItem>
+                  <ListItemText
+                    primary={item.dish_name}
+                    secondary={`Quantity: ${item.quantity}`}
+                    style={{ color: '#333' }}
+                  />
+                  <Typography style={{ color: '#333', marginLeft: 'auto' }}>£{(item.dish_price * item.quantity).toFixed(2)}</Typography>
+                  <Button onClick={() => removeFromCart(item.dish_id)} size="small" style={{ color: '#fff', background: '#666', marginLeft: '8px' }}>Remove</Button>
+                </ListItem>
+                <Divider />
+              </React.Fragment>
+            ))}
+          </List>
+          <Box display="flex" justifyContent="center">
+            <Typography variant="h6" style={{ marginTop: '20px', color: '#333' }}>
+              Total: £{(calculateTotal()).toFixed(2)}
+            </Typography>
+          </Box>
+          <Button
+            variant="contained"
+            color="primary"
+            fullWidth
+            style={{ marginTop: '20px', color: '#fff', background: '#333' }}
+            onClick={handleCheckout}
+          >
+            Pay Now
+          </Button>
+        </>
+      )}
+    </Paper>
   );
 };
 

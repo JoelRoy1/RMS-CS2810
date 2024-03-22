@@ -1,82 +1,147 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Container, TextField, Button, Typography } from '@mui/material';
+import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { Helmet } from 'react-helmet';
-import { 
-    Box, 
-    Button, 
-    Typography, 
-    TextField, 
-    FormControl, 
-    InputLabel, 
-    Select, 
-    MenuItem 
-} from '@mui/material';
 
 const PaymentPage = () => {
-  let navigate = useNavigate();
+  const navigate = useNavigate(); // Hook for programmatic navigation
+  const [formData, setFormData] = useState({
+    table_number: sessionStorage.getItem('table'),
+    amount: sessionStorage.getItem('amount'),
+    card_number: '',
+    card_holder: '',
+    card_expiry: '',
+    card_cvc: '',
+  });
+  const [paymentStatus, setPaymentStatus] = useState(null);
+  const [submitting, setSubmitting] = useState(false);
 
-  const handleCancel = () => {
-    navigate('/Menu');
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
   };
 
-  const handlePayNow = () => {
-    alert('Payment Successful!');
-    navigate('/');
-  };
+  const handleSubmit = async (e) => {
+    e.preventDefault(); // Prevent default form submission
+    if (submitting) return; // Prevent multiple submissions
 
-  // payment options, not functional at all
-  const paymentOptions = [
-    'Credit Card',
-    'Debit Card',
-    'PayPal',
-    'Google Pay',
-    'Apple Pay'
-  ];
-
-  // need to implement function for different payment options
-  const handlePaymentOptionChange = (e) => {
-  };
+    setSubmitting(true); // Disable the submit button
+    try {
+      await axios.post('http://localhost:9000/payment', formData);
+      setPaymentStatus('success');
+      setTimeout(() => navigate('/payment-info'), 700); // Navigate to menu after 2 seconds
+    } catch (error) {
+      console.error('Payment Failed', error);
+      setPaymentStatus('failed');
+    } finally {
+      setSubmitting(false); // Re-enable the submit button
+    }
+  };  
 
   return (
-    <Box sx={{ textAlign: 'center', maxWidth: '600px', margin: '0 auto' }}>
-      <Helmet>
-        <title>Payment | OAXACA</title>
-      </Helmet>
-      <Typography variant="h4" color="black" gutterBottom>
-        Payment Details
-      </Typography>
-      <FormControl margin="normal" style={{ width: '100%' }}>
-        <InputLabel id="payment-option-label">Select Payment Option</InputLabel>
-        <Select
-          labelId="payment-option-label"
-          id="payment-option-select"
-          value={''}
-          onChange={handlePaymentOptionChange}
-          label="Select Payment Option"
-        >
-          {paymentOptions.map((option, index) => (
-            <MenuItem key={index} value={option}>{option}</MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-      <TextField label="Card Number" variant="outlined" margin="normal" style={{ width: '100%' }} />
-      <TextField label="Expiry Date" variant="outlined" margin="normal" style={{ width: '100%' }} />
-      <TextField label="CVV" variant="outlined" margin="normal" style={{ width: '100%' }} />
-      <TextField label="Name on Card" variant="outlined" margin="normal" style={{ width: '100%' }} />
-      <Box sx={{ marginTop: '2rem' }}>
-        <Button
-          variant="contained"
-          color="secondary"
-          onClick={handleCancel}
-          sx={{ marginRight: '1rem' }}
-        >
-          Cancel
-        </Button>
-        <Button variant="contained" color="primary" onClick={handlePayNow}>
-          Pay Now
-        </Button>
-      </Box>
-    </Box>
+    <Container component="main" maxWidth="xs">
+      <div style={{ marginTop: '4rem', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <Typography component="h1" variant="h5" style={{ color: '#333', marginBottom: '2rem' }}>
+          Order Payment
+        </Typography>
+        {paymentStatus === 'success' && (
+          <Typography style={{ color: 'green', marginBottom: '1rem' }}>
+            Transaction Successful. Redirecting to menu...
+          </Typography>
+        )}
+        {paymentStatus === 'failed' && (
+          <Typography style={{ color: 'red', marginBottom: '1rem' }}>
+            Transaction Failed. Please try again.
+          </Typography>
+        )}
+        <form style={{ width: '100%', marginTop: '1rem' }} onSubmit={handleSubmit}>
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            label="Table Number"
+            name="table_number"
+            value={formData.table_number}
+            disabled
+            style={{ backgroundColor: '#f5f5f5' }}
+            InputProps={{ style: { color: '#333' } }}
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            label="Amount"
+            name="amount"
+            value={formData.amount}
+            disabled
+            style={{ backgroundColor: '#f5f5f5' }}
+            InputProps={{ style: { color: '#333' } }}
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            label="Card Number"
+            name="card_number"
+            value={formData.card_number}
+            onChange={handleChange}
+            style={{ backgroundColor: '#f5f5f5' }}
+            InputProps={{ style: { color: '#333' } }}
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            label="Card Holder"
+            name="card_holder"
+            value={formData.card_holder}
+            onChange={handleChange}
+            style={{ backgroundColor: '#f5f5f5' }}
+            InputProps={{ style: { color: '#333' } }}
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            label="Card Expiry"
+            name="card_expiry"
+            value={formData.card_expiry}
+            onChange={handleChange}
+            style={{ backgroundColor: '#f5f5f5' }}
+            InputProps={{ style: { color: '#333' } }}
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            label="Card CVC"
+            name="card_cvc"
+            value={formData.card_cvc}
+            onChange={handleChange}
+            style={{ backgroundColor: '#f5f5f5' }}
+            InputProps={{ style: { color: '#333' } }}
+          />
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            style={{ backgroundColor: '#333', color: '#fff', marginTop: '2rem' }}
+            disabled={submitting} // Disable button while submitting
+          >
+            Submit
+          </Button>
+        </form>
+      </div>
+    </Container>
   );
 };
 

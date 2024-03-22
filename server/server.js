@@ -40,6 +40,7 @@ app.use('/order/mark-delivered', orderRoute)
 app.use('/order/get-delivered', orderRoute)
 app.use('/order/get-pending-orders', orderRoute)
 app.use('/order/fetch-all', orderRoute)
+app.use('/order/customer-order', orderRoute)
 
 //order endpoints
 app.use('/help', helpRoute)
@@ -55,7 +56,7 @@ app.use('/table/clear', tableRoute)//clear a table once done to let new customer
 
 //payment endpoints
 app.use('/payment', paymentRoute)
-app.use('/payment/refund', paymentRoute)
+app.use('/payment/get-info', paymentRoute)
 
 //customer endpoints
 app.use('/customer', customerRoute)
