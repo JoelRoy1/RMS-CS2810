@@ -171,6 +171,35 @@ async function orderConfirmed(orderId, staffId) {
   }
 }
 
+async function orderReadyForDelivery(orderId, staffId) {
+  let client;
+  try {
+    console.log('Attempting to set order as ready...');
+    client = await pool.connect();
+    const query = `
+      UPDATE orders
+      SET order_status = 'ready for delivery'
+      WHERE order_id = $1
+      AND staff_id = $2;
+    `;
+    const query2 = 'SELECT order_id FROM orders WHERE order_id = $1 AND staff_id = $2;';
+    const getWaiter = 'SELECT staff_name FROM staff WHERE staff_id = $1;';
+    const values = [orderId, staffId];
+    await client.query(query, values);
+    const values2 = [staffId];
+    const result = await client.query(query2, values);
+    const result2 = await client.query(getWaiter, values2);
+    console.log('Order marked ready successfully');
+    console.log('Order:', result.rows[0].order_id, 'marked as ready by :',  result2.rows[0].staff_name);
+  } catch (error) {
+    console.error('Error setting order as ready', error);
+  } finally {
+    if (client) {
+      client.release();
+    }
+  }
+}
+
 async function getDeliveredOrderCount() {
   let client;
   try {
