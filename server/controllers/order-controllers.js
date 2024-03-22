@@ -178,7 +178,7 @@ async function orderReadyForDelivery(orderId, staffId) {
     client = await pool.connect();
     const query = `
       UPDATE orders
-      SET order_status = 'ready for delivery'
+      SET order_status = 'ready to deliver'
       WHERE order_id = $1
       AND staff_id = $2;
     `;
