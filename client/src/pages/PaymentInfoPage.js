@@ -5,12 +5,12 @@ import { Container, Typography, Box, Grid, Paper, TableContainer, Table, TableHe
 const PaymentInfoPage = () => {
   const [paymentInfo, setPaymentInfo] = useState([]);
   const [customerOrders, setCustomerOrders] = useState([]);
+  const [orderStatus, setOrderStatus] = useState('');
   const [totalPrice, setTotalPrice] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
   useEffect(() => {
-    document.title = "Order Summary";
     const fetchData = async () => {
       const tableNumber = sessionStorage.getItem('table');
       const customerId = sessionStorage.getItem('id');
@@ -40,6 +40,18 @@ const PaymentInfoPage = () => {
         setError('Error fetching customer orders');
       }
 
+      try {
+        const orderStatusResponse = await axios.get('http://localhost:9000/order/status', {
+          params: {
+            customer_id: customerId
+          }
+        });
+        setOrderStatus(orderStatusResponse.data);
+      } catch (error) {
+        console.error('Error fetching order status:', error);
+        setError('Error fetching order status');
+      }
+
       // Set total price from session storage
       setTotalPrice(totalPriceFromStorage);
 
@@ -60,6 +72,7 @@ const PaymentInfoPage = () => {
   return (
     <Container style={{ marginTop: '64px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
       <Typography variant="h4" gutterBottom style={{ color: '#FFF', marginBottom: '20px' }}>Order Details</Typography>
+
       <Grid container spacing={3}>
         <Grid item xs={12} md={6}>
           <Paper elevation={3} style={{ backgroundColor: '#f7f7f7', padding: '20px' }}>
@@ -108,6 +121,12 @@ const PaymentInfoPage = () => {
               ))}
             </Box>
           </Paper>
+          <Box mt={3}>
+            <Paper elevation={3} style={{ backgroundColor: '#f7f7f7', padding: '20px' }}>
+              <Typography variant="h5" gutterBottom style={{ color: '#333', marginBottom: '15px' }}>Your Order Status</Typography>
+              <Typography variant="body1" style={{ color: '#333', marginBottom: '5px' }}>{orderStatus}</Typography>
+            </Paper>
+          </Box>
         </Grid>
       </Grid>
     </Container>
