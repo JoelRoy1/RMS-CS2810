@@ -31,8 +31,9 @@ function StaffLoginPage() {
       })
 
       // Checking for successful response status
-      if (response.data === 'admin') {
-        navigate('/success')
+      if (response.data === username) {
+        sessionStorage.setItem('valid_user', true);
+        navigate('/dashboard');
       } else {
         setError('Incorrect username or pincode')
       }
