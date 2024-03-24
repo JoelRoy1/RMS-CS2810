@@ -11,28 +11,31 @@ import './styles/App.css'
 import PaymentPage from './pages/PaymentPage';
 import PaymentInfoPage from './pages/PaymentInfoPage'
 import TableStatusPage from './pages/TableStatusPage'
+import ProtectdRoute from './ProtectedRoute'
 
 function App() {
   return (
-    <Router>
-      <div className="App">
+    <div className="App">
+      <Router>
         <OmniNavbar />
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/menu" element={<MenuPage />} />
-          <Route path="/menu-management" element={<MenuManagement />} />
           <Route path="/customer-login" element={<CustomerLoginPage />} />
-          <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/staff-login" element={<StaffLoginPage/>} />
           <Route path="/payment" element={<PaymentPage />} />
           <Route path="/payment-info" element={<PaymentInfoPage />} />
-          <Route path="/table-info" element={< TableStatusPage/>} />
+          <Route element = {<ProtectdRoute/>}>
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/menu-management" element={<MenuManagement />} />
+            <Route path="/table-info" element={< TableStatusPage/>} />
+          </Route>
         </Routes>
         <footer className="App-footer">
           <p>The Exquisite Oaxaca</p>
         </footer>
-      </div>
-    </Router>
+      </Router>
+    </div>
   )
 }
 
