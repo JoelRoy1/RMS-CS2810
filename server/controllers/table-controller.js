@@ -1,6 +1,6 @@
 /**
  * @file Manages all table functionality.
- * @version 1.1.0
+ * @version 2.0.0
  */
 const db = require('../db');
 const pool = db.pool;
@@ -22,7 +22,11 @@ async function showTables() {
     }
 }
 
-//view all tables that are assigned to specific waiter
+/**
+ * Shows all the tables that a particular waiter has been assigned.
+ * @param {int} staffId- The ID of the waiter
+ * @returns- The tables that the corresponding waiter has been assigned.
+ */
 async function showAssigned(staffId) {
     let client;
     try {
@@ -39,7 +43,12 @@ async function showAssigned(staffId) {
     }
 };
 
-//customer is given a table
+/**
+ * Assigns a table to a customer.
+ * Called at the same time a customer logs in to the restaurant system.
+ * @param {int} customerId- The ID of the customer that the table is being assigned to.
+ * @returns- A random table number assigned to the customer.
+ */
 async function assignToTable(customerId) {
     let client;
     try {
@@ -63,6 +72,10 @@ async function assignToTable(customerId) {
     }
 };
 
+/**
+ * Assigns a waiter to a random waiter to a random table where one has not been assigned yet.
+ * @returns- All the tables after updating the database.
+ */
 async function assignWaiterToTable() {
     let client;
     try {
@@ -98,6 +111,11 @@ async function assignWaiterToTable() {
     }
 };
 
+/**
+ * Clears a table after a customer has left.
+ * @param {int} tableNumber- The ID of the table to clear.
+ * @returns- All tables after updating the database
+ */
 async function clearTable(tableNumber) {
     let client;
     try {
@@ -115,6 +133,12 @@ async function clearTable(tableNumber) {
     }
 };
 
+/**
+ * Displays information about the customer and the orders the customer at a specific table
+ * have made.
+ * @returns- The name of the customer at a specific table, the status of their order and
+ * whether they have paid or not.
+ */
 async function displayTableStatus() {
     let client;
     try {
@@ -141,4 +165,7 @@ async function displayTableStatus() {
     }
   }
 
+/**
+ * Export all functions to be used elsewhere in the project.
+ */
 module.exports = { showTables, showAssigned, assignToTable, assignWaiterToTable, clearTable, displayTableStatus };
