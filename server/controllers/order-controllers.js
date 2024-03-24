@@ -1,6 +1,6 @@
 /**
  * @file Manages all interactions with the orders table.
- * @version 1.0.0
+ * @version 2.0.0
  */
 
 /**
@@ -42,6 +42,17 @@ async function cancelOrder(orderId) {
   }
 }
 
+/**
+ * The placeOrder function handles the placing of orders.
+ * It builds an order with all the relevant information and inserts it into the relevant tables in the database.
+ * 
+ * @param {int} customerId- the ID of the customer placing the order.
+ * @param {int} staffId- the ID of the waiter assigned to handle this order.
+ * @param {string} orderStatus- the status of the order, pending by default.
+ * @param {string} orderAllergies- All allergies associated with the items in the order.
+ * @param {string[]}items- A list of the dishes from the menu table that are present in the order.
+ * @returns A summary of the order with all the information.
+ */
 async function placeOrder(customerId, staffId, orderStatus, orderAllergies, items) {
   let client;
   try {
@@ -111,7 +122,11 @@ async function placeOrder(customerId, staffId, orderStatus, orderAllergies, item
   }
 }
 
-
+/**
+ * Updates the order_status attribute of the relevant order to 'delivered'.
+ * @param {int} orderId- the orderId of the order to mark as delivered.
+ * @param {int} staffId- The ID of the waiter that delivered the order.
+ */
 async function orderDelivered(orderId, staffId) {
   let client;
   try {
@@ -142,6 +157,11 @@ async function orderDelivered(orderId, staffId) {
   }
 }
 
+/**
+ * Updates the order_status of the relevant order in the databse to 'confirmed'.
+ * @param {int} orderId- the orderId of the order to mark as confirmed.
+ * @param {int} staffId- the staff ID of the kitchen staff who confirmed the order.
+ */
 async function orderConfirmed(orderId, staffId) {
   let client;
   try {
@@ -171,6 +191,11 @@ async function orderConfirmed(orderId, staffId) {
   }
 }
 
+/**
+ * Updates the order_status of the relevant order in the database to 'ready to deliver'.
+ * @param {int} orderId- the orderId of the order to mark as 'ready to deliver'.
+ * @param {int} staffId- the staff ID of the kitchen staff who prepared the order.
+ */
 async function orderReadyForDelivery(orderId, staffId) {
   let client;
   try {
@@ -200,6 +225,10 @@ async function orderReadyForDelivery(orderId, staffId) {
   }
 }
 
+/**
+ * Retrieves all the orders in the database with order_status 'delivered'.
+ * @returns all orders that have been marked as 'delivered'.
+ */
 async function getDeliveredOrderCount() {
   let client;
   try {
@@ -225,6 +254,10 @@ async function getDeliveredOrderCount() {
   }
 }
 
+/**
+ * Retrieves all the orders in the database with order_status 'pending'.
+ * @returns all orders that have not been marked as 'delivered'.
+ */
 async function getPendingOrderCount() {
   let client;
   try {
@@ -250,6 +283,12 @@ async function getPendingOrderCount() {
   }
 }
 
+/**
+ * Retrieves all the orders in the database.
+ * They are grouped by their ID so tat 
+ * @returns all orders and associated information such as dishes, staff assigned, 
+ * customer who ordered and the time the order was placed.
+ */
 async function getAllOrders() {
   let client;
   try {
@@ -311,6 +350,10 @@ async function getAllOrders() {
   }
 };
 
+/**
+ * Retrieves all the orders in the database associated with a certain customer'.
+ * @returns all orders placed by the specified customer ID.
+ */
 async function getCustomerOrder(customerId) {
   let client;
   try {
@@ -335,6 +378,11 @@ async function getCustomerOrder(customerId) {
   }
 }
 
+/**
+ * Retrieves the order_status of a prticular customer's order.
+ * @param {int} customerId- The customer ID associated with the order whose status is being retrieved.
+ * @returns The order_status of the customer's order.
+ */
 async function getOrderStatus(customerId) {
   let client;
   try {
@@ -370,6 +418,9 @@ async function getOrderStatus(customerId) {
   }
 };
 
+/**
+ *Export all functions to be used elsewhere in the project.
+ */
 module.exports = { 
   cancelOrder, placeOrder, orderDelivered, 
   orderConfirmed, orderReadyForDelivery, getDeliveredOrderCount, 

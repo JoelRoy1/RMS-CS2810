@@ -1,11 +1,18 @@
 /**
  * @file Manages all customer functionality.
- * @version 1.0.0
+ * @version 2.0.0
  */
 const db = require('../db');
 const pool = db.pool;
 const tableController = require('../controllers/table-controller');
 
+/**
+ * Function to add a new customer to the database.
+ * A table is also automatically assigned to the customer when they register.
+ * 
+ * @param {string} customerName-The name of the new customer.
+ * @param {string} customerAllergies-The allergies the new customer has.
+ */
 async function addCustomer(customerName, customerAllergies) {
     let client;
     try {
