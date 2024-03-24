@@ -15,6 +15,11 @@ function OmniNavbar() {
   const handleLogout = () => {
     // Logout logic: set valid_user to false and route to /staff-login
     sessionStorage.setItem('valid_user', 'false')
+    navigate('/staff-login')
+  }
+
+  const handleHome = () => {
+    //route to the landing page
     navigate('/')
   }
 
@@ -60,7 +65,7 @@ function OmniNavbar() {
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
             {validUser && (
               <Button
-                onClick={handleLogout}
+                onClick={handleHome}
                 sx={{
                   color: 'black',
                   '&:hover': {
