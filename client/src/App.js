@@ -12,6 +12,7 @@ import PaymentPage from './pages/PaymentPage';
 import PaymentInfoPage from './pages/PaymentInfoPage'
 import TableStatusPage from './pages/TableStatusPage'
 import ProtectdRoute from './ProtectedRoute'
+import AboutUsPage from './pages/AboutUsPage'
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/menu" element={<MenuPage />} />
+          <Route path="/about-us" element={< AboutUsPage/>} />
           <Route path="/customer-login" element={<CustomerLoginPage />} />
           <Route path="/staff-login" element={<StaffLoginPage/>} />
           <Route path="/payment" element={<PaymentPage />} />
