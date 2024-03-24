@@ -167,9 +167,6 @@ const MenuPage = () => {
         </Paper>
         <Grid container spacing={2}>
           <Grid item xs={12} md={8}>
-            <Typography variant="h4" gutterBottom align="center">
-              Menu
-            </Typography>
             <Grid container spacing={2}>
               {(filteredDishes.length > 0 ? filteredDishes : dishes).map((dish) => (
                 <Grid item key={dish.dish_id} xs={12} sm={6} md={4}>

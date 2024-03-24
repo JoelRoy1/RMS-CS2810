@@ -18,6 +18,7 @@ function CustomerLoginPage() {
       const response = await axios.post("http://localhost:9000/customer/", { customerName, customerAllergies });
       const { customerId, tableNumber } = response.data;
       sessionStorage.setItem('id', customerId);
+      sessionStorage.setItem('customer_name', customerName);
       sessionStorage.setItem('table', tableNumber);
       setTableNumber(tableNumber);
       setSuccess(true);

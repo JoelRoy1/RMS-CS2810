@@ -1,16 +1,34 @@
 import React from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { AppBar, Box, Button, Container, Toolbar } from '@mui/material'
 
 function OmniNavbar() {
   const location = useLocation()
+  const navigate = useNavigate()
 
-  const menuItems = [
-    { path: '/', label: 'Home' },
-    //{ path: '/menu', label: 'Menu' },
-    { path: '/menu-management', label: 'Menu Management' },
-    { path: '/about-us', label: 'About Us' },
-  ]
+  // Retrieve valid_user from session storage
+  const validUser = sessionStorage.getItem('valid_user') === 'true'
+
+  // Retrieve staff name from session storage
+  const staffName = sessionStorage.getItem('staff_name')
+
+  const handleLogout = () => {
+    // Logout logic: set valid_user to false and route to /staff-login
+    sessionStorage.setItem('valid_user', 'false')
+    navigate('/')
+  }
+
+  // Define menu items based on the value of valid_user
+  const menuItems = validUser
+    ? [
+        { path: '/dashboard', label: 'Dashboard' },
+        { path: '/table-info', label: 'Table Info' },
+        { path: '/menu-management', label: 'Menu Management' },
+      ]
+    : [
+        { path: '/', label: 'Home' },
+        { path: '/about-us', label: 'About Us' },
+      ]
 
   return (
     <AppBar
@@ -39,11 +57,26 @@ function OmniNavbar() {
             overflow: 'hidden',
           }}
         >
-          <Box sx={{ display: 'flex', gap: 2 }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+            {validUser && (
+              <Button
+                onClick={handleLogout}
+                sx={{
+                  color: 'black',
+                  '&:hover': {
+                    bgcolor: 'rgba(0, 0, 0, 0.04)',
+                    color: 'primary.main',
+                  },
+                  transition: 'all 0.2s ease-in-out',
+                }}
+              >
+                Home
+              </Button>
+            )}
             {menuItems.map(({ path, label }) => (
               <Button
-                key={path}
-                component={Link}
+                key={label}
+                component={path ? Link : 'button'}
                 to={path}
                 sx={{
                   color: location.pathname === path ? 'primary.main' : 'black',
@@ -59,10 +92,30 @@ function OmniNavbar() {
               </Button>
             ))}
           </Box>
+          <Box>
+            {validUser && (
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                <span style={{ color: 'black' }}>{staffName}</span>
+                <Button
+                  onClick={handleLogout}
+                  sx={{
+                    color: 'black',
+                    '&:hover': {
+                      bgcolor: 'rgba(0, 0, 0, 0.04)',
+                      color: 'primary.main',
+                    },
+                    transition: 'all 0.2s ease-in-out',
+                  }}
+                >
+                  Logout
+                </Button>
+              </Box>
+            )}
+          </Box>
         </Toolbar>
       </Container>
     </AppBar>
   )
-}
+};       
 
 export default OmniNavbar

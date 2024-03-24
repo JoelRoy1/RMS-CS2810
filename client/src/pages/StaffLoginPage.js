@@ -33,6 +33,7 @@ function StaffLoginPage() {
       // Checking for successful response status
       if (response.data === username) {
         sessionStorage.setItem('valid_user', true);
+        sessionStorage.setItem('staff_name', username)
         navigate('/dashboard');
       } else {
         setError('Incorrect username or pincode')
