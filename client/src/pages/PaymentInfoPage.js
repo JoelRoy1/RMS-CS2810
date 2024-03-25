@@ -65,7 +65,7 @@ const PaymentInfoPage = () => {
 
   const handleUpdateStatus = async () => {
     try {
-      await axios.post('http://localhost:9000/table/clear', { tableNumber: tableNumber })
+      await axios.post('http://localhost:9000/table/clear', { tableNumber: sessionStorage.getItem('table') })
       navigate('/'); // Navigate to 'Home'
     } catch (error) {
       console.error('Error updating order status:', error);
