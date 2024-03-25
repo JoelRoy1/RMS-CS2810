@@ -1,6 +1,6 @@
 /**
  * @file Manges all order routes.
- * @version 1.1.0
+ * @version 1.5.0
  */
 
 const express = require('express');
@@ -39,47 +39,18 @@ router.delete('/cancel-order/:orderId', async (req, res) => {
 
 
 /**
- * mark an order as delivered
+ * mark an order with new status
  */
-router.post('/mark-delivered', async (req, res) => {
-  const { orderId, staffId } = req.body;
+router.post('/mark-status', async (req, res) => {
+  const { orderStatus, orderId, staffId } = req.body;
   try {
-    await orderController.orderDelivered(orderId, staffId);
-    res.status(200).json({ message: 'Order marked devlivered successfully' });
+    await orderController.changeStatus(orderStatus, orderId, staffId);
+    res.status(200).json({ message: 'Order status changed successfully' });
   } catch (error) {
-    console.error(`Error confirming delivery: ${error.message}`);
+    console.error(`Error changing status: ${error.message}`);
     res.status(500).json({ error: error.message });
   }
 });
-
-/**
- * mark an order as confirmed
- */
-router.post('/mark-confirmed', async (req, res) => {
-  const { orderId, staffId } = req.body;
-  try {
-    await orderController.orderConfirmed(orderId, staffId);
-    res.status(200).json({ message: 'Order marked confirmed successfully' });
-  } catch (error) {
-    console.error(`Error confirming delivery: ${error.message}`);
-    res.status(500).json({ error: error.message });
-  }
-});
-
-/**
- * mark an order as confirmed
- */
-router.post('/mark-ready', async (req, res) => {
-  const { orderId, staffId } = req.body;
-  try {
-    await orderController.orderReadyForDelivery(orderId, staffId);
-    res.status(200).json({ message: 'Order marked ready successfully' });
-  } catch (error) {
-    console.error(`Error readying delivery: ${error.message}`);
-    res.status(500).json({ error: error.message });
-  }
-});
-
 
 /**
  * Retrieves the count of orders marked as delivered.

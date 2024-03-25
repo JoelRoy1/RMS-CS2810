@@ -1,6 +1,6 @@
 /**
  * @file Core script of the api. Starts server and manages ports and routes.
- * @version 1.2.2
+ * @version 1.2.4
  */
 //initializing dependencies and constants needed for the api.
 const express = require('express')
@@ -36,9 +36,7 @@ app.use('/menu/delete-item', menuRoute)
 //order endpoints
 app.use('/order/cancel-order', orderRoute)
 app.use('/order', orderRoute)
-app.use('/order/mark-delivered', orderRoute)
-app.use('/order/mark-confirmed', orderRoute)
-app.use('order/mark-ready', orderRoute)
+app.use('order/mark-status', orderRoute)
 app.use('/order/get-delivered', orderRoute)
 app.use('/order/get-pending-orders', orderRoute)
 app.use('/order/fetch-all', orderRoute)

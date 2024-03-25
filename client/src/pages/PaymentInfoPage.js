@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Container, Typography, Box, Grid, Paper, TableContainer, Table, TableHead, TableBody, TableRow, TableCell } from '@mui/material';
+import { Container, Typography, Box, Grid, Paper, TableContainer, Table, TableHead, TableBody, TableRow, TableCell, Button } from '@mui/material';
+import { useNavigate } from 'react-router-dom'; // Import useHistory hook
 
 const PaymentInfoPage = () => {
   const [paymentInfo, setPaymentInfo] = useState([]);
@@ -9,6 +10,7 @@ const PaymentInfoPage = () => {
   const [totalPrice, setTotalPrice] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const navigate = useNavigate(); 
 
   useEffect(() => {
     const fetchData = async () => {
@@ -60,6 +62,16 @@ const PaymentInfoPage = () => {
 
     fetchData();
   }, []);
+
+  const handleUpdateStatus = async () => {
+    try {
+      await axios.post('http://localhost:9000/table/clear', { tableNumber: tableNumber })
+      navigate('/'); // Navigate to 'Home'
+    } catch (error) {
+      console.error('Error updating order status:', error);
+      setError('Error updating order status');
+    }
+  };
 
   if (loading) {
     return <div>Loading...</div>;
@@ -125,6 +137,9 @@ const PaymentInfoPage = () => {
             <Paper elevation={3} style={{ backgroundColor: '#f7f7f7', padding: '20px' }}>
               <Typography variant="h5" gutterBottom style={{ color: '#333', marginBottom: '15px' }}>Your Order Status</Typography>
               <Typography variant="body1" style={{ color: '#333', marginBottom: '5px' }}>{orderStatus}</Typography>
+              {orderStatus === 'Your order has been delivered. Bon Apetite!' && ( // Conditionally render the button
+                <Button variant="contained" onClick={handleUpdateStatus}>Leave Table</Button>
+              )}
             </Paper>
           </Box>
         </Grid>

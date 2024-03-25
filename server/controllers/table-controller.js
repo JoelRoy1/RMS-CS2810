@@ -1,6 +1,6 @@
 /**
  * @file Manages all table functionality.
- * @version 2.0.0
+ * @version 2.2.0
  */
 const db = require('../db');
 const pool = db.pool;
@@ -112,26 +112,46 @@ async function assignWaiterToTable() {
 };
 
 /**
- * Clears a table after a customer has left.
- * @param {int} tableNumber- The ID of the table to clear.
- * @returns- All tables after updating the database
+ * Clears a table by removing the customer and staff assignment,
+ * and clears any associated orders and payments.
+ * @param {int} tableNumber - The table number to be cleared.
+ * @returns {Promise} A promise indicating the success or failure of the operation.
  */
 async function clearTable(tableNumber) {
     let client;
     try {
         client = await pool.connect(); // Establish Connection
-        // Clear staff and customer IDs for the specified table
-        const clearTableQuery = 'UPDATE tables SET staff_id = NULL, customer_id = NULL WHERE table_number = $1';
+
+        // Begin a transaction
+        await client.query('BEGIN');
+
+        // Clear customer and staff assignment for the table
+        const clearTableQuery = 'UPDATE tables SET customer_id = NULL, staff_id = NULL WHERE table_number = $1';
         await client.query(clearTableQuery, [tableNumber]);
-        console.log(`Table ${tableNumber} has been cleared.`);
-        return showTables();
+
+        // Clear orders associated with the customer from that table
+        const clearOrdersQuery = 'DELETE FROM orders WHERE customer_id = (SELECT customer_id FROM tables WHERE table_number = $1)';
+        await client.query(clearOrdersQuery, [tableNumber]);
+
+        // Clear payments associated with the customer from that table
+        const clearPaymentsQuery = 'DELETE FROM payments WHERE table_number = $1';
+        await client.query(clearPaymentsQuery, [tableNumber]);
+
+        // Commit the transaction
+        await client.query('COMMIT');
+
+        return true; // Operation succeeded
     } catch (error) {
+        // If an error occurs, rollback the transaction
+        await client.query('ROLLBACK');
         console.error('Error clearing table:', error);
+        return false; // Operation failed
     } finally {
         console.log('client released');
         client.release(); // Release the client back to the pool
     }
 };
+
 
 /**
  * Displays information about the customer and the orders the customer at a specific table

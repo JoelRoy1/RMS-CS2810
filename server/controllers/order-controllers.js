@@ -1,6 +1,6 @@
 /**
  * @file Manages all interactions with the orders table.
- * @version 2.0.0
+ * @version 2.1.0
  */
 
 /**
@@ -123,93 +123,24 @@ async function placeOrder(customerId, staffId, orderStatus, orderAllergies, item
 }
 
 /**
- * Updates the order_status attribute of the relevant order to 'delivered'.
- * @param {int} orderId- the orderId of the order to mark as delivered.
- * @param {int} staffId- The ID of the waiter that delivered the order.
- */
-async function orderDelivered(orderId, staffId) {
-  let client;
-  try {
-    console.log('Attempting to deliver order...');
-    client = await pool.connect();
-    const query = `
-      UPDATE orders
-      SET order_status = 'delivered'
-      WHERE order_id = $1
-      AND staff_id = $2;
-    `;
-    const query2 = 'SELECT order_id FROM orders WHERE order_id = $1 AND staff_id = $2;';
-    const getWaiter = 'SELECT staff_name FROM staff WHERE staff_id = $1;';
-    const values = [orderId, staffId];
-    await client.query(query, values);
-    const values2 = [staffId];
-    const result = await client.query(query2, values);
-    const result2 = await client.query(getWaiter, values2);
-    console.log('Order marked delivered successfully');
-    console.log('Order:', result.rows[0].order_id, 'marked as delivered by :',  result2.rows[0].staff_name);
-  } catch (error) {
-    console.error('Error confirming order as delivered', error);
-  } finally {
-    if (client) {
-      console.log('client released');
-      client.release();
-    }
-  }
-}
-
-/**
- * Updates the order_status of the relevant order in the databse to 'confirmed'.
- * @param {int} orderId- the orderId of the order to mark as confirmed.
- * @param {int} staffId- the staff ID of the kitchen staff who confirmed the order.
- */
-async function orderConfirmed(orderId, staffId) {
-  let client;
-  try {
-    console.log('Attempting to confirm order...');
-    client = await pool.connect();
-    const query = `
-      UPDATE orders
-      SET order_status = 'confirmed'
-      WHERE order_id = $1
-      AND staff_id = $2;
-    `;
-    const query2 = 'SELECT order_id FROM orders WHERE order_id = $1 AND staff_id = $2;';
-    const getWaiter = 'SELECT staff_name FROM staff WHERE staff_id = $1;';
-    const values = [orderId, staffId];
-    await client.query(query, values);
-    const values2 = [staffId];
-    const result = await client.query(query2, values);
-    const result2 = await client.query(getWaiter, values2);
-    console.log('Order marked confirmed successfully');
-    console.log('Order:', result.rows[0].order_id, 'marked as confirmed by :',  result2.rows[0].staff_name);
-  } catch (error) {
-    console.error('Error confirming order as confirmed', error);
-  } finally {
-    if (client) {
-      client.release();
-    }
-  }
-}
-
-/**
- * Updates the order_status of the relevant order in the database to 'ready to deliver'.
+ * Updates the order_status of the relevant order in the database to the given input.
  * @param {int} orderId- the orderId of the order to mark as 'ready to deliver'.
  * @param {int} staffId- the staff ID of the kitchen staff who prepared the order.
  */
-async function orderReadyForDelivery(orderId, staffId) {
+async function changeStatus(orderStatus, orderId, staffId) {
   let client;
   try {
     console.log('Attempting to set order as ready...');
     client = await pool.connect();
     const query = `
       UPDATE orders
-      SET order_status = 'ready to deliver'
-      WHERE order_id = $1
-      AND staff_id = $2;
+      SET order_status = $1
+      WHERE order_id = $2
+      AND staff_id = $3;
     `;
     const query2 = 'SELECT order_id FROM orders WHERE order_id = $1 AND staff_id = $2;';
     const getWaiter = 'SELECT staff_name FROM staff WHERE staff_id = $1;';
-    const values = [orderId, staffId];
+    const values = [orderStatus, orderId, staffId];
     await client.query(query, values);
     const values2 = [staffId];
     const result = await client.query(query2, values);
@@ -422,7 +353,6 @@ async function getOrderStatus(customerId) {
  *Export all functions to be used elsewhere in the project.
  */
 module.exports = { 
-  cancelOrder, placeOrder, orderDelivered, 
-  orderConfirmed, orderReadyForDelivery, getDeliveredOrderCount, 
+  cancelOrder, placeOrder, changeStatus, getDeliveredOrderCount, 
   getPendingOrderCount, getAllOrders, getCustomerOrder, getOrderStatus 
 };

@@ -59,45 +59,18 @@ const Dashboard = () => {
     }
   }
 
-  const handleDelivered = async (orderId, staffId) => {
+  const changeStatus = async (orderStatus, orderId, staffId) => {
     try {
-      await axios.post('http://localhost:9000/order/mark-delivered', {
+      await axios.post('http://localhost:9000/order/mark-status', {
+        orderStatus,
         orderId,
         staffId,
       })
-      console.log(`Order ${orderId} marked as delivered successfully`)
+      console.log(`Order ${orderId} status changed successfully`)
       fetchOrders() // Refresh orders after marking as delivered
     } catch (error) {
-      console.error('Error marking order as delivered:', error)
-      setError('Error marking order as delivered. Please try again later.')
-    }
-  }
-
-  const handleConfirmed = async (orderId, staffId) => {
-    try {
-      await axios.post('http://localhost:9000/order/mark-confirmed', {
-        orderId,
-        staffId,
-      })
-      console.log(`Order ${orderId} marked as confirmed successfully`)
-      fetchOrders() // Refresh orders after marking as confirmed
-    } catch (error) {
-      console.error('Error marking order as confirmed:', error)
-      setError('Error marking order as confirmed. Please try again later.')
-    }
-  }
-
-  const handleReadyToDeliver = async (orderId, staffId) => {
-    try {
-      await axios.post('http://localhost:9000/order/mark-ready', {
-        orderId,
-        staffId,
-      })
-      console.log(`Order ${orderId} marked as ready successfully`)
-      fetchOrders() // Refresh orders after marking as ready
-    } catch (error) {
-      console.error('Error marking order as ready:', error)
-      setError('Error marking order as ready. Please try again later.')
+      console.error('Error changing status:', error)
+      setError('Error changing order status. Please try again later.')
     }
   }
 
@@ -172,7 +145,7 @@ const Dashboard = () => {
                     </IconButton>
                     <IconButton
                       onClick={() =>
-                        handleDelivered(order.order_id, order.staff_id)
+                        changeStatus('delivered', order.order_id, order.staff_id)
                       }
                       color="success"
                     >
@@ -180,14 +153,14 @@ const Dashboard = () => {
                     </IconButton>
                     <IconButton
                       onClick={() =>
-                        handleConfirmed(order.order_id, order.staff_id)
+                        changeStatus('confirmed' ,order.order_id, order.staff_id)
                       }
                     >
                       <CheckCircleIcon />
                     </IconButton>
                     <IconButton
                       onClick={() =>
-                        handleReadyToDeliver(order.order_id, order.staff_id)
+                        changeStatus('ready to deliver', order.order_id, order.staff_id)
                       }
                       color="primary"
                     >
