@@ -35,10 +35,10 @@ const TableStatusPage = () => {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell style={{ fontWeight: 'bold', fontSize: '1.2rem' }}>Table Number</TableCell>
-              <TableCell style={{ fontWeight: 'bold', fontSize: '1.2rem' }}>Customer Name</TableCell>
-              <TableCell style={{ fontWeight: 'bold', fontSize: '1.2rem' }}>Order Status</TableCell>
-              <TableCell style={{ fontWeight: 'bold', fontSize: '1.2rem' }}>Paid</TableCell>
+              <TableCell style={{ fontWeight: 'bold', fontSize: '1rem' }}>Table Number</TableCell>
+              <TableCell style={{ fontWeight: 'bold', fontSize: '1rem' }}>Customer Name</TableCell>
+              <TableCell style={{ fontWeight: 'bold', fontSize: '1rem' }}>Order Status</TableCell>
+              <TableCell style={{ fontWeight: 'bold', fontSize: '1rem' }}>Paid</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
