@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import {
   Card,
   CardMedia,
@@ -9,7 +10,34 @@ import {
   Collapse,
 } from '@mui/material';
 
+const fetchImages = async (searchTerm) => {
+  try {
+    const response = await axios.get('https://api.unsplash.com/search/photos', {
+      params: {
+        query: searchTerm,
+        per_page: 1, // Number of images to fetch
+        client_id: 'h0R5KSpe27itJHrcy8DLqDKbmMv2zapc5060cgHO0nk', //Unsplash API access key
+      },
+    });
+    return response.data.results[0].urls.regular; // Return the URL of the first image
+  } catch (error) {
+    console.error('Error fetching images:', error);
+    return ''; // Return an empty string if there's an error
+  }
+};
+
 const DishCard = ({ dish, onAddToCart }) => {
+  const [image, setImage] = useState('');
+
+  useEffect(() => {
+    const fetchImageForDish = async () => {
+      const imageUrl = await fetchImages(dish.dish_name);
+      setImage(imageUrl);
+    };
+
+    fetchImageForDish();
+  }, [dish.dish_name]);
+
   const [expanded, setExpanded] = useState(false);
 
   const handleExpandClick = () => {
@@ -21,7 +49,7 @@ const DishCard = ({ dish, onAddToCart }) => {
       <CardMedia
         component="img"
         height="140"
-        image={dish.image} // Assuming the dish object has an 'image' property
+        image={image}
         alt={dish.name}
         style={{ borderRadius: '10px 10px 0 0' }}
       />

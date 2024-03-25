@@ -178,11 +178,49 @@ async function updateMenuItem(dishID, dishName, dishCalories, dishPrice, dishDes
   }
 }
 
+/**
+ * Function to retrieve image data for a specific dish ID.
+ * @param {number} dishID The ID of the dish to retrieve image data for.
+ * @returns {Promise<string|null>} The image data as a Base64 encoded string, or null if no image found.
+ */
+async function getMenuImageByDishID(dishID) {
+  let client;
+  try {
+    client = await pool.connect();
+    const query = 'SELECT image_data FROM menu_images WHERE dish_id = $1;';
+    const result = await client.query(query, [dishID]);
+    return result.rows.length > 0 ? result.rows[0].image_data : null;
+  } catch (error) {
+    throw new Error(`Error retrieving menu image: ${error.message}`);
+  } finally {
+    if (client) {
+      client.release();
+    }
+  }
+}
+
+/**
+ * Function to add a new menu image entry.
+ * @param {number} dishID The ID of the dish the image belongs to.
+ * @param {string} imageData The Base64 encoded image data.
+ */
+async function addMenuImage(dishID, imageData) {
+  let client;
+  try {
+    client = await pool.connect();
+    const query = 'INSERT INTO menu_images (dish_id, image_data) VALUES ($1, $2);';
+    await client.query(query, [dishID, imageData]);
+    console.log('New menu image added for dish ID:', dishID);
+  } catch (error) {
+    throw new Error(`Error adding menu image: ${error.message}`);
+  } finally {
+    if (client) {
+      client.release();
+    }
+  }
+}
+
 module.exports = { 
-  getAllMenuItems, 
-  filterOutAllergens, 
-  filterCalories,
-  createMenuItem, 
-  deleteMenuItem,
-  updateMenuItem
+  getAllMenuItems, filterOutAllergens, filterCalories, createMenuItem, 
+  deleteMenuItem, updateMenuItem, getMenuImageByDishID, addMenuImage
 }; //Export controller for use in router
