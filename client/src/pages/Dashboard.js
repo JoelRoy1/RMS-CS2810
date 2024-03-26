@@ -11,6 +11,7 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Tooltip,
   Paper,
   Typography,
   Box,
@@ -107,124 +108,142 @@ const filteredOrders = orders.filter((order) => {
 })
 
 
-  return (
-    <Container maxWidth="lg">
-      <Helmet>
-        <title>Oaxaca | Dashboard</title>
-      </Helmet>
-      <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
-      <Typography variant="h4" gutterBottom component="div" sx={{ my: 4 }}>
-        Order Information
-      </Typography>
+return (
+  <Container maxWidth="lg">
+    <Helmet>
+      <title>Oaxaca | Dashboard</title>
+    </Helmet>
+    <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
+    <Typography variant="h4" gutterBottom component="div" sx={{ my: 4 }}>
+      Order Information
+    </Typography>
 
-      <FormControl fullWidth sx={{ mb: 2 }}>
-        <InputLabel id="order-status-filter-label">Filter by Status</InputLabel>
-        <Select
-          labelId="order-status-filter-label"
-          value={filter}
-          label="Filter by Status"
-          onChange={handleFilterChange}
-        >
-          <MenuItem value="all">All</MenuItem>
-          <MenuItem value="pending">Pending</MenuItem>
-          <MenuItem value="ready to deliver">
-            Ready to be Delivered
-          </MenuItem>
-          <MenuItem value="confirmed">Confirmed</MenuItem>
-          <MenuItem value="delivered">Delivered</MenuItem>
-        </Select>
-      </FormControl>
+    <FormControl fullWidth sx={{ mb: 2 }}>
+      <InputLabel id="order-status-filter-label">Filter by Status</InputLabel>
+      <Select
+        labelId="order-status-filter-label"
+        value={filter}
+        label="Filter by Status"
+        onChange={handleFilterChange}
+      >
+        <MenuItem value="all">All</MenuItem>
+        <MenuItem value="pending">Pending</MenuItem>
+        <MenuItem value="ready to deliver">Ready to be Delivered</MenuItem>
+        <MenuItem value="confirmed">Confirmed</MenuItem>
+        <MenuItem value="delivered">Delivered</MenuItem>
+      </Select>
+    </FormControl>
 
-      <TableContainer component={Paper}>
-        <Table aria-label="order table">
-          <TableHead>
+    <TableContainer component={Paper}>
+      <Table aria-label="order table">
+        <TableHead>
+          <TableRow>
+            <TableCell sx={{ fontWeight: 'bold' }}>Order ID</TableCell>
+            <TableCell sx={{ fontWeight: 'bold' }}>Waiter</TableCell>
+            <TableCell sx={{ fontWeight: 'bold' }}>Customer</TableCell>
+            <TableCell sx={{ fontWeight: 'bold' }}>Table Number</TableCell>
+            <TableCell sx={{ fontWeight: 'bold' }}>Time</TableCell>
+            <TableCell sx={{ fontWeight: 'bold' }}>Items</TableCell>
+            <TableCell sx={{ fontWeight: 'bold' }}>Price</TableCell>
+            <TableCell sx={{ fontWeight: 'bold' }}>Order Status</TableCell>
+            <TableCell sx={{ fontWeight: 'bold' }}>Actions</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {loading ? (
             <TableRow>
-              <TableCell sx={{ fontWeight: 'bold' }}>Order ID</TableCell>
-              <TableCell sx={{ fontWeight: 'bold' }}>Waiter</TableCell>
-              <TableCell sx={{ fontWeight: 'bold' }}>Customer</TableCell>
-              <TableCell sx={{ fontWeight: 'bold' }}>Table Number</TableCell>
-              <TableCell sx={{ fontWeight: 'bold' }}>Time</TableCell>
-              <TableCell sx={{ fontWeight: 'bold' }}>Items</TableCell>
-              <TableCell sx={{ fontWeight: 'bold' }}>Price</TableCell>
-              <TableCell sx={{ fontWeight: 'bold' }}>Order Status</TableCell>
-              <TableCell sx={{ fontWeight: 'bold' }}>Actions</TableCell>
+              <TableCell colSpan={9} align="center">
+                <CircularProgress />
+              </TableCell>
             </TableRow>
-          </TableHead>
-          <TableBody>
-            {loading ? (
-              <TableRow>
-                <TableCell colSpan={9} align="center">
-                  <CircularProgress />
+          ) : error ? (
+            <TableRow>
+              <TableCell colSpan={9} align="center">
+                {error}
+              </TableCell>
+            </TableRow>
+          ) : filteredOrders.length > 0 ? (
+            filteredOrders.map((order) => (
+              <TableRow key={order.order_id}>
+                <TableCell>{order.order_id}</TableCell>
+                <TableCell>{order.staff_name}</TableCell>
+                <TableCell>{order.customer_name}</TableCell>
+                <TableCell>{order.table_number}</TableCell>
+                <TableCell>{formatDateTime(order.order_time)}</TableCell>
+                <TableCell>
+                  {order.items.map((item) => (
+                    <Box
+                      key={item.dish_id}
+                    >{`${item.dish_name} x ${item.quantity}`}</Box>
+                  ))}
                 </TableCell>
-              </TableRow>
-            ) : error ? (
-              <TableRow>
-                <TableCell colSpan={9} align="center">
-                  {error}
-                </TableCell>
-              </TableRow>
-            ) : filteredOrders.length > 0 ? (
-              filteredOrders.map((order) => (
-                <TableRow key={order.order_id}>
-                  <TableCell>{order.order_id}</TableCell>
-                  <TableCell>{order.staff_name}</TableCell>
-                  <TableCell>{order.customer_name}</TableCell>
-                  <TableCell>{order.table_number}</TableCell>
-                  <TableCell>{formatDateTime(order.order_time)}</TableCell>
-                  <TableCell>
-                    {order.items.map((item) => (
-                      <Box key={item.dish_id}>
-                        {`${item.dish_name} x ${item.quantity}`}
-                      </Box>
-                    ))}
-                  </TableCell>
-                  <TableCell>£{order.totalOrderPrice.toFixed(2)}</TableCell>
-                  <TableCell>{order.order_status}</TableCell>
-                  <TableCell>
+                <TableCell>£{order.totalOrderPrice.toFixed(2)}</TableCell>
+                <TableCell>{order.order_status}</TableCell>
+                <TableCell>
+                  <Tooltip title="Cancel order">
                     <IconButton
                       onClick={() => handleCancel(order.order_id)}
                       color="error"
                     >
                       <CancelIcon />
                     </IconButton>
+                  </Tooltip>
+                  <Tooltip title="Mark as delivered">
                     <IconButton
                       onClick={() =>
-                        changeStatus('delivered', order.order_id, order.staff_id)
+                        changeStatus(
+                          'delivered',
+                          order.order_id,
+                          order.staff_id
+                        )
                       }
                       color="success"
                     >
                       <LocalShippingIcon />
                     </IconButton>
+                  </Tooltip>
+                  <Tooltip title="Confirm order">
                     <IconButton
                       onClick={() =>
-                        changeStatus('confirmed' ,order.order_id, order.staff_id)
+                        changeStatus(
+                          'confirmed',
+                          order.order_id,
+                          order.staff_id
+                        )
                       }
                     >
                       <CheckCircleIcon />
                     </IconButton>
+                  </Tooltip>
+                  <Tooltip title="Ready to deliver">
                     <IconButton
                       onClick={() =>
-                        changeStatus('ready to deliver', order.order_id, order.staff_id)
+                        changeStatus(
+                          'ready to deliver',
+                          order.order_id,
+                          order.staff_id
+                        )
                       }
                       color="primary"
                     >
                       <DoneAllIcon />
                     </IconButton>
-                  </TableCell>
-                </TableRow>
-              ))
-            ) : (
-              <TableRow>
-                <TableCell colSpan={9} align="center">
-                  No orders found.
+                  </Tooltip>
                 </TableCell>
               </TableRow>
-            )}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </Container>
-  )
+            ))
+          ) : (
+            <TableRow>
+              <TableCell colSpan={9} align="center">
+                No orders found.
+              </TableCell>
+            </TableRow>
+          )}
+        </TableBody>
+      </Table>
+    </TableContainer>
+  </Container>
+)
 }
 
-export default Dashboard
+export default Dashboard;
