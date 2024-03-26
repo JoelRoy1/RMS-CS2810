@@ -78,7 +78,9 @@ router.get('/get-pending-orders', async (req, res) => {
   }
 });
 
-//fetch all orders
+/**
+ * Retrieves an array of all orders.
+ */
 router.get('/fetch-all',  async (req, res) => { // Get all orders
   try {
     const orders = await orderController.getAllOrders();
@@ -100,6 +102,9 @@ router.get('/customer-order', async (req, res) => { // Get order details by cust
   }
 });
 
+/**
+ * Retrieves the status of an order by customer ID.
+ */
 router.get('/status', async (req, res) => { // Get order status by customer ID
   try {
       const { customer_id } = req.query;

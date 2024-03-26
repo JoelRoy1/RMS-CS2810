@@ -6,7 +6,16 @@ const db = require('../db');
 const pool = db.pool;
 const stripe = require('stripe')('sk_test_51OrP3NFH91vMUm0iDEYKaWF0bnVLTYPXHF9rFSeHo8b9zGDgXc1ceXRBHpdKUg4CUjLAJvIDzIdCvSU9kEmtvdMX00kBFQLZmp');
 
-async function addPayment(amount, table_number, card_number, card_holder, card_expiry, card_cvc) {
+/**
+ * Function to add a new payment to the database.
+ * @param {number} amount The amount to be paid.
+ * @param {number} table_number The table number the payment is for.
+ * @param {string} card_number The card number used for the payment.
+ * @param {string} card_holder The card holder's name.
+ * @param {string} card_expiry The card's expiry date.
+ * @param {string} card_cvc The card's security code.
+ */
+async function addPayment(amount, table_number, card_number, card_holder, card_expiry, card_cvc) { // Function to add a new payment to the database
     let client;
     try {
         if (isNaN(amount)) {
@@ -41,8 +50,11 @@ async function addPayment(amount, table_number, card_number, card_holder, card_e
         }
     }
 };
-
-async function getPayment(table_number) {
+/**
+ * Function to receive payment information from the database.
+ * @param {number} table_number The table number to retrieve payment information for.
+ */
+async function getPayment(table_number) { // Function to retrieve payment information from the database
     let client;
     try {
         client = await pool.connect();

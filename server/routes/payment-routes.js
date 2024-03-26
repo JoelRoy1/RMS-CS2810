@@ -6,6 +6,9 @@ const express = require('express');
 const router = express.Router();
 const paymentController = require('../controllers/payment-controllers'); // Import the module containing table functionality
 
+/**
+ * Route to handle payment transactions.
+ */
 router.post('/', async (req, res) => {
     try {
         const { amount, table_number, card_number, card_holder, card_expiry, card_cvc } = req.body;
@@ -17,6 +20,9 @@ router.post('/', async (req, res) => {
     }
 });
 
+/**
+ * Route to get payment information.
+ */
 router.get('/get-info', async (req, res) => {
     try {
         const { table_number } = req.query; // Access from query parameters

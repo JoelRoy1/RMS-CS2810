@@ -13,7 +13,7 @@ const tableController = require('../controllers/table-controller');
  * @param {string} customerName-The name of the new customer.
  * @param {string} customerAllergies-The allergies the new customer has.
  */
-async function addCustomer(customerName, customerAllergies) {
+async function addCustomer(customerName, customerAllergies) { // Function to add a new customer to the database
     let client;
     try {
         console.log('Connecting to database');

@@ -6,6 +6,7 @@ const express = require('express');
 const router = express.Router();
 const controller = require('../controllers/customer-controllers');
 
+
 router.post('/', async (req, res) => {
     const { customerName, customerAllergies } = req.body
     try {

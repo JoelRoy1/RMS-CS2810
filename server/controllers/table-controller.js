@@ -5,6 +5,10 @@
 const db = require('../db');
 const pool = db.pool;
 
+/**
+ * Retrieves all tables from the database.
+ * @returns All the tables in the database.
+*/
 async function showTables() { // Function to retrieve all tables from the database
     let client;
     try {

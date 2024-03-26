@@ -12,7 +12,7 @@ const pool = db.pool;
  * @throws {Error} Throws an error if there's an issue submitting the help request.
  * @returns {Promise<void>} A Promise that resolves when the help request is successfully submitted.
  */
-async function requestHelp(customerId) {
+async function requestHelp(customerId) { 
   let client;
   try {
     console.log('Submitting help request...');
