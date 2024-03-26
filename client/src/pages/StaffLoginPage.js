@@ -45,31 +45,42 @@ function StaffLoginPage() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="xs">
+      <Container 
+        component="main" 
+        maxWidth="sm"
+        sx={{
+          height: '100vh',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
         <Helmet>
           <title>Oaxaca | Staff Login</title>
         </Helmet>
         <Box
           sx={{
-            marginTop: 8,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
           }}
         >
-          <Typography component="h1" variant="h5">
-            Staff Login
-          </Typography>
           <Paper
             sx={{
-              marginTop: 1,
+              marginTop: 2,
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
-              padding: 2,
+              padding: 3,
+              backgroundColor: '#f5f5f5',
+              borderRadius: '8px',
+              boxShadow: '0px 3px 5px rgba(0, 0, 0, 0.1)',
             }}
-            elevation={2}
+            elevation={0}
           >
+            <Typography component="h1" variant="h5" sx={{ mb: 2 }}>
+              Staff Login
+            </Typography>
             <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
               <TextField
                 margin="normal"
@@ -82,6 +93,7 @@ function StaffLoginPage() {
                 autoFocus
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
+                sx={{ '& input:focus': { color: '#333' } }} // Set the input text color on focus
               />
 
               <TextField
@@ -95,6 +107,7 @@ function StaffLoginPage() {
                 autoComplete="current-pin"
                 value={pin}
                 onChange={(e) => setPin(e.target.value)}
+                sx={{ '& input:focus': { color: '#333' } }} // Set the input text color on focus
               />
 
               {error && (
@@ -107,7 +120,7 @@ function StaffLoginPage() {
                 type="submit"
                 fullWidth
                 variant="contained"
-                sx={{ mt: 3, mb: 2 }}
+                sx={{ mt: 3, mb: 2, backgroundColor: '#333', color: '#fff', '&:hover': { backgroundColor: '#666' } }}
               >
                 Submit
               </Button>
