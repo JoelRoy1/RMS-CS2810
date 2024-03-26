@@ -22,12 +22,20 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 import LocalShippingIcon from '@mui/icons-material/LocalShipping'
 import DoneAllIcon from '@mui/icons-material/DoneAll'
 
+import FilterListIcon from '@mui/icons-material/FilterList'
+import Select from '@mui/material/Select'
+import MenuItem from '@mui/material/MenuItem'
+import FormControl from '@mui/material/FormControl'
+import InputLabel from '@mui/material/InputLabel'
+
+
 
 const Dashboard = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
   const [orders, setOrders] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
+  const [filter, setFilter] = useState('all') // New state for filter
 
   useEffect(() => {
     fetchOrders()
@@ -79,19 +87,55 @@ const Dashboard = () => {
     return dateTime.toLocaleString()
   }
 
+  const handleFilterChange = (event) => {
+    setFilter(event.target.value)
+  }
+
+const filteredOrders = orders.filter((order) => {
+  switch (filter) {
+    case 'all':
+      return true // Show all orders
+    case 'confirmed':
+      return order.order_status === 'confirmed' // when you select 'confirm' on the filter menu
+    case 'ready to deliver':
+      return order.order_status === 'ready to deliver' // when you select 'Ready to be delivered' on the filter menu
+    case 'delivered':
+      return order.order_status === 'delivered' //  when you select 'Delivered' on the filter menu
+    default:
+      return order.order_status === filter // This will match the filter for any other statuses
+  }
+})
+
+
   return (
     <Container maxWidth="lg">
       <Helmet>
         <title>Oaxaca | Dashboard</title>
       </Helmet>
-
       <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
-
       <Typography variant="h4" gutterBottom component="div" sx={{ my: 4 }}>
         Order Information
       </Typography>
 
-      <TableContainer component={Paper} sx={{ marginBottom: 4 }}>
+      <FormControl fullWidth sx={{ mb: 2 }}>
+        <InputLabel id="order-status-filter-label">Filter by Status</InputLabel>
+        <Select
+          labelId="order-status-filter-label"
+          value={filter}
+          label="Filter by Status"
+          onChange={handleFilterChange}
+        >
+          <MenuItem value="all">All</MenuItem>
+          <MenuItem value="pending">Pending</MenuItem>
+          <MenuItem value="ready to deliver">
+            Ready to be Delivered
+          </MenuItem>
+          <MenuItem value="confirmed">Confirmed</MenuItem>
+          <MenuItem value="delivered">Delivered</MenuItem>
+        </Select>
+      </FormControl>
+
+      <TableContainer component={Paper}>
         <Table aria-label="order table">
           <TableHead>
             <TableRow>
@@ -119,8 +163,8 @@ const Dashboard = () => {
                   {error}
                 </TableCell>
               </TableRow>
-            ) : orders.length > 0 ? (
-              orders.map((order) => (
+            ) : filteredOrders.length > 0 ? (
+              filteredOrders.map((order) => (
                 <TableRow key={order.order_id}>
                   <TableCell>{order.order_id}</TableCell>
                   <TableCell>{order.staff_name}</TableCell>
@@ -129,9 +173,9 @@ const Dashboard = () => {
                   <TableCell>{formatDateTime(order.order_time)}</TableCell>
                   <TableCell>
                     {order.items.map((item) => (
-                      <Box
-                        key={item.dish_id}
-                      >{`${item.dish_name} x ${item.quantity}`}</Box>
+                      <Box key={item.dish_id}>
+                        {`${item.dish_name} x ${item.quantity}`}
+                      </Box>
                     ))}
                   </TableCell>
                   <TableCell>£{order.totalOrderPrice.toFixed(2)}</TableCell>
