@@ -7,10 +7,8 @@ function Order() {
     if (cartData) {
       // If cartData exists in local storage, parse it and set it to state
       setCart(JSON.parse(cartData));
-      console.log(JSON.parse(cartData)); // Logging the cart data
     }
   }, []);
-  console.log(cart);
   return (
     <>
       <div style={{ width: "800px", margin: "auto" }}>

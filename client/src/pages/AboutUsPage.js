@@ -13,7 +13,7 @@ import {
   Link,
 } from '@mui/material';
 
-const theme = createTheme({
+const theme = createTheme({ 
   typography: {
     fontFamily: 'Roboto, sans-serif',
     color: '#333',

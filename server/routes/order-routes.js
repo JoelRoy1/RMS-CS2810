@@ -79,7 +79,7 @@ router.get('/get-pending-orders', async (req, res) => {
 });
 
 //fetch all orders
-router.get('/fetch-all',  async (req, res) => {
+router.get('/fetch-all',  async (req, res) => { // Get all orders
   try {
     const orders = await orderController.getAllOrders();
     res.json(orders);
@@ -89,7 +89,7 @@ router.get('/fetch-all',  async (req, res) => {
   }
 });
 
-router.get('/customer-order', async (req, res) => {
+router.get('/customer-order', async (req, res) => { // Get order details by customer ID
   try {
       const { customer_id } = req.query;
       const orderDetails = await orderController.getCustomerOrder(customer_id);
@@ -100,7 +100,7 @@ router.get('/customer-order', async (req, res) => {
   }
 });
 
-router.get('/status', async (req, res) => {
+router.get('/status', async (req, res) => { // Get order status by customer ID
   try {
       const { customer_id } = req.query;
       const orderDetails = await orderController.getOrderStatus(customer_id);

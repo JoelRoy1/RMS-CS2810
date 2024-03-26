@@ -12,11 +12,11 @@ function CustomerLoginPage() {
   const [customerName, setCustomerName] = useState("");
   const [customerAllergies, setCustomerAllergies] = useState([]);
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (event) => { // Function to handle form submission
     event.preventDefault();
     try {
       const response = await axios.post("http://localhost:9000/customer/", { customerName, customerAllergies });
-      const { customerId, tableNumber } = response.data;
+      const { customerId, tableNumber } = response.data; // Extract customerId and tableNumber from response
       sessionStorage.setItem('id', customerId);
       sessionStorage.setItem('customer_name', customerName);
       sessionStorage.setItem('table', tableNumber);
@@ -27,12 +27,11 @@ function CustomerLoginPage() {
         navigate("/menu");
       }, 1000); // Hide table number after 1 second
     } catch (err) {
-      console.log(err);
       setError("An error occurred. Please try again later.");
     }
   };
 
-  const handleAllergyChange = (allergy) => {
+  const handleAllergyChange = (allergy) => { // Function to handle allergy checkbox change
     if (customerAllergies.includes(allergy)) {
       setCustomerAllergies(customerAllergies.filter((a) => a !== allergy));
     } else {

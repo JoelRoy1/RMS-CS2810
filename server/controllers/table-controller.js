@@ -5,7 +5,7 @@
 const db = require('../db');
 const pool = db.pool;
 
-async function showTables() {
+async function showTables() { // Function to retrieve all tables from the database
     let client;
     try {
         client = await pool.connect();

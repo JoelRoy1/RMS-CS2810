@@ -36,10 +36,10 @@ function StaffLoginPage() {
         sessionStorage.setItem('staff_name', username)
         navigate('/dashboard');
       } else {
-        setError('Incorrect username or pincode')
+        setError('Incorrect username or pincode') // Error message for invalid credentials
       }
     } catch (err) {
-      setError('An error occurred during login.')
+      setError('An error occurred during login.') // Error message for server error
     }
   }
 
