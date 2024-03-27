@@ -8,7 +8,6 @@ import { Helmet } from 'react-helmet';
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { TextField, Button, Typography, Grid, Paper } from "@mui/material";
-import React, { useState } from "react";
 
 /**
  * Represents the customer login page component.

@@ -31,19 +31,19 @@ const theme = createTheme();
 function StaffLoginPage() {
   /**
    * State variable for username input field.
-   * @type {[string, function]} 
+   * @type {Array} 
    */
   const [username, setUsername] = useState('');
   
   /**
    * State variable for pin input field.
-   * @type {[string, function]} 
+   * @type {Array}
    */
   const [pin, setPin] = useState('');
   
   /**
    * State variable for error message.
-   * @type {[string, function]} 
+   * @type {Array}
    */
   const [error, setError] = useState('');
   

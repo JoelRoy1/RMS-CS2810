@@ -1,14 +1,7 @@
 /**
-<<<<<<< HEAD
  * React component to handle rendering of the menu page.
  * @module client/menu
  */
-=======
- * Represents a page displaying a menu with options to filter allergens and add items to cart for ordering.
- * @module MenuPage
- */
-
->>>>>>> 78ba41f6c4f7f9bb38319ebf420e1486d10229f7
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import {
