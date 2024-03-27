@@ -125,16 +125,16 @@ CREATE TABLE orders(
 GRANT ALL ON orders TO root;
 
 INSERT INTO orders (customer_id, staff_id, order_status, order_allergies)
-VALUES (2, 2, 'pending', 'No allergies')
+VALUES (2, 2, 'confirmed', 'No allergies')
 RETURNING order_id;
 INSERT INTO orders (customer_id, staff_id, order_status, order_allergies)
-VALUES (3, 2, 'pending', 'No allergies')
+VALUES (3, 2, 'ready to deliver', 'No allergies')
 RETURNING order_id;
 INSERT INTO orders (customer_id, staff_id, order_status, order_allergies)
 VALUES (1, 3, 'pending', 'No allergies')
 RETURNING order_id;
 INSERT INTO orders (customer_id, staff_id, order_status, order_allergies)
-VALUES (5, 4, 'pending', 'No allergies')
+VALUES (5, 4, 'delivered', 'No allergies')
 RETURNING order_id;
 INSERT INTO orders (customer_id, staff_id, order_status, order_allergies)
 VALUES (4, 3, 'pending', 'No allergies')
@@ -203,3 +203,10 @@ CREATE TABLE payments (
 );
 
 GRANT ALL ON payments TO root;
+
+-- Insert three entries
+INSERT INTO payments (payment_time, payment_amount, table_number, card_holder, card_ending, card_expiry)
+VALUES 
+    (CURRENT_TIMESTAMP, 50.00, 2, 'John Doe', 1234, '12/25'),
+    (CURRENT_TIMESTAMP, 75.50, 5, 'Jane Smith', 5678, '06/27'),
+    (CURRENT_TIMESTAMP, 30.25, 3, 'Bob Johnson', 9101, '09/26');
