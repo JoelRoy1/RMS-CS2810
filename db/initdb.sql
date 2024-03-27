@@ -59,7 +59,7 @@ INSERT INTO menu (dish_name, dish_calories, dish_price, dish_description)
 VALUES ('Tacos al Pastor', 350, 9.99, 'Marinated pork tacos with pineapple and cilantro'),
        ('Chicken Enchiladas', 450, 12.99, 'Tender shredded chicken wrapped in corn tortillas, topped with enchilada sauce and cheese'),
        ('Beef Fajitas', 600, 15.99, 'Sizzling strips of beef served with grilled onions and peppers, accompanied by tortillas, guacamole, sour cream, and salsa'),
-       ('Chile Rellenos', 400, 11.99, 'Poblano peppers stuffed with cheese, battered, and fried, served with rice and beans'),
+       ('Carnitas Tacos', 400, 11.99, 'Slow-cooked pork tacos with onion, cilantro, and salsa verde'),
        ('Shrimp Tostadas', 380, 10.99, 'Crispy corn tortillas topped with seasoned shrimp, lettuce, tomatoes, avocado, and salsa'),
        ('Carne Asada', 550, 17.99, 'Grilled marinated steak served with rice, beans, guacamole, and tortillas'),
        ('Quesadillas', 480, 8.99, 'Flour tortillas stuffed with cheese and your choice of meat, served with salsa and sour cream'),
@@ -101,7 +101,7 @@ VALUES ((SELECT dish_id FROM menu WHERE dish_name = 'Beef Fajitas'), (SELECT all
        ((SELECT dish_id FROM menu WHERE dish_name = 'Beef Fajitas'), (SELECT allergen_id FROM allergens WHERE allergen_name = 'Dairy'));
 -- Chile Rellenos contain Dairy
 INSERT INTO dish_allergens (dish_id, allergen_id)
-VALUES ((SELECT dish_id FROM menu WHERE dish_name = 'Chile Rellenos'), (SELECT allergen_id FROM allergens WHERE allergen_name = 'Dairy'));
+VALUES ((SELECT dish_id FROM menu WHERE dish_name = 'Carnitas Tacos'), (SELECT allergen_id FROM allergens WHERE allergen_name = 'Gluten'));
 -- Shrimp Tostadas contain Gluten
 INSERT INTO dish_allergens (dish_id, allergen_id)
 VALUES ((SELECT dish_id FROM menu WHERE dish_name = 'Shrimp Tostadas'), (SELECT allergen_id FROM allergens WHERE allergen_name = 'Gluten'));
