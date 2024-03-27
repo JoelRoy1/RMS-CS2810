@@ -1,11 +1,6 @@
 /**
-<<<<<<< HEAD
  * React component to handle rendering of the landing page.
  * @module client/landingPage
-=======
- * Represents a page displaying Landing page.
- * @module LandingPage
->>>>>>> 78ba41f6c4f7f9bb38319ebf420e1486d10229f7
  */
 
 import React from 'react'
