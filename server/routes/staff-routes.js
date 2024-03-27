@@ -1,5 +1,6 @@
 /**
- * @file Manges all staff routes.
+ * @file staff-routes.js manages all staff routes.
+ * @module server/staff
  * @version 1.1.0
  */
 

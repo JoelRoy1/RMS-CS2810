@@ -1,3 +1,8 @@
+/**
+ * @file App.js is the core script of the Client, It Starts the client app and manages all pages and routing between them.
+ * @module client
+ * @version 2.0.0
+ */
 import React from 'react'
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
 import OmniNavbar from './components/OmniNavbar' // Assuming you've created this based on previous discussions
@@ -14,6 +19,10 @@ import TableStatusPage from './pages/TableStatusPage'
 import ProtectdRoute from './ProtectedRoute'
 import AboutUsPage from './pages/AboutUsPage'
 
+/**
+ *  Represents the app component
+ * @returns {html} The generated webpage.
+ */
 function App() {
   return (
     <div className="App">

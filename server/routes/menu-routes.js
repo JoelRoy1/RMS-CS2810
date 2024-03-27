@@ -1,5 +1,6 @@
 /**
- * @file Manges all menu routes.
+ * @file menu-routes.js manages all menu routes.
+ * @module server/menu
  * @version 1.1.1
  */
 const express = require('express')

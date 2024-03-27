@@ -1,5 +1,6 @@
 /**
- * @file Manages all help functionality.
+ * @file help-controller.js manages all help functionality.
+ * @module server/help
  * @version 1.2.0
  */
 const db = require('../db');

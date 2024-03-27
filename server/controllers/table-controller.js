@@ -1,5 +1,6 @@
 /**
- * @file Manages all table functionality.
+ * @file table-controller.js manages all table functionality.
+ * @module server/table
  * @version 2.2.0
  */
 const db = require('../db');

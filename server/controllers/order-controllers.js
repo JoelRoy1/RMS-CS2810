@@ -1,5 +1,6 @@
 /**
- * @file Manages all interactions with the orders table.
+ * @file order-controllers.js manages all interactions with the orders table.
+ * @module server/order
  * @version 2.1.0
  */
 

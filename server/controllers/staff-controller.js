@@ -1,5 +1,6 @@
 /**
- * @file Manages all interactions with the Staff table.
+ * @file staff-controller.js manages all interactions with the Staff table.
+ * @module server/staff
  * @version 1.3.0
  */
 

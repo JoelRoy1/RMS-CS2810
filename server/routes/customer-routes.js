@@ -1,5 +1,6 @@
 /**
- * @file Manges all menu routes.
+ * @file customer-routes.js manages all routes related to customers.
+ * @module server/customer
  * @version 1.0.0
  */
 const express = require('express');

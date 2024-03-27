@@ -1,5 +1,6 @@
 /**
- * @file Manages all customer functionality.
+ * @file customer-controller.js manages all customer functionality.
+ * @module server/customer
  * @version 2.0.0
  */
 const db = require('../db');

@@ -1,5 +1,6 @@
 /**
- * @file Manges all order routes.
+ * @file order-routes.js manages all order routes.
+ * @module server/order
  * @version 1.5.0
  */
 

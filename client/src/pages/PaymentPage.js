@@ -1,6 +1,6 @@
 /**
  * React component for handling payment process.
- * @module PaymentPage
+ * @module client/payment
  */
 
 import React, { useState } from 'react';

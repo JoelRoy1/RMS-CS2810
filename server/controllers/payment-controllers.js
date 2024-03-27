@@ -1,5 +1,6 @@
 /**
- * @file Manages all payment functionality.
+ * @file payment-controllers.js manages all payment functionality.
+ * @module server/payment
  * @version 1.2.2
  */
 const db = require('../db');

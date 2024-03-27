@@ -1,5 +1,6 @@
 /**
- * @file Manges all table routes.
+ * @file table-routes.js manages all table routes.
+ * @module server/table
  * @version 1.0.0
  */
 const express = require('express');

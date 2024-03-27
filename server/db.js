@@ -1,8 +1,10 @@
 /**
- * Creates a Connection Pool to the Postgres database,
+ * @file db.js Creates a Connection Pool to the Postgres Database,
  * which we can use to make queries.
+ * @version 1.1.1
  * @constant {Pool} DB_POOL 
  */
+
 const { Pool } = require('pg');
 
 const pool = new Pool({

@@ -1,5 +1,6 @@
 /**
- * @file Manages all interactions with the Menu table.
+ * @file menu-controller.js manages all interactions with the Menu table.
+ * @module server/menu
  * @version 1.1.0
  */
 const db = require('../db');

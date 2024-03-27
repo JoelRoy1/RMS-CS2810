@@ -1,5 +1,6 @@
 /**
- * @file Manges all payment routes.
+ * @file payment-routes.js manages all payment routes.
+ * @module server/payment
  * @version 1.4.0
  */
 const express = require('express');

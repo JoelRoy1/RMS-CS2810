@@ -1,5 +1,6 @@
 /**
- * @file Creates and validates tokens for staff (protected routes)
+ * @file token-controller.js creates and validates tokens for staff (protected routes)
+ * @module server/token
  * @version 1.1.1
  */
 
