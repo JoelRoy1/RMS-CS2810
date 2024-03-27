@@ -1,17 +1,26 @@
-// TableStatusPage.js
+/**
+ * TableStatusPage component displays the active status of tables along with customer names, order status, and payment status.
+ * @module TableStatusPage
+ */
+
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import Sidebar from '../components/Sidebar';
 import { Container, Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
 
+/**
+ * TableStatusPage component.
+ * @returns {JSX.Element} TableStatusPage component.
+ */
 const TableStatusPage = () => {
+  /**
+   * State to store table data.
+   * @type {Array<Object>}
+   */
   const [tableData, setTableData] = useState([]);
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
-  const toggleSidebar = () => {
-    setIsSidebarOpen(!isSidebarOpen);
-  };
-
+  /**
+   * Fetches table data from the server upon component mount.
+   */
   useEffect(() => {
     axios.get('http://localhost:9000/table/status')
       .then(response => {
@@ -23,15 +32,11 @@ const TableStatusPage = () => {
   }, []);
 
   return (
-    <Container maxWidth="md">
-      <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
-      <div className="header-stats">
-        <div className="stat-item">Active Tables</div>
-      </div>
-      <Typography variant="h4" align="center" gutterBottom>
-        Table Status
+    <Container maxWidth="md" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '100vh'}}>
+      <Typography variant="h4" align="center" gutterBottom style={{ color: '#333', marginBottom: '20px' }}>
+        Active Table Status
       </Typography>
-      <TableContainer component={Paper}>
+      <TableContainer component={Paper} style={{ backgroundColor: '#fff', borderRadius: '10px', boxShadow: '0 2px 4px rgba(0,0,0,0.1)' }}>
         <Table>
           <TableHead>
             <TableRow>
@@ -46,7 +51,7 @@ const TableStatusPage = () => {
               <TableRow key={table.table_number}>
                 <TableCell>{table.table_number}</TableCell>
                 <TableCell>{table.customer_name}</TableCell>
-                <TableCell>{table.order_status}</TableCell>
+                <TableCell>{(table.order_status).toUpperCase()}</TableCell>
                 <TableCell>{table.paid ? 'Yes' : 'No'}</TableCell>
               </TableRow>
             ))}
