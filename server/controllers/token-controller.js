@@ -25,6 +25,7 @@ function generateToken(username, pin) {
  * @param {object} req - Express request object.
  * @param {object} res - Express response object.
  * @param {function} next - Express next middleware function.
+ * @returns {json} The decoded token as a html response. 
  */
 function verifyToken(req, res, next) {
     const token = req.headers.authorization; // Token should be in the Authorization header

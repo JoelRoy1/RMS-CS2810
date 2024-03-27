@@ -53,6 +53,8 @@ async function addPayment(amount, table_number, card_number, card_holder, card_e
 /**
  * Function to receive payment information from the database.
  * @param {number} table_number The table number to retrieve payment information for.
+ * @throws {Error} Throws an error if payment information is not retrievable.
+ * @returns {json} Information about the payment.
  */
 async function getPayment(table_number) { // Function to retrieve payment information from the database
     let client;

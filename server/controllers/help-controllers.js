@@ -8,9 +8,9 @@ const pool = db.pool;
 /**
  * Submits a help request for a customer to the database.
  * @async
- * @param {number} customerId - The ID of the customer needing help.
+ * @param {int} customerId - The ID of the customer needing help.
  * @throws {Error} Throws an error if there's an issue submitting the help request.
- * @returns {Promise<void>} A Promise that resolves when the help request is successfully submitted.
+ * @returns {Promise<void>} A promise that resolves when the help request is successfully submitted.
  */
 async function requestHelp(customerId) { 
   let client;
@@ -35,7 +35,7 @@ async function requestHelp(customerId) {
  * Retrieves a list of customers needing help from the database.
  * @async
  * @throws {Error} Throws an error if there's an issue retrieving the customers needing help.
- * @returns List of all customers who need help
+ * @returns {json} A list of all customers who need help.
  */
 async function getCustomersNeedingHelp() {
   let client;

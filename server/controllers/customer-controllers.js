@@ -10,8 +10,9 @@ const tableController = require('../controllers/table-controller');
  * Function to add a new customer to the database.
  * A table is also automatically assigned to the customer when they register.
  * 
- * @param {string} customerName-The name of the new customer.
- * @param {string} customerAllergies-The allergies the new customer has.
+ * @param {string} customerName The name of the new customer.
+ * @param {string} customerAllergies The allergies the new customer has.
+ * @returns {json} The CustomerId and tableNumber.
  */
 async function addCustomer(customerName, customerAllergies) { // Function to add a new customer to the database
     let client;

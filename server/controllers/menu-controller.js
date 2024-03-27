@@ -6,9 +6,9 @@ const db = require('../db');
 const pool = db.pool;
 
 /**
- * function to retrieve all the items from the menu table in the db.
+ * Function to retrieve all the items from the menu table in the db.
  * 
- * @returns menu items in db
+ * @returns {json} All menu items in the db.
  */
 async function getAllMenuItems() {
   let client;
@@ -39,9 +39,10 @@ async function getAllMenuItems() {
 };
 
 /**
- * function to filters items from the menu table in the db based on allergens.
+ * Function to filters items from the menu table in the db based on allergens.
  * 
- * @returns menu items in db
+ * @param {string} allergens The allergens to filter the menu with.
+ * @returns {json} Allergen filtered menu items in the db.
  */
 async function filterOutAllergens(allergens) {
   console.log('Attempting to connect to database...');
@@ -70,10 +71,10 @@ async function filterOutAllergens(allergens) {
 };
 
 /**
- * function to filter items from the menu table based on if calories are lower
+ * Function to filter items from the menu table based on if calories are lower
  * than input value.
- * @param {int} calories calorie limit 
- * @returns menu items below the calorie limit
+ * @param {int} calories The specified calorie limit.
+ * @returns {json} All menu items below the calorie limit.
  */
 async function filterCalories(calories) {
   let client;
@@ -95,10 +96,11 @@ async function filterCalories(calories) {
 };
 
 /**
- * function to add items to the menu table.
- * @param {string} dishName  the name of the dish to add
- * @param {int} dishCalories the number of calories in the dish
- * @param {float} dishPrice the price of the dish
+ * Function to add items to the menu table.
+ * @param {string} dishName  The name of the dish to add.
+ * @param {int} dishCalories The number of calories in the dish.
+ * @param {float} dishPrice The price of the dish.
+ * @returns {json} The dish added to the menu.
  */
 async function createMenuItem(dishName, dishCalories, dishPrice, dishDescription) { 
   let client;
@@ -124,8 +126,8 @@ async function createMenuItem(dishName, dishCalories, dishPrice, dishDescription
 };
 
 /**
- * function to delete menu items from the db based on dish ID.
- * @param {int} dishID the ID of menu item to delete
+ * Function to delete menu items from the db based on dish ID.
+ * @param {int} dishID The ID of menu item to delete.
  */
 async function deleteMenuItem(dishID) {
   let client;

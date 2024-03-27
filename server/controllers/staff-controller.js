@@ -10,9 +10,9 @@ const pool = db.pool;
 /**
  * The signIn function handles authentication when a user tries to sign in.
  * 
- * @param {string} username the username to authenticate
- * @param {int} pin the pin number to authenticate
- * @returns the matching data from the database
+ * @param {string} username The username to authenticate.
+ * @param {int} pin The pin number to authenticate.
+ * @returns {json} The verified user token.
  */
 async function signIn(username, pin) {
   let client;
@@ -45,9 +45,9 @@ async function signIn(username, pin) {
 /**
  * The create account function handles creating new users.
  * 
- * @param {string} username new username
- * @param {int} pin new pin number
- * @returns newly created user
+ * @param {string} username The new username.
+ * @param {int} pin The new pin number.
+ * @returns {json} The newly created user.
  */
 async function createAccount(username, pin, specialization) {
   let client;

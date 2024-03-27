@@ -7,7 +7,7 @@ const pool = db.pool;
 
 /**
  * Retrieves all tables from the database.
- * @returns All the tables in the database.
+ * @returns {json} All the tables in the database.
 */
 async function showTables() { // Function to retrieve all tables from the database
     let client;
@@ -28,8 +28,8 @@ async function showTables() { // Function to retrieve all tables from the databa
 
 /**
  * Shows all the tables that a particular waiter has been assigned.
- * @param {int} staffId- The ID of the waiter
- * @returns- The tables that the corresponding waiter has been assigned.
+ * @param {int} staffId The ID of the waiter
+ * @returns {json} The tables that the corresponding waiter has been assigned.
  */
 async function showAssigned(staffId) {
     let client;
@@ -50,8 +50,8 @@ async function showAssigned(staffId) {
 /**
  * Assigns a table to a customer.
  * Called at the same time a customer logs in to the restaurant system.
- * @param {int} customerId- The ID of the customer that the table is being assigned to.
- * @returns- A random table number assigned to the customer.
+ * @param {int} customerId The ID of the customer that the table is being assigned to.
+ * @returns {json} A random table number assigned to the customer.
  */
 async function assignToTable(customerId) {
     let client;
@@ -78,7 +78,7 @@ async function assignToTable(customerId) {
 
 /**
  * Assigns a waiter to a random waiter to a random table where one has not been assigned yet.
- * @returns- All the tables after updating the database.
+ * @returns {json} All the tables after updating the database.
  */
 async function assignWaiterToTable() {
     let client;
@@ -118,7 +118,7 @@ async function assignWaiterToTable() {
 /**
  * Clears a table by removing the customer and staff assignment,
  * and clears any associated orders and payments.
- * @param {int} tableNumber - The table number to be cleared.
+ * @param {int} tableNumber The table number to be cleared.
  * @returns {Promise} A promise indicating the success or failure of the operation.
  */
 async function clearTable(tableNumber) {
@@ -160,7 +160,7 @@ async function clearTable(tableNumber) {
 /**
  * Displays information about the customer and the orders the customer at a specific table
  * have made.
- * @returns- The name of the customer at a specific table, the status of their order and
+ * @returns {json} The name of the customer at a specific table, the status of their order and
  * whether they have paid or not.
  */
 async function displayTableStatus() {

@@ -3,15 +3,15 @@
  * @version 2.1.0
  */
 
-/**
- * The cancelOrder function deletes the corresponding order when a csutomer wishes to cancel.
- * 
- * @param {int} orderId the orderId of the order to delete
- * @returns the matching data from the database
- */
 const db = require('../db');
 const pool = db.pool;
 
+/**
+ * The cancelOrder function deletes the corresponding order when a csutomer wishes to cancel.
+ * 
+ * @param {int} orderId The orderId of the order to be deleted.
+ * @returns {json} The order ID of the cancelled order.
+ */
 async function cancelOrder(orderId) {
   let client;
   try {
@@ -46,12 +46,12 @@ async function cancelOrder(orderId) {
  * The placeOrder function handles the placing of orders.
  * It builds an order with all the relevant information and inserts it into the relevant tables in the database.
  * 
- * @param {int} customerId- the ID of the customer placing the order.
- * @param {int} staffId- the ID of the waiter assigned to handle this order.
- * @param {string} orderStatus- the status of the order, pending by default.
- * @param {string} orderAllergies- All allergies associated with the items in the order.
- * @param {string[]}items- A list of the dishes from the menu table that are present in the order.
- * @returns A summary of the order with all the information.
+ * @param {int} customerId The ID of the customer placing the order.
+ * @param {int} staffId The ID of the waiter assigned to handle this order.
+ * @param {string} orderStatus The status of the order, pending by default.
+ * @param {string} orderAllergies All allergies associated with the items in the order.
+ * @param {string[]}items A list of the dishes from the menu table that are present in the order.
+ * @returns {json} A summary of the order with all the information.
  */
 async function placeOrder(customerId, staffId, orderStatus, orderAllergies, items) {
   let client;
@@ -124,8 +124,9 @@ async function placeOrder(customerId, staffId, orderStatus, orderAllergies, item
 
 /**
  * Updates the order_status of the relevant order in the database to the given input.
- * @param {int} orderId- the orderId of the order to mark as 'ready to deliver'.
- * @param {int} staffId- the staff ID of the kitchen staff who prepared the order.
+ * @param {int} orderId The order ID of the order to mark as 'ready to deliver'.
+ * @param {int} staffId The staff ID of the kitchen staff who prepared the order.
+ * @returns {json} The updated order status.
  */
 async function changeStatus(orderStatus, orderId, staffId) {
   let client;
@@ -158,7 +159,7 @@ async function changeStatus(orderStatus, orderId, staffId) {
 
 /**
  * Retrieves all the orders in the database with order_status 'delivered'.
- * @returns all orders that have been marked as 'delivered'.
+ * @returns {json} All orders that have been marked as 'delivered'.
  */
 async function getDeliveredOrderCount() {
   let client;
@@ -187,7 +188,7 @@ async function getDeliveredOrderCount() {
 
 /**
  * Retrieves all the orders in the database with order_status 'pending'.
- * @returns all orders that have not been marked as 'delivered'.
+ * @returns {json} All orders that have not been marked as 'delivered'.
  */
 async function getPendingOrderCount() {
   let client;
@@ -217,8 +218,7 @@ async function getPendingOrderCount() {
 /**
  * Retrieves all the orders in the database.
  * They are grouped by their ID so tat 
- * @returns all orders and associated information such as dishes, staff assigned, 
- * customer who ordered and the time the order was placed.
+ * @returns {json} All orders and associated information.
  */
 async function getAllOrders() {
   let client;
@@ -283,7 +283,7 @@ async function getAllOrders() {
 
 /**
  * Retrieves all the orders in the database associated with a certain customer'.
- * @returns all orders placed by the specified customer ID.
+ * @returns {json} All orders placed by the specified customer ID.
  */
 async function getCustomerOrder(customerId) {
   let client;
@@ -311,8 +311,8 @@ async function getCustomerOrder(customerId) {
 
 /**
  * Retrieves the order_status of a prticular customer's order.
- * @param {int} customerId- The customer ID associated with the order whose status is being retrieved.
- * @returns The order_status of the customer's order.
+ * @param {int} customerId The customer ID associated with the order whose status is being retrieved.
+ * @returns {json} The order_status of the customer's order.
  */
 async function getOrderStatus(customerId) {
   let client;
