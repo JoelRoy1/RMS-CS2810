@@ -1,11 +1,15 @@
 /**
+<<<<<<< HEAD
  * React component to handle rendering of the landing page.
  * @module client/landingPage
+=======
+ * Represents a page displaying Landing page.
+ * @module LandingPage
+>>>>>>> 78ba41f6c4f7f9bb38319ebf420e1486d10229f7
  */
 
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Helmet } from 'react-helmet';
 import Button from '@mui/material/Button'
 import { Box, Typography } from '@mui/material'
 import Carousel from 'react-material-ui-carousel'
@@ -14,20 +18,27 @@ import carousel from '../assets/carousel.jpg'
 import carousel2 from '../assets/carousel2.jpg'
 
 /**
- * @function LandingPage
- * @returns the rendered landing page component.
+ * Landing page component.
+ * @returns {JSX.Element} Landing page JSX.
  */
 const LandingPage = () => {
   let navigate = useNavigate()
 
+  /**
+   * Handler for clicking on staff login.
+   */
   const handleStaffClick = () => {
     navigate('/staff-login')
   }
 
+  /**
+   * Handler for clicking on customer login.
+   */
   const handleCustomerClick = () => {
     navigate('/customer-login')
   }
 
+  // Array of carousel items
   const items = [
     {
       name: 'Item 1',
@@ -43,7 +54,6 @@ const LandingPage = () => {
   ]
 
   return (
-
     <Box sx={{ textAlign: 'center', color: 'white' }}>
       <Carousel
         sx={{

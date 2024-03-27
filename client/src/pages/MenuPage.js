@@ -1,7 +1,14 @@
 /**
+<<<<<<< HEAD
  * React component to handle rendering of the menu page.
  * @module client/menu
  */
+=======
+ * Represents a page displaying a menu with options to filter allergens and add items to cart for ordering.
+ * @module MenuPage
+ */
+
+>>>>>>> 78ba41f6c4f7f9bb38319ebf420e1486d10229f7
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import {
@@ -23,6 +30,10 @@ import { Helmet } from 'react-helmet';
 import Cart from '../components/Cart';
 import { useNavigate } from 'react-router-dom';
 
+/**
+ * Represents the theme for the MenuPage.
+ * @constant {object}
+ */
 const theme = createTheme({
   typography: {
     fontFamily: 'Roboto, sans-serif',
@@ -39,32 +50,42 @@ const theme = createTheme({
 });
 
 /**
- * Represent the menu page component.
- * @returns {JSX.Element} The Menu page JSX template.
+ * Represents a page displaying a menu with options to filter allergens and add items to cart for ordering.
+ * @returns {JSX.Element} The JSX element representing the MenuPage.
  */
 const MenuPage = () => {
-   /**
-   * State to store dish data.
-   * @type {Array<Object>}
+  /**
+   * State hook to manage the list of dishes.
+   * @type {Array}
    */
   const [dishes, setDishes] = useState([]);
-   /**
-   * State to store cart data.
-   * @type {Array<Object>}
+  
+  /**
+   * State hook to manage the list of items in the cart.
+   * @type {Array}
    */
   const [cartItems, setCartItems] = useState([]);
-   /**
-   * State to store allergen data.
-   * @type {Array<Object>}
+  
+  /**
+   * State hook to manage the list of selected allergens for filtering.
+   * @type {Array}
    */
   const [allergens, setAllergens] = useState([]);
-   /**
-   * State to store filtered dish data.
-   * @type {Array<Object>}
+  
+  /**
+   * State hook to manage the list of filtered dishes based on allergens.
+   * @type {Array}
    */
   const [filteredDishes, setFilteredDishes] = useState([]);
+  
+  /**
+   * React hook for navigation management.
+   */
   const navigate = useNavigate();
 
+  /**
+   * Effect hook to fetch menu items when the component mounts.
+   */
   useEffect(() => {
     fetchMenuItems();
   }, []);

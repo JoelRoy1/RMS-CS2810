@@ -15,46 +15,75 @@ import {
   Alert,
   Container,
   Box,
-} from '@mui/material'
-import { createTheme, ThemeProvider } from '@mui/material/styles'
+} from '@mui/material';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 
-const theme = createTheme()
 /**
- * Represents the staff login component.
- * @returns {JSX.Element} The staff login page template.
+ * Represents the theme used for styling components.
+ * @constant {Object} theme
+ */
+const theme = createTheme();
+
+/**
+ * A functional component for staff login page.
+ * @returns {JSX.Element} JSX representing the staff login page.
  */
 function StaffLoginPage() {
-  const [username, setUsername] = useState('')
-  const [pin, setPin] = useState('')
-  const [error, setError] = useState('')
-  const navigate = useNavigate()
+  /**
+   * State variable for username input field.
+   * @type {[string, function]} 
+   */
+  const [username, setUsername] = useState('');
+  
+  /**
+   * State variable for pin input field.
+   * @type {[string, function]} 
+   */
+  const [pin, setPin] = useState('');
+  
+  /**
+   * State variable for error message.
+   * @type {[string, function]} 
+   */
+  const [error, setError] = useState('');
+  
+  /**
+   * Navigate function for redirecting user.
+   * @type {function} 
+   */
+  const navigate = useNavigate();
 
+  /**
+   * Handles form submission.
+   * @param {Event} e - The form submit event.
+   * @returns {Promise<void>}
+   */
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
     try {
       const response = await axios.post('http://localhost:9000/signin', {
         username,
         pin: parseInt(pin, 10),
-      })
+      });
 
       // Checking for successful response status
       if (response.data === username) {
         sessionStorage.setItem('valid_user', true);
-        sessionStorage.setItem('staff_name', username)
+        sessionStorage.setItem('staff_name', username);
         navigate('/dashboard');
       } else {
-        setError('Incorrect username or pincode') // Error message for invalid credentials
+        setError('Incorrect username or pincode'); // Error message for invalid credentials
       }
     } catch (err) {
-      setError('An error occurred during login.') // Error message for server error
+      setError('An error occurred during login.'); // Error message for server error
     }
-  }
+  };
 
   return (
     <ThemeProvider theme={theme}>
-      <Container 
-        component="main" 
+      <Container
+        component="main"
         maxWidth="sm"
         sx={{
           height: '100vh',
@@ -137,7 +166,7 @@ function StaffLoginPage() {
         </Box>
       </Container>
     </ThemeProvider>
-  )
+  );
 }
 
-export default StaffLoginPage
+export default StaffLoginPage;
