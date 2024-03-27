@@ -1,8 +1,17 @@
+/**
+ * React component to handle rendering of payment info page.
+ * @module client/payment
+ */
+
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Container, Typography, Box, Grid, Paper, TableContainer, Table, TableHead, TableBody, TableRow, TableCell, Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom'; // Import useHistory hook
 
+/**
+ * Represents the Payment Info page component
+ * @returns {JSX.Element} the Payment Info page template.
+ */
 const PaymentInfoPage = () => {
   const [paymentInfo, setPaymentInfo] = useState([]);
   const [customerOrders, setCustomerOrders] = useState([]);

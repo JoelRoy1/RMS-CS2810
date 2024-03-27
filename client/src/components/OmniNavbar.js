@@ -1,7 +1,16 @@
+/**
+ * React component to handle operations of the Omni Navbar.
+ * @module client/navbar
+ */
+
 import React from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { AppBar, Box, Button, Container, Toolbar } from '@mui/material'
 
+/**
+ * @function OmniNavbar handles rendering of the navbar.
+ * @returns {JSX.Element} The navbar JSX template. 
+ */
 function OmniNavbar() {
   const location = useLocation()
   const navigate = useNavigate()

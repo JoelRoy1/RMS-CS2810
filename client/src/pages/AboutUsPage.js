@@ -1,3 +1,9 @@
+/**
+ * React component to handle rendering of about us page.
+ * @module client/about
+ */
+
+
 import React from 'react';
 import XIcon from '@mui/icons-material/X';
 import InstagramIcon from '@mui/icons-material/Instagram';

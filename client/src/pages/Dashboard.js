@@ -1,3 +1,8 @@
+/**
+ * React component to handle rendering of the dashboard page.
+ * @module client/dashboard
+ */
+
 import React, { useEffect, useState } from 'react'
 import Sidebar from '../components/Sidebar'
 import axios from 'axios'
@@ -30,18 +35,43 @@ import FormControl from '@mui/material/FormControl'
 import InputLabel from '@mui/material/InputLabel'
 
 
-
+/**
+ * Represents the dashboard component.
+ * @returns {JSX.Element} The dahsboard page JSX template.
+ */
 const Dashboard = () => {
+  /**
+   * State to check if sidebard is open.
+   * @type {Array<Object>}
+   */
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
+  /**
+   * State to store order data.
+   * @type {Array<Object>}
+   */
   const [orders, setOrders] = useState([])
+  /**
+   * State to check if page is loading.
+   * @type {Array<Object>}
+   */
   const [loading, setLoading] = useState(true)
+  /**
+   * State to check for errors.
+   * @type {Array<Object>}
+   */
   const [error, setError] = useState('')
+  /**
+   * State to filter dishes.
+   * @type {Array<Object>}
+   */
   const [filter, setFilter] = useState('all') // New state for filter
 
   useEffect(() => {
     fetchOrders()
   }, [])
-
+  /**
+   * @function fetchOrders fetches orders from db.
+   */
   const fetchOrders = async () => {
     try {
       const response = await axios.get('http://localhost:9000/order/fetch-all')
@@ -56,7 +86,10 @@ const Dashboard = () => {
   }
 
   const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen)
-
+  /**
+   * @function handleCancel handles cancellation of orders.
+   * @param {*} orderId  the order to be cancelled.
+   */
   const handleCancel = async (orderId) => {
     try {
       await axios.delete(`http://localhost:9000/order/cancel-order/${orderId}`)
@@ -67,7 +100,12 @@ const Dashboard = () => {
       setError('Error cancelling order. Please try again later.')
     }
   }
-
+ /**
+  * @function changeStatus handles changing of order status.
+  * @param {*} orderStatus the updated status.
+  * @param {*} orderId the order ID of to change status.
+  * @param {*} staffId the staff ID of the member that wants to change status.
+  */
   const changeStatus = async (orderStatus, orderId, staffId) => {
     try {
       await axios.post('http://localhost:9000/order/mark-status', {
@@ -82,7 +120,11 @@ const Dashboard = () => {
       setError('Error changing order status. Please try again later.')
     }
   }
-
+  /**
+   * @function formatDateTime formats date and time from the db to a human readable format.
+   * @param {*} dateTimeString 
+   * @returns formatted date and time.
+   */
   const formatDateTime = (dateTimeString) => {
     const dateTime = new Date(dateTimeString)
     return dateTime.toLocaleString()
@@ -91,7 +133,9 @@ const Dashboard = () => {
   const handleFilterChange = (event) => {
     setFilter(event.target.value)
   }
-
+/**
+ * @function filteredOrders handles order filtering.
+ */
 const filteredOrders = orders.filter((order) => {
   switch (filter) {
     case 'all':

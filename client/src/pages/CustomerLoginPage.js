@@ -1,16 +1,44 @@
+/**
+ * React component to handle rendering of customer login page.
+ * @module client/customer
+ */
+
 import React, { useState } from "react";
 import { Helmet } from 'react-helmet';
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { TextField, Button, Typography, Grid, Paper } from "@mui/material";
 
+/**
+ * Represents the customer login page component.
+ * @returns {JSX.Element} The customer login page JSX template.
+ */
 function CustomerLoginPage() {
+  /**
+   * State to check if an error has occured.
+   * @type {Array<Object>}
+   */
   const [error, setError] = useState(null);
+  /**
+   * State to check if login is succesful.
+   * @type {Array<Object>}
+   */
   const [success, setSuccess] = useState(false);
+  /**
+   * State to store table number.
+   * @type {Array<Object>}
+   */
   const [tableNumber, setTableNumber] = useState(null);
   const navigate = useNavigate();
+  /**
+   * State to store customer name.
+   * @type {Array<Object>}
+   */
   const [customerName, setCustomerName] = useState("");
-
+ /**
+  * @function handleSubmit handles a customer login.
+  * @param {*} event login button is pressed.
+  */
   const handleSubmit = async (event) => { // Function to handle form submission
     event.preventDefault();
     try {

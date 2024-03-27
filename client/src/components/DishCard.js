@@ -1,3 +1,8 @@
+/**
+ * React component to handle rendering of dish cards/
+ * @module client/menu
+ */
+
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import {
@@ -9,7 +14,11 @@ import {
   Button,
   Collapse,
 } from '@mui/material';
-
+/**
+ * @function fetchImages fetches images for dishes from unsplash API.
+ * @param {*} searchTerm the term to search for the dish.
+ * @returns the image for the dish.
+ */
 const fetchImages = async (searchTerm) => {
   try {
     const response = await axios.get('https://api.unsplash.com/search/photos', {
@@ -25,7 +34,10 @@ const fetchImages = async (searchTerm) => {
     return ''; // Return an empty string if there's an error
   }
 };
-
+/**
+ * @function Dishcard handles rendering of the dish card.
+ * @returns {JSX.Element} The dish card JSX template.
+ */
 const DishCard = ({ dish, onAddToCart }) => {
   const [image, setImage] = useState('');
 

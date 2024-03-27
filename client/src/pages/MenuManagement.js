@@ -1,6 +1,6 @@
 /**
- * MenuManagment component allows a staff memeber to edit the menu
- * @module MenuManagement
+ * React component to handle management of the menu.
+ * @module client/menu
  */
 
 import React, { useState, useEffect } from 'react';
@@ -35,13 +35,13 @@ import EditIcon from '@mui/icons-material/Edit';
 const MenuManagementPage = () => {
   /**
    * State hook to manage the list of dishes.
-   * @type {[Array, function]} dishes - State variable representing the list of dishes.
+   * @type {Array<Object>}
    */
   const [dishes, setDishes] = useState([]);
 
   /**
    * State hook to manage the form data for adding/editing dishes.
-   * @type {[Object, function]} form - State variable representing the form data.
+   * @type {Array<Object>} 
    */
   const [form, setForm] = useState({
     dishName: '',
@@ -52,19 +52,19 @@ const MenuManagementPage = () => {
 
   /**
    * State hook to manage the ID of the dish being edited.
-   * @type {[number|null, function]} editingID - State variable representing the ID of the dish being edited.
+   * @type {Array<Object>} 
    */
   const [editingID, setEditingId] = useState(null);
 
   /**
    * State hook to manage the visibility of the dialog for adding/editing dishes.
-   * @type {[boolean, function]} openDialog - State variable representing the visibility of the dialog.
+   * @type {Array<Object>} 
    */
   const [openDialog, setOpenDialog] = useState(false);
 
   /**
    * State hook to manage the snackbar for displaying notifications.
-   * @type {[Object, function]} snackbar - State variable representing the snackbar data.
+   * @type {Array<Object>} 
    */
   const [snackbar, setSnackbar] = useState({
     open: false,

@@ -1,5 +1,5 @@
 /**
- * React component for handling payment process.
+ * React component for handling the payment process.
  * @module client/payment
  */
 

@@ -1,3 +1,8 @@
+/**
+ * React component to handle rendering of staff login page.
+ * @module client/staff
+ */
+
 import React, { useState } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
@@ -14,7 +19,10 @@ import {
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 
 const theme = createTheme()
-
+/**
+ * Represents the staff login component.
+ * @returns {JSX.Element} The staff login page template.
+ */
 function StaffLoginPage() {
   const [username, setUsername] = useState('')
   const [pin, setPin] = useState('')

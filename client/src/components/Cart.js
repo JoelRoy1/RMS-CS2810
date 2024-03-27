@@ -1,3 +1,8 @@
+/**
+ * React component to handle rendering of the cart.
+ * @module client/cart
+ */
+
 import React from 'react';
 import {
   Typography,
@@ -10,6 +15,10 @@ import {
   Box,
 } from '@mui/material';
 
+/**
+ * @function cart handles rendering of the cart
+ * @returns the cart component.
+ */
 const Cart = ({ cartItems, removeFromCart, calculateTotal, handleCheckout }) => {
   return (
     <Paper elevation={3} style={{ position: 'sticky', top: '100px', maxHeight: 'calc(100vh - 120px)', overflowY: 'auto', padding: '20px', borderRadius: '10px', background: '#f9f9f9' }}>

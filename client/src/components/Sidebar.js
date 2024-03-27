@@ -1,3 +1,8 @@
+/**
+ * React component to handle operations of the sidebar.
+ * @module client/sidebar
+ */
+
 import React, { useState, useEffect } from 'react';
 import Drawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
@@ -16,7 +21,10 @@ import { useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import axios from 'axios';
 import avatarPlaceholder from '../assets/avatar.png';
-
+/**
+ * @function Sidebar handles rendering of the sidebar.
+ * @returns {JSX.Element} The sidebar JSX template.
+ */
 const Sidebar = ({ isOpen, toggleSidebar }) => {
   const theme = useTheme();
   const [userData, setUserData] = useState(null);

@@ -1,3 +1,8 @@
+/**
+ * React component to handle rendering of the landing page.
+ * @module client/landingPage
+ */
+
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Helmet } from 'react-helmet';
@@ -8,7 +13,10 @@ import { Paper } from '@mui/material'
 import carousel from '../assets/carousel.jpg'
 import carousel2 from '../assets/carousel2.jpg'
 
-
+/**
+ * @function LandingPage
+ * @returns the rendered landing page component.
+ */
 const LandingPage = () => {
   let navigate = useNavigate()
 

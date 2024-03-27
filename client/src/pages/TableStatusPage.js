@@ -1,6 +1,6 @@
 /**
  * TableStatusPage component displays the active status of tables along with customer names, order status, and payment status.
- * @module TableStatusPage
+ * @module client/table
  */
 
 import React, { useEffect, useState } from 'react';
