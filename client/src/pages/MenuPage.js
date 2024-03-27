@@ -1,3 +1,8 @@
+/**
+ * Represents a page displaying a menu with options to filter allergens and add items to cart for ordering.
+ * @module MenuPage
+ */
+
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import {
@@ -19,6 +24,10 @@ import { Helmet } from 'react-helmet';
 import Cart from '../components/Cart';
 import { useNavigate } from 'react-router-dom';
 
+/**
+ * Represents the theme for the MenuPage.
+ * @constant {object}
+ */
 const theme = createTheme({
   typography: {
     fontFamily: 'Roboto, sans-serif',
@@ -34,17 +43,51 @@ const theme = createTheme({
   },
 });
 
+/**
+ * Represents a page displaying a menu with options to filter allergens and add items to cart for ordering.
+ * @returns {JSX.Element} The JSX element representing the MenuPage.
+ */
 const MenuPage = () => {
+  /**
+   * State hook to manage the list of dishes.
+   * @type {Array}
+   */
   const [dishes, setDishes] = useState([]);
+  
+  /**
+   * State hook to manage the list of items in the cart.
+   * @type {Array}
+   */
   const [cartItems, setCartItems] = useState([]);
+  
+  /**
+   * State hook to manage the list of selected allergens for filtering.
+   * @type {Array}
+   */
   const [allergens, setAllergens] = useState([]);
+  
+  /**
+   * State hook to manage the list of filtered dishes based on allergens.
+   * @type {Array}
+   */
   const [filteredDishes, setFilteredDishes] = useState([]);
+  
+  /**
+   * React hook for navigation management.
+   */
   const navigate = useNavigate();
 
+  /**
+   * Effect hook to fetch menu items when the component mounts.
+   */
   useEffect(() => {
     fetchMenuItems();
   }, []);
 
+  /**
+   * Fetches menu items from the server.
+   * @async
+   */
   const fetchMenuItems = async () => {
     try {
       const response = await axios.get('http://localhost:9000/menu');
@@ -54,6 +97,10 @@ const MenuPage = () => {
     }
   };
 
+  /**
+   * Adds a dish to the cart.
+   * @param {object} dishToAdd - The dish to add to the cart.
+   */
   const addToCart = (dishToAdd) => {
     const existingItem = cartItems.find((item) => item.dish_id === dishToAdd.dish_id);
     if (existingItem) {
@@ -66,11 +113,19 @@ const MenuPage = () => {
     }
   };
 
+  /**
+   * Removes a dish from the cart.
+   * @param {number} id - The ID of the dish to remove from the cart.
+   */
   const removeFromCart = (id) => {
     const updatedCartItems = cartItems.filter((item) => item.dish_id !== id);
     setCartItems(updatedCartItems);
   };
 
+  /**
+   * Calculates the total price of items in the cart.
+   * @returns {number} The total price.
+   */
   const calculateTotal = () => {
     if (cartItems.length === 0) {
       return 0;
@@ -78,11 +133,18 @@ const MenuPage = () => {
     return cartItems.reduce((total, item) => total + item.dish_price * item.quantity, 0);
   };
 
+  /**
+   * Stores the order total in session storage.
+   */
   const storeOrderTotal = () => {
     const total = calculateTotal().toFixed(2);
     sessionStorage.setItem('amount', total);
   };
 
+  /**
+   * Handles the checkout process.
+   * @async
+   */
   const handleCheckout = async () => {
     const customerID = sessionStorage.getItem('id');
     const staffID = 2; // Assigning staff ID manually
@@ -112,6 +174,10 @@ const MenuPage = () => {
     }
   };
 
+  /**
+   * Handles the change of allergen filters.
+   * @param {object} event - The event object.
+   */
   const handleAllergenChange = (event) => {
     const { value } = event.target;
     if (allergens.includes(value)) {
@@ -121,6 +187,10 @@ const MenuPage = () => {
     }
   };
 
+  /**
+   * Fetches menu items filtered by allergens from the server.
+   * @async
+   */
   const filterMenuItems = async () => {
     try {
       const response = await axios.get('http://localhost:9000/menu/filter-allergens', {

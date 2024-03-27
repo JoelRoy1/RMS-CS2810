@@ -1,17 +1,56 @@
-import React, { useState } from "react";
+/**
+ * Represents a page component for customer login.
+ * @module CustomerLoginPage
+ */
 import { Helmet } from 'react-helmet';
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { TextField, Button, Typography, Grid, Paper } from "@mui/material";
+import React, { useState } from "react";
 
+/**
+ * React functional component for the customer login page.
+ * Allows customers to enter their name and login as a guest.
+ * @component
+ * @returns {JSX.Element} CustomerLoginPage component
+ */
 function CustomerLoginPage() {
+  /**
+   * State variable to hold error message if any occurs during form submission.
+   * @type {[string | null, function]} State variable and its setter function
+   */
   const [error, setError] = useState(null);
+
+  /**
+   * State variable to indicate successful form submission.
+   * @type {[boolean, function]} State variable and its setter function
+   */
   const [success, setSuccess] = useState(false);
+
+  /**
+   * State variable to hold the table number assigned after successful login.
+   * @type {[number | null, function]} State variable and its setter function
+   */
   const [tableNumber, setTableNumber] = useState(null);
-  const navigate = useNavigate();
+
+  /**
+   * State variable to hold the customer's name entered in the form.
+   * @type {[string, function]} State variable and its setter function
+   */
   const [customerName, setCustomerName] = useState("");
 
-  const handleSubmit = async (event) => { // Function to handle form submission
+  /**
+   * React hook for navigation to other pages.
+   * @type {function}
+   */
+  const navigate = useNavigate();
+
+  /**
+   * Handles the form submission by sending a POST request to the server.
+   * @param {Event} event - The form submit event
+   * @returns {Promise<void>}
+   */
+  const handleSubmit = async (event) => {
     event.preventDefault();
     try {
       const response = await axios.post("http://localhost:9000/customer/", { customerName });
