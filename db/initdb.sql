@@ -55,12 +55,16 @@ CREATE TABLE menu(
 GRANT ALL ON menu TO root;
 
 --insert dummy values for dishes, allergens and the menu-allergen relation
-INSERT INTO menu (dish_name, dish_calories, dish_price, dish_description) VALUES ('Pizza', 800, 10.99, 'Indulge in our mouthwatering pizza, crafted with a crispy thin crust and topped with premium ingredients like savory pepperoni, fresh mozzarella, and vibrant vegetables, all perfectly melded with our signature tomato sauce. Every bite is a symphony of flavors that will leave you craving for more.');
-INSERT INTO menu (dish_name, dish_calories, dish_price, dish_description) VALUES ('Burger', 700, 8.99, 'Sink your teeth into our juicy burger masterpiece, featuring a flame-grilled beef patty, nestled between toasted brioche buns, layered with crisp lettuce, ripe tomatoes, and melted cheese, crowned with our secret sauce. It is a classic American comfort food experience you will not forget.');
-INSERT INTO menu (dish_name, dish_calories, dish_price, dish_description) VALUES ('Salad', 300, 6.99, 'Elevate your palate with our vibrant salad bursting with freshness and flavor. Crisp mixed greens, ripe cherry tomatoes, creamy avocado, and crunchy cucumbers, all tossed in a tangy vinaigrette, topped with toasted nuts and tangy feta cheese. A refreshing and nutritious delight for the senses.');
-INSERT INTO menu (dish_name, dish_calories, dish_price, dish_description) VALUES ('Chicken Wings', 1200, 12.00, 'Experience a culinary adventure with our tantalizing chicken wing dish. Delicately seasoned and braised to perfection, these tender morsels are infused with aromatic spices, offering a unique texture and taste sensation that will intrigue and delight your taste buds.');
-INSERT INTO menu (dish_name, dish_calories, dish_price, dish_description) VALUES ('Chocolate Cake', 3500, 16.60, 'Indulge your sweet tooth with our decadent chocolate cake, a symphony of rich, moist layers of chocolate sponge cake, generously filled and frosted with velvety chocolate ganache. Each forkful is a heavenly delight, sure to satisfy your craving for something sinfully sweet.');
-INSERT INTO menu (dish_name, dish_calories, dish_price, dish_description) VALUES ('Protein Bar', 3000, 1.99, 'Fuel your day with our wholesome protein bar, packed with nutritious ingredients like oats, almonds, and whey protein, sweetened with a touch of honey and adorned with luscious dark chocolate. Whether as a pre-workout boost or a guilt-free snack, it is the perfect balance of flavor and nutrition.');
+INSERT INTO menu (dish_name, dish_calories, dish_price, dish_description) 
+VALUES ('Tacos al Pastor', 350, 9.99, 'Marinated pork tacos with pineapple and cilantro'),
+       ('Chicken Enchiladas', 450, 12.99, 'Tender shredded chicken wrapped in corn tortillas, topped with enchilada sauce and cheese'),
+       ('Beef Fajitas', 600, 15.99, 'Sizzling strips of beef served with grilled onions and peppers, accompanied by tortillas, guacamole, sour cream, and salsa'),
+       ('Chile Rellenos', 400, 11.99, 'Poblano peppers stuffed with cheese, battered, and fried, served with rice and beans'),
+       ('Shrimp Tostadas', 380, 10.99, 'Crispy corn tortillas topped with seasoned shrimp, lettuce, tomatoes, avocado, and salsa'),
+       ('Carne Asada', 550, 17.99, 'Grilled marinated steak served with rice, beans, guacamole, and tortillas'),
+       ('Quesadillas', 480, 8.99, 'Flour tortillas stuffed with cheese and your choice of meat, served with salsa and sour cream'),
+       ('Vegetarian Burrito Bowl', 400, 10.99, 'A hearty bowl filled with rice, black beans, grilled vegetables, lettuce, cheese, salsa, and guacamole');
+
 
 CREATE TABLE allergens(
   allergen_id SERIAL PRIMARY KEY,
@@ -84,14 +88,29 @@ CREATE TABLE dish_allergens (
 GRANT ALL ON dish_allergens TO root;
 
 -- Assign allergens to dishes
-INSERT INTO dish_allergens (dish_id, allergen_id) VALUES (1, 1); -- Pizza contains Gluten
-INSERT INTO dish_allergens (dish_id, allergen_id) VALUES (1, 2); -- Pizza contains Dairy
-INSERT INTO dish_allergens (dish_id, allergen_id) VALUES (2, 1); -- Burger contains Gluten
-INSERT INTO dish_allergens (dish_id, allergen_id) VALUES (3, 3); -- Salad contains Nuts
-INSERT INTO dish_allergens (dish_id, allergen_id) VALUES (4, 1);-- Chicken Feet contain Gluten
-INSERT INTO dish_allergens (dish_id, allergen_id) VALUES (5, 2);-- Chocolate Cake contains Dairy
-INSERT INTO dish_allergens (dish_id, allergen_id) VALUES (6, 3);-- Protein Bar contains Nuts
--- Create orders table
+
+-- Tacos al Pastor contain Gluten
+INSERT INTO dish_allergens (dish_id, allergen_id)
+VALUES ((SELECT dish_id FROM menu WHERE dish_name = 'Tacos al Pastor'), (SELECT allergen_id FROM allergens WHERE allergen_name = 'Gluten'));
+-- Chicken Enchiladas contain Dairy
+INSERT INTO dish_allergens (dish_id, allergen_id)
+VALUES ((SELECT dish_id FROM menu WHERE dish_name = 'Chicken Enchiladas'), (SELECT allergen_id FROM allergens WHERE allergen_name = 'Dairy'));
+-- Beef Fajitas contain Gluten and Dairy
+INSERT INTO dish_allergens (dish_id, allergen_id)
+VALUES ((SELECT dish_id FROM menu WHERE dish_name = 'Beef Fajitas'), (SELECT allergen_id FROM allergens WHERE allergen_name = 'Gluten')),
+       ((SELECT dish_id FROM menu WHERE dish_name = 'Beef Fajitas'), (SELECT allergen_id FROM allergens WHERE allergen_name = 'Dairy'));
+-- Chile Rellenos contain Dairy
+INSERT INTO dish_allergens (dish_id, allergen_id)
+VALUES ((SELECT dish_id FROM menu WHERE dish_name = 'Chile Rellenos'), (SELECT allergen_id FROM allergens WHERE allergen_name = 'Dairy'));
+-- Shrimp Tostadas contain Gluten
+INSERT INTO dish_allergens (dish_id, allergen_id)
+VALUES ((SELECT dish_id FROM menu WHERE dish_name = 'Shrimp Tostadas'), (SELECT allergen_id FROM allergens WHERE allergen_name = 'Gluten'));
+-- Carne Asada contains none of the listed allergens
+-- Quesadillas contain Dairy
+INSERT INTO dish_allergens (dish_id, allergen_id)
+VALUES ((SELECT dish_id FROM menu WHERE dish_name = 'Quesadillas'), (SELECT allergen_id FROM allergens WHERE allergen_name = 'Dairy'));
+-- Vegetarian Burrito Bowl contains none of the listed allergens
+
 CREATE TABLE orders(
   order_id SERIAL PRIMARY KEY,
   customer_id INT REFERENCES customer(customer_id) ON DELETE CASCADE,
