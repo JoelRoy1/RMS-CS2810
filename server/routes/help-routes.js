@@ -1,5 +1,6 @@
 /**
- * @file Manges all help routes.
+ * @file help-routes.js manages all help routes.
+ * @module server/help
  * @version 1.0.0
  */
 const express = require('express');

@@ -1,5 +1,6 @@
 /**
- * @file Manages all interactions with the Staff table.
+ * @file staff-controller.js manages all interactions with the Staff table.
+ * @module server/staff
  * @version 1.3.0
  */
 
@@ -10,15 +11,15 @@ const pool = db.pool;
 /**
  * The signIn function handles authentication when a user tries to sign in.
  * 
- * @param {string} username the username to authenticate
- * @param {int} pin the pin number to authenticate
- * @returns the matching data from the database
+ * @param {string} username The username to authenticate.
+ * @param {int} pin The pin number to authenticate.
+ * @returns {json} The verified user token.
  */
 async function signIn(username, pin) {
   let client;
   try {
     console.log('Attempting to sign in...');
-    const client = await pool.connect();//Establish Connection
+    client = await pool.connect();//Establish Connection
     console.log('Connected to the database');
     const query = {
       text: 'SELECT * FROM staff WHERE staff_name = $1 AND staff_pin = $2',
@@ -30,12 +31,13 @@ async function signIn(username, pin) {
       throw new Error('Invalid username or PIN. Please check your credentials and try again.');
     }
     console.log('Sign in successful');
-    return token.generateToken(username, pin); // Return the token for staff member (for protected routes)
+    return username; // Return the token for staff member (for protected routes)
   } catch (error) {
     console.error(`Error signing in: ${error.message}`);
     throw new Error(`Unable to sign in: ${error.message}`);
   } finally {
     if (client) {
+      console.log('client released');
       client.release(); // Release the client back to the pool
     }
   }
@@ -44,9 +46,9 @@ async function signIn(username, pin) {
 /**
  * The create account function handles creating new users.
  * 
- * @param {string} username new username
- * @param {int} pin new pin number
- * @returns newly created user
+ * @param {string} username The new username.
+ * @param {int} pin The new pin number.
+ * @returns {json} The newly created user.
  */
 async function createAccount(username, pin, specialization) {
   let client;
@@ -63,7 +65,7 @@ async function createAccount(username, pin, specialization) {
       throw new Error('An account with this username already exists.');
     }
     const query = {
-      text: 'INSERT INTO staff (staff_name, staff_pin, specialization) VALUES ($1, $2, $3) RETURNING *',
+      text: 'INSERT INTO staff (staff_name, staff_pin, staff_type) VALUES ($1, $2, $3) RETURNING *',
       values: [username, pin, specialization],
     };
     const result = await client.query(query);
@@ -73,6 +75,7 @@ async function createAccount(username, pin, specialization) {
     throw new Error(`Unable to create account: ${error.message}`);
   } finally {
     if (client) {
+      console.log('client released');
       client.release(); // Release the client back to the pool
     }
   }

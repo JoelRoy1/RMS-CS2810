@@ -24,3 +24,7 @@ yarn-error.log*
 
 # docker
 *.yaml
+
+conf.json
+docs/
+*.md
